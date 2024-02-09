@@ -1,16 +1,16 @@
 import React from "react";
 
-import SignUp from "@/components/auth/SignUp/SignUp";
+import Login from "@/components/auth/Login/Login";
 
-const SignUpPage = () => {
+const SignInPage: React.FC = (props) => {
   return (
     <div className="flex flex-1 bg-background">
+      <Login className="w-1/2" />
       <div className="w-1/2 flex flex-1 items-center justify-center">
         Prueba
       </div>
-      <SignUp className="w-1/2" />
     </div>
   );
 };
 
-export default SignUpPage;
+export default SignInPage;
