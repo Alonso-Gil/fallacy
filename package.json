@@ -6,12 +6,17 @@
     "dev": "start http://localhost:3000 & next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check-types": "tsc"
   },
   "dependencies": {
+    "@nextui-org/react": "^2.2.9",
     "@supabase/auth-helpers-nextjs": "^0.9.0",
     "@supabase/supabase-js": "^2.39.3",
+    "framer-motion": "^11.0.3",
     "next": "14.1.0",
+    "next-themes": "^0.2.1",
+    "prettier-plugin-tailwindcss": "^0.5.11",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.2.1"

@@ -8,7 +8,7 @@ const LogOutButton = () => {
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
-    redirect("/login");
+    router.push("/login");
   };
 
   return (

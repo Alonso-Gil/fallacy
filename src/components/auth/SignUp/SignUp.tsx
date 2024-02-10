@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
@@ -29,7 +30,9 @@ const SignUp: React.FC<Props> = ({ className }) => {
             <input type="checkbox" className="" />
             <label>Remember me</label>
           </div>
-          <p className="text-sm text-palette font-semibold">Forgot password</p>
+          <Link className="text-sm text-palette font-semibold" href={"/login"}>
+            Forgot password
+          </Link>
         </div>
         <button className="h-12 rounded-xl bg-palette  text-white mb-4">
           Sign in

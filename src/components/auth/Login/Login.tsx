@@ -1,3 +1,5 @@
+import { Checkbox, Divider } from "@nextui-org/react";
+import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
 import { LoginProps } from "./Login.types";
@@ -12,28 +14,33 @@ const Login: React.FC<LoginProps> = ({ className }) => {
     <div
       className={twMerge(
         className,
-        "flex flex-1 flex-col items-center p-6 relative animate-fade-in-right-to-left bg-white"
+        "flex flex-1 flex-col items-center p-6 relative animate-fade-in-right-to-left bg-background dark:bg-background-dark duration-200"
       )}
     >
       <Logo className="absolute top-6 left-6" />
       <div className="flex flex-1 flex-col justify-center w-[400px]">
-        <h3 className="text-3xl font-semibold pb-6">Create a new account</h3>
-        <p className="pb-8 text-gray-500">
+        <h3 className="text-3xl font-semibold pb-6 text-typography dark:text-white">
+          Create a new account
+        </h3>
+        <p className="pb-8 text-typography-soft">
           Register to have access to completely free content
         </p>
-        <Input label="Email" type="email" />
-        <Input label="Password" type="password" />
+        <Input label="Email" type="email" className="mb-6" />
+        <Input label="Password" type="password" className="mb-6" />
         <div className="flex justify-between pb-6">
-          <div className="flex gap-2 text-sm">
-            <input type="checkbox" className="" />
-            <label>Remember me</label>
-          </div>
-          <p className="text-sm text-palette font-semibold">Forgot password</p>
+          <Checkbox defaultSelected>Remember me</Checkbox>
+          <Link
+            className="text-sm text-palette font-semibold"
+            href={"/sign-up"}
+          >
+            Forgot password
+          </Link>
         </div>
-        <button className="h-12 rounded-xl bg-palette  text-white mb-4">
+        <button className="h-12 rounded-xl bg-background-primary text-typography-white mb-6 dark:bg-background-dark-contrast">
           Sign in
         </button>
-        <button className="h-12 rounded-xl mb-4 border-2 flex items-center justify-center text-black gap-3 font-medium">
+        <Divider className="mb-6" />
+        <button className="h-12 rounded-xl mb-4 border-2 flex items-center justify-center text-typography gap-3 font-medium dark:text-typography-white dark:bg-background-dark-contrast dark:border-background-dark-contrast">
           <GoogleSVG className="w-6 h-6" />
           Sign in with google
         </button>

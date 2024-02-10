@@ -10,7 +10,7 @@ export default async function HomePage() {
   const { session } = sessionData;
 
   if (!session) {
-    redirect("/sign-up");
+    redirect("/login");
   }
 
   return <main className="">{session && <LogOutButton />}</main>;

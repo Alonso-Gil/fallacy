@@ -1,22 +1,35 @@
 import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
 
-const primary = "#7f55d9";
-const backgroundPrimary = "#f3f4f7";
+const { nextui } = require("@nextui-org/react");
 
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        palette: {
-          DEFAULT: primary,
-        },
         background: {
-          DEFAULT: backgroundPrimary,
+          DEFAULT: colors.white,
+          primary: colors.violet[600],
+          contrast: colors.gray[100],
+        },
+        "background-dark": {
+          DEFAULT: colors.slate[900],
+          contrast: colors.slate[800],
+        },
+        typography: {
+          DEFAULT: colors.neutral[900],
+          accent: colors.slate[900],
+          soft: colors.gray[500],
+          white: colors.white,
+        },
+        "typography-dark": {
+          DEFAULT: colors.white,
         },
       },
       keyframes: {
@@ -47,6 +60,7 @@ const config: Config = {
         "fade-in 0.2s cubic-bezier(0.4, 0, 0.2, 1), scale-up 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
     },
   },
-  plugins: [],
+  darkMode: ["class"],
+  plugins: [nextui()],
 };
 export default config;

@@ -7,3 +7,7 @@
     text-wrap: balance;
   }
 }
+
+.after\:bg-primary::after {
+  @apply !bg-background-dark;
+}

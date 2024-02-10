@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { twMerge } from "tailwind-merge";
+
+import ThemeSwitcherButton from "@/components/ui/ThemeSwitcherButton/ThemeSwitcherButton";
+import NextUIProvider from "@/providers/nextui-provider";
+import ThemeProvider from "@/providers/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +20,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={twMerge(inter.className, "w-screen h-screen flex")}>
-        {children}
+      <body className={inter.className}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <NextUIProvider className="w-screen h-screen flex relative">
+            {children}
+            <ThemeSwitcherButton className="absolute bottom-10 right-10" />
+          </NextUIProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
