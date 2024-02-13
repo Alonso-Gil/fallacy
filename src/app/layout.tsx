@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <NextUIProvider className="w-screen h-screen flex relative">
+          <NextUIProvider className="relative flex h-screen w-screen overflow-hidden bg-background-contrast dark:bg-background-dark">
             {children}
             <ThemeSwitcherButton className="absolute bottom-10 right-10" />
           </NextUIProvider>

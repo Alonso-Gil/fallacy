@@ -8,7 +8,6 @@ import GitHubIcon from "images/icons/github-icon.svg";
 const SignInButton = () => {
   const supabase = createClientComponentClient();
   const [session, setSession] = useState<Session | null>(null);
-  console.log({ session });
 
   const handleSignIn = async () => {
     await supabase.auth.signInWithOAuth({
@@ -33,10 +32,10 @@ const SignInButton = () => {
   return (
     <button
       type="button"
-      className="gap-3 justify-center text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 me-2 mb-2"
+      className="mb-2 me-2 inline-flex items-center justify-center gap-3 rounded-lg bg-[#24292F] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#24292F]/90 focus:outline-none focus:ring-4 focus:ring-[#24292F]/50 dark:hover:bg-[#050708]/30 dark:focus:ring-gray-500"
       onClick={handleSignIn}
     >
-      <GitHubIcon className="w-6 h-6" />
+      <GitHubIcon className="h-6 w-6" />
       Sign in with Github
     </button>
   );

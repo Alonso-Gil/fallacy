@@ -1,10 +1,9 @@
-import Link from "next/link";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
+import EmailSignUp from "./EmailSignUp/EmailSignUp";
 import { SignUpProps as Props } from "./SignUp.types";
 import SignInButton from "@/components/auth/sign-in-button";
-import Input from "@/components/ui/Input/Input";
 import Logo from "@/components/ui/Logo/Logo";
 
 import GoogleSVG from "images/google.svg";
@@ -14,31 +13,18 @@ const SignUp: React.FC<Props> = ({ className }) => {
     <div
       className={twMerge(
         className,
-        "flex flex-1 flex-col items-center p-6 relative animate-fade-in-right-to-left bg-white"
+        "relative flex flex-1 animate-fade-in-right-to-left flex-col items-center bg-white p-6",
       )}
     >
-      <Logo className="absolute top-6 left-6" />
-      <div className="flex flex-1 flex-col justify-center w-[400px]">
-        <h3 className="text-3xl font-semibold pb-6">Login with your account</h3>
+      <Logo className="absolute left-6 top-6" />
+      <div className="flex w-[400px] flex-1 flex-col justify-center">
+        <h3 className="pb-6 text-3xl font-semibold">Login with your account</h3>
         <p className="pb-8 text-gray-500">
           Register to have access to completely free content
         </p>
-        <Input label="Email" type="email" />
-        <Input label="Password" type="password" />
-        <div className="flex justify-between pb-6">
-          <div className="flex gap-2 text-sm">
-            <input type="checkbox" className="" />
-            <label>Remember me</label>
-          </div>
-          <Link className="text-sm text-palette font-semibold" href={"/login"}>
-            Forgot password
-          </Link>
-        </div>
-        <button className="h-12 rounded-xl bg-palette  text-white mb-4">
-          Sign in
-        </button>
-        <button className="h-12 rounded-xl mb-4 border-2 flex items-center justify-center text-black gap-3 font-medium">
-          <GoogleSVG className="w-6 h-6" />
+        <EmailSignUp />
+        <button className="mb-4 flex h-12 items-center justify-center gap-3 rounded-xl border-2 font-medium text-black">
+          <GoogleSVG className="h-6 w-6" />
           Sign in with google
         </button>
         <SignInButton />

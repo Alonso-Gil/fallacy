@@ -1,13 +1,14 @@
 import React from "react";
 
+import RandomFallacy from "@/components/RandomFallacy/RandomFallacy";
 import Login from "@/components/auth/Login/Login";
 
 const SignInPage: React.FC = (props) => {
   return (
-    <div className="flex flex-1 bg-background-contrast">
-      <Login className="w-1/2" />
-      <div className="w-1/2 flex flex-1 items-center justify-center">
-        Prueba
+    <div className="SignInPage flex flex-1">
+      <Login className="animate-fade-in-right-to-left border-r dark:border-border-color" />
+      <div className="hidden flex-1 animate-fade-in items-center justify-center md:w-1/2 xl:flex">
+        <RandomFallacy />
       </div>
     </div>
   );

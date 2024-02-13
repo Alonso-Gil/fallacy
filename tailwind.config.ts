@@ -19,17 +19,21 @@ const config: Config = {
           contrast: colors.gray[100],
         },
         "background-dark": {
-          DEFAULT: colors.slate[900],
+          DEFAULT: colors.neutral[900],
+          primary: colors.slate[900],
           contrast: colors.slate[800],
         },
         typography: {
           DEFAULT: colors.neutral[900],
           accent: colors.slate[900],
           soft: colors.gray[500],
-          white: colors.white,
         },
         "typography-dark": {
           DEFAULT: colors.white,
+          accent: colors.gray[400],
+        },
+        "border-color": {
+          DEFAULT: colors.gray[800],
         },
       },
       keyframes: {
