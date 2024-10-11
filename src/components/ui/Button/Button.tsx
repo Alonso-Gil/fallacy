@@ -5,18 +5,19 @@ import { twMerge } from "tailwind-merge";
 import { ButtonProps as Props } from "./Button.types";
 
 const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
-  const { className, text, ...rest } = props;
+  const { className, text, icon, children, ...rest } = props;
 
   return (
     <ButtonNextUI
       className={twMerge(
+        "h-12 w-full bg-background-primary text-base font-medium text-white dark:bg-background-dark-contrast",
         className,
-        "h-12 w-full bg-background-primary text-base text-white dark:bg-background-dark-contrast",
       )}
       ref={ref}
       {...rest}
     >
-      {text}
+      {icon}
+      {text ?? children}
     </ButtonNextUI>
   );
 });

@@ -41,4 +41,8 @@ export const validationRules = {
       /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[#^<>;,:.'_@$!%*&"¡¿?°/()=|+~{}-]).{7,70}$/,
       invalidPassword,
     ),
+  repeatPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), ""], "Passwords must match")
+    .required("Repeat password is required"),
 };

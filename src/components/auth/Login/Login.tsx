@@ -1,20 +1,22 @@
-import { Checkbox, Divider } from "@nextui-org/react";
+"use client";
+import { Divider } from "@nextui-org/react";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-import { LoginProps } from "./Login.types";
-import EmailSignUp from "../SignUp/EmailSignUp/EmailSignUp";
-import SignInButton from "../sign-in-button";
+import { LoginProps as Props } from "./Login.types";
+import EmailSignUp from "../SignUp/EmailAuthForm/EmailAuthForm";
+import AuthButton from "@/components/ui/AuthButton/AuthButton";
 import Logo from "@/components/ui/Logo/Logo";
 
 import GoogleSVG from "images/google.svg";
+import GitHubIcon from "images/icons/github-icon.svg";
 
-const Login: React.FC<LoginProps> = ({ className }) => {
+const Login: React.FC<Props> = ({ className }) => {
   return (
     <div
       className={twMerge(
         className,
-        "Login flex flex-1 flex-col items-center overflow-y-auto bg-background p-2 dark:bg-background-dark-primary md:p-6",
+        "Login flex flex-1 flex-col items-center justify-between overflow-y-auto bg-background p-2 dark:bg-background-dark-primary md:p-6",
       )}
     >
       <Logo className="md:self-start" />
@@ -23,15 +25,26 @@ const Login: React.FC<LoginProps> = ({ className }) => {
           Welcome back
         </h1>
         <p className="pb-8 text-typography-soft">Sign in to your account</p>
-        <EmailSignUp className="w-full" />
-        <Divider className="mb-6" />
-        <button className="mb-4 flex h-12 items-center justify-center gap-3 rounded-xl border font-medium text-typography dark:border-background-dark-primary dark:bg-background-dark-contrast dark:text-white">
-          <GoogleSVG className="h-6 w-6" />
-          Sign in with google
-        </button>
-        <SignInButton />
+        <AuthButton
+          signInIcon={<GoogleSVG className="h-6 w-6" />}
+          signInProvider="google"
+          className="mb-4 border bg-white text-typography dark:border-background-dark-primary dark:bg-background-dark-contrast dark:text-white"
+        />
+        <AuthButton
+          signInIcon={<GitHubIcon className="h-6 w-6" />}
+          signInProvider="github"
+          className="bg-[#24292F] text-white dark:hover:bg-[#050708]/30 dark:focus:ring-gray-500"
+        />
+        <Divider className="my-6" />
+        <EmailSignUp context="login" className="mb-4 w-full" />
+        <Link className="text-center" href={"/sign-up"}>
+          <p>
+            Don&lsquo;t have an account?{" "}
+            <span className="underline">Sign Up Now</span>
+          </p>
+        </Link>
       </div>
-      <p className="self-start text-sm">
+      <p className="text-sm">
         &copy; Fallacy. Todos los derechos reservados.{" "}
         {new Date().getFullYear()}
       </p>
