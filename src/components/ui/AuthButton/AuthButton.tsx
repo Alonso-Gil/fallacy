@@ -1,5 +1,6 @@
 "use client";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { twMerge } from "tailwind-merge";
 
 import { AuthButtonProps as Props } from "./AuthButton.types";
 import Button from "../Button/Button";
@@ -25,7 +26,10 @@ const AuthButton: React.FC<Props> = (props) => {
       type="button"
       onClick={handleSignIn}
       icon={signInIcon}
-      className={className}
+      className={twMerge(
+        "bg-[#24292F] text-white dark:hover:bg-[#050708]/30 dark:focus:ring-gray-500",
+        className,
+      )}
     />
   );
 };

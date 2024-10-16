@@ -9,7 +9,6 @@ import AuthButton from "@/components/ui/AuthButton/AuthButton";
 import Logo from "@/components/ui/Logo/Logo";
 
 import GoogleSVG from "images/google.svg";
-import GitHubIcon from "images/icons/github-icon.svg";
 
 const Login: React.FC<Props> = ({ className }) => {
   return (
@@ -28,14 +27,8 @@ const Login: React.FC<Props> = ({ className }) => {
         <AuthButton
           signInIcon={<GoogleSVG className="h-6 w-6" />}
           signInProvider="google"
-          className="mb-4 border bg-white text-typography dark:border-background-dark-primary dark:bg-background-dark-contrast dark:text-white"
         />
-        <AuthButton
-          signInIcon={<GitHubIcon className="h-6 w-6" />}
-          signInProvider="github"
-          className="bg-[#24292F] text-white dark:hover:bg-[#050708]/30 dark:focus:ring-gray-500"
-        />
-        <Divider className="my-6" />
+        <Divider className="my-8" />
         <EmailSignUp context="login" className="mb-4 w-full" />
         <Link className="text-center" href={"/sign-up"}>
           <p>
@@ -45,7 +38,7 @@ const Login: React.FC<Props> = ({ className }) => {
         </Link>
       </div>
       <p className="text-sm">
-        &copy; Fallacy. Todos los derechos reservados.{" "}
+        &copy; Fallacy. All rights reserved.{" "}
         {new Date().getFullYear()}
       </p>
     </div>

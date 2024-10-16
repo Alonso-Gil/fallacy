@@ -56,8 +56,8 @@ const config: Config = {
       },
     },
     animation: {
-      "fade-in": "fade-in 0.5s ease-in-out",
-      "fade-out": "fade-out 0.5s ease-in-out",
+      "fade-in": "fade-in 1s ease-in-out",
+      "fade-out": "fade-out 1s ease-in-out",
       "fade-in-right-to-left": "fade-in-right-to-left 0.5s ease-in-out",
       page: "fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1), slide-to-left 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
       modal:

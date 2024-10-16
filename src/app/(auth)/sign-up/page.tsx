@@ -5,7 +5,7 @@ import SignUp from "@/components/auth/SignUp/SignUp";
 
 const SignUpPage = () => {
   return (
-    <div className="flex flex-1 bg-background">
+    <div className="SignUpPage flex flex-1">
       <SignUp className="animate-fade-in-right-to-left border-r dark:border-border-color" />
       <div className="hidden flex-1 animate-fade-in items-center justify-center md:w-1/2 xl:flex">
         <RandomFallacy />
