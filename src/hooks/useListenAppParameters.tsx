@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
-import { supabase } from "@/lib/supabaseClient";
 import { useAppParametersStore } from "@/store/appParameters/appParameters.store";
 import { AppParameters } from "@/types/common.types";
+import { createClient } from "@/utils/supabase/component";
 
 const useListenAppParameters = () => {
+  const supabase = createClient();
   const [isClient, setIsClient] = useState(false);
   const setAppParameters = useAppParametersStore(
     (state) => state.setAppParameters,
@@ -48,7 +49,7 @@ const useListenAppParameters = () => {
     return () => {
       supabase.removeChannel(subscription);
     };
-  }, [isClient, setAppParameters]);
+  }, [isClient, setAppParameters, supabase]);
 };
 
 export default useListenAppParameters;

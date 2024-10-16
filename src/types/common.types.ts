@@ -14,5 +14,11 @@ export type StorePreviousValue<T = unknown> = (prev: T) => T;
 export type StoreSetState<T> = (payload: StorePreviousValue<T> | T) => void;
 
 export interface AppParameters {
-  out_of_service: boolean;
+  out_of_service_web: boolean;
+}
+
+export interface PageProps {}
+
+export interface LayoutProps {
+  children: React.ReactNode;
 }

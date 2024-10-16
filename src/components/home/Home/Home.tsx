@@ -1,17 +1,13 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-
+"use client";
 import { HomeProps as Props } from "./Home.types";
+import LogOutButton from "@/components/auth/LogOutButton";
 
-const Home: React.FC<Props> = async () => {
-  const supabase = createServerComponentClient({ cookies });
-  const { data: sessionData } = await supabase.auth.getSession();
-  const { session } = sessionData;
-
-  if (!session) redirect("/login");
-
-  return <div className="flex h-full w-full bg-red-500"></div>;
+const Home: React.FC<Props> = () => {
+  return (
+    <div className="flex h-full w-full bg-red-500">
+      <LogOutButton />
+    </div>
+  );
 };
 
 export default Home;

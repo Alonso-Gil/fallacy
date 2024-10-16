@@ -3,7 +3,7 @@
 import { AppParameters, StoreSetState } from "@/types/common.types";
 
 export interface AppParametersStoreValues {
-  appParameters: AppParameters | null;
-  setAppParameters: StoreSetState<AppParameters | null>;
+  appParameters: AppParameters | undefined;
+  setAppParameters: StoreSetState<AppParameters | undefined>;
   reset: () => void;
 }

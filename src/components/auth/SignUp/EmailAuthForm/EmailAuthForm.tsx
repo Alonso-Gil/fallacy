@@ -1,6 +1,5 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -12,9 +11,11 @@ import { EmailLoginFormSchema } from "./EmailAuthForm.types";
 import { EmailSignUpFormSchema } from "./EmailAuthForm.types";
 import Button from "@/components/ui/Button/Button";
 import Input from "@/components/ui/Input/Input";
+import { createClient } from "@/utils/supabase/component";
 
 const EmailAuthForm: React.FC<EmailAuthFormProps> = (props) => {
   const { context, className } = props;
+  const supabase = createClient();
   const schema =
     context === "signUp" ? getSignUpEmailSchema() : getLoginEmailSchema();
   const formMethods = useForm<EmailSignUpFormSchema | EmailLoginFormSchema>({
@@ -26,7 +27,6 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const { push } = useRouter();
-  const supabase = createClientComponentClient();
 
   const submitHandler = async (
     form: EmailSignUpFormSchema | EmailLoginFormSchema,

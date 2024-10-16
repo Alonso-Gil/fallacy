@@ -1,13 +1,13 @@
 "use client";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { twMerge } from "tailwind-merge";
 
 import { AuthButtonProps as Props } from "./AuthButton.types";
 import Button from "../Button/Button";
+import { createClient } from "@/utils/supabase/component";
 
 const AuthButton: React.FC<Props> = (props) => {
   const { signInProvider, signInIcon, className } = props;
-  const supabase = createClientComponentClient();
+  const supabase = createClient();
 
   const handleSignIn = async () => {
     if (!signInProvider) return;
@@ -15,7 +15,8 @@ const AuthButton: React.FC<Props> = (props) => {
     await supabase.auth.signInWithOAuth({
       provider: signInProvider,
       options: {
-        redirectTo: "http://localhost:3000/api/auth/callback",
+        // TODO: cambiar url
+        redirectTo: "http://localhost:3000/api/auth/callback?next=/home",
       },
     });
   };
