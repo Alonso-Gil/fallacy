@@ -1,8 +1,8 @@
+import { AppParameters } from "@fallacy/types";
 import { useEffect, useState } from "react";
 
-import { useAppParametersStore } from "@/store/appParameters/appParameters.store";
-import { AppParameters } from "@/types/common.types";
-import { createClient } from "@/utils/supabase/component";
+import { useAppParametersStore } from "../store/appParameters/appParameters.store";
+import { createClient } from "../utils/supabase/component";
 
 const useListenAppParameters = () => {
   const supabase = createClient();

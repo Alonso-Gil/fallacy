@@ -4,10 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
-.yarn/install-state.gz
 
 # testing
 /coverage
+/playwright-report
 
 # next.js
 /.next/
@@ -15,11 +15,11 @@
 
 # production
 /build
+/android
+/ios
 
 # misc
 .DS_Store
-*.pem
-.turbo
 
 # debug
 npm-debug.log*
@@ -27,11 +27,9 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
-.env*.local
+.env*
+!.env.template
 
-# vercel
+# deploy
 .vercel
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts

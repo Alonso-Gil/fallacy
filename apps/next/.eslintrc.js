@@ -1,34 +1,29 @@
-const setAssetsImportRule = patterns => {
-  return patterns.map(pattern => ({
+const setAssetsImportRule = (patterns) => {
+  return patterns.map((pattern) => ({
     pattern,
     patternOptions: {
-      matchBase: true
+      matchBase: true,
     },
-    group: "object"
+    group: "object",
   }));
 };
 
 module.exports = {
-  ignorePatterns: ["environments/*"],
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: "module",
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
-    parser: "babel-eslint"
+    parser: "babel-eslint",
   },
-  extends: ["eslint:recommended", "prettier"],
+  extends: ["eslint:recommended", "prettier", "next/core-web-vitals"],
   rules: {
     "import/no-duplicates": "off",
     "import/order": [
       "error",
       {
-        groups: [
-          ["builtin", "external"],
-          ["internal", "parent", "sibling", "index"],
-          ["object"]
-        ],
+        groups: [["builtin", "external"], ["internal", "parent", "sibling", "index"], ["object"]],
         pathGroups: [
           ...setAssetsImportRule([
             "*.svg",
@@ -46,33 +41,30 @@ module.exports = {
             "*.tif",
             "*.tiff",
             "*.woff",
-            "*.woff2"
-          ])
+            "*.woff2",
+          ]),
         ],
         "newlines-between": "always",
         alphabetize: {
           order: "asc",
-          caseInsensitive: false
-        }
-      }
-    ]
+          caseInsensitive: false,
+        },
+      },
+    ],
   },
   env: {
     browser: true,
-    node: true
+    node: true,
   },
   overrides: [
     {
       files: "**/*.+(ts|tsx)",
       parser: "@typescript-eslint/parser",
       parserOptions: {
-        project: "./tsconfig.json"
+        project: "./tsconfig.json",
       },
       plugins: ["@typescript-eslint/eslint-plugin"],
-      extends: [
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended"
-      ],
+      extends: ["plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended"],
       rules: {
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
@@ -84,8 +76,8 @@ module.exports = {
         "@typescript-eslint/ban-types": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
-        "@typescript-eslint/no-namespace": "off"
-      }
-    }
-  ]
+        "@typescript-eslint/no-namespace": "off",
+      },
+    },
+  ],
 };

@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "start http://localhost:3000 & next dev",
-    "dev": "yarn start",
-    "build": "next build",
-    "lint": "next lint",
-    "check-types": "tsc"
+    "clean": "rm -rf node_modules && rm -rf packages/**/node_modules && rm -rf apps/**/node_modules && yarn clean:cache",
+    "clean:cache": "rm -rf packages/**/.turbo && rm -rf apps/**/.turbo && rm -rf apps/**/.next",
+    "compile": "turbo run compile",
+    "check-types": "turbo run check-types",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "check-format": "turbo run check-format"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -27,6 +29,9 @@
     "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-inject": "^5.0.3",
+    "@rollup/plugin-json": "^6.0.0",
     "@svgr/webpack": "^8.1.0",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -34,6 +39,7 @@
     "@typescript-eslint/parser": "^8.8.1",
     "autoprefixer": "^10.0.1",
     "babel-eslint": "^10.1.0",
+    "esbuild": "^0.17.17",
     "eslint": "^8.50.0",
     "eslint-config-next": "14.1.0",
     "eslint-config-prettier": "^9.1.0",
@@ -46,7 +52,18 @@
     "postcss": "^8",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
+    "rollup": "^2.77.1",
+    "rollup-plugin-dts": "^5.3.0",
+    "rollup-plugin-esbuild": "^5.0.0",
     "tailwindcss": "^3.3.0",
+    "turbo": "^1.10.12",
     "typescript": "^5"
-  }
+  },
+  "workspaces": {
+    "packages": [
+      "apps/*",
+      "packages/*"
+    ]
+  },
+  "packageManager": "yarn@1.22.19"
 }
