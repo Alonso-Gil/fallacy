@@ -23,7 +23,7 @@ export default function RootLayout({
       <body
         className={twMerge(
           inter.className,
-          "relative overflow-hidden bg-background-contrast dark:bg-background-dark",
+          "relative h-screen w-screen overflow-hidden bg-background-contrast dark:bg-background-dark",
         )}
       >
         <Providers>{children}</Providers>

@@ -3,6 +3,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider } from "next-themes";
 
 import { ProvidersProps as Props } from "./Providers.types";
+
 import ThemeSwitcherButton from "@/components/ui/ThemeSwitcherButton/ThemeSwitcherButton";
 import useListeners from "@/hooks/useListeners";
 
