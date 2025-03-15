@@ -21,7 +21,7 @@ const ThemeSwitcher: React.FC<Props> = ({ className }) => {
     <button
       className={twMerge(
         className,
-        "rounded-xl bg-slate-200 px-10 py-2 duration-200 dark:bg-[#212933]",
+        "absolute bottom-4 right-4 rounded-xl bg-slate-200 px-10 py-2 duration-200 dark:bg-[#212933]",
       )}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >

@@ -16,7 +16,7 @@ const AuthButton: React.FC<Props> = (props) => {
       provider: signInProvider,
       options: {
         // TODO: cambiar url
-        redirectTo: "http://localhost:3000/api/auth/callback?next=/home",
+        redirectTo: "http://localhost:3000/api/auth/callback?next=/",
       },
     });
   };

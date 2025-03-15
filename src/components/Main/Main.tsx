@@ -9,7 +9,7 @@ const Main: React.FC<Props> = (props) => {
   return (
     <main
       className={twMerge(
-        "Main flex-1 bg-background-contrast dark:bg-background-dark",
+        "Main flex flex-1 bg-background-contrast dark:bg-background-dark",
         className,
       )}
     >

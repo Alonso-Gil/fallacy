@@ -38,8 +38,7 @@ const Login: React.FC<Props> = ({ className }) => {
         </Link>
       </div>
       <p className="text-sm">
-        &copy; Fallacy. All rights reserved.{" "}
-        {new Date().getFullYear()}
+        &copy; Fallacy. All rights reserved. {new Date().getFullYear()}
       </p>
     </div>
   );
