@@ -9,9 +9,9 @@ import { getSignUpEmailSchema } from "./EmailAuthForm.helpers";
 import { EmailAuthFormProps } from "./EmailAuthForm.types";
 import { EmailLoginFormSchema } from "./EmailAuthForm.types";
 import { EmailSignUpFormSchema } from "./EmailAuthForm.types";
-import Button from "@/components/ui/Button/Button";
-import Input from "@/components/ui/Input/Input";
-import { createClient } from "@/utils/supabase/component";
+import Button from "ui/Button/Button";
+import Input from "ui/Input/Input";
+import { createClient } from "utils/supabase/component";
 
 const EmailAuthForm: React.FC<EmailAuthFormProps> = (props) => {
   const { context, className } = props;

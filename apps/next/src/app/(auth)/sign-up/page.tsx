@@ -1,7 +1,7 @@
 import React from "react";
 
-import RandomFallacy from "@/components/RandomFallacy/RandomFallacy";
-import SignUp from "@/components/auth/SignUp/SignUp";
+import RandomFallacy from "components/RandomFallacy/RandomFallacy";
+import SignUp from "components/auth/SignUp/SignUp";
 
 const SignUpPage = () => {
   return (

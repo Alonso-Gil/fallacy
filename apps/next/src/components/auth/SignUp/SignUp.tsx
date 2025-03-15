@@ -5,8 +5,8 @@ import { twMerge } from "tailwind-merge";
 
 import EmailSignUp from "./EmailAuthForm/EmailAuthForm";
 import { SignUpProps as Props } from "./SignUp.types";
-import AuthButton from "@/components/ui/AuthButton/AuthButton";
-import Logo from "@/components/ui/Logo/Logo";
+import AuthButton from "ui/AuthButton/AuthButton";
+import Logo from "ui/Logo/Logo";
 
 import GoogleSVG from "images/google.svg";
 

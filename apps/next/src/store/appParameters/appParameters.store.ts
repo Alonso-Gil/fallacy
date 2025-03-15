@@ -4,7 +4,7 @@ import { devtools } from "zustand/middleware";
 
 import { defaultValues } from "./appParameters.store.helpers";
 import { AppParametersStoreValues } from "./appParameters.store.types";
-import { getStoreSetState } from "@/utils/common.utils";
+import { getStoreSetState } from "utils/common.utils";
 
 export const useAppParametersStore = create<AppParametersStoreValues>()(
   devtools(

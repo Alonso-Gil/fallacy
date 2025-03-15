@@ -2,7 +2,7 @@
 
 import { AppParameters } from "@fallacy/types";
 
-import { StoreSetState } from "../../types/common.types";
+import { StoreSetState } from "types/common.types";
 
 export interface AppParametersStoreValues {
   appParameters: AppParameters | undefined;

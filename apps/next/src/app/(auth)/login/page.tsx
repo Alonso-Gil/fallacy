@@ -1,7 +1,7 @@
 import React from "react";
 
-import RandomFallacy from "@/components/RandomFallacy/RandomFallacy";
-import Login from "@/components/auth/Login/Login";
+import RandomFallacy from "components/RandomFallacy/RandomFallacy";
+import Login from "components/auth/Login/Login";
 
 const SignInPage: React.FC = () => {
   return (

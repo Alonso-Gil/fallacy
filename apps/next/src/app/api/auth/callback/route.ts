@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { createClient } from "../../../../utils/supabase/server-props";
+import { createClient } from "utils/supabase/server-props";
 
 // The client you created from the Server-Side Auth instructions
 

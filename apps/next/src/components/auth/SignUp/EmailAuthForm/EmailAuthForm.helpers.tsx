@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-import { validationRules } from "@/utils/form.utils";
+import { validationRules } from "utils/form.utils";
 
 const { requiredEmail, requiredString, repeatPassword } = validationRules;
 

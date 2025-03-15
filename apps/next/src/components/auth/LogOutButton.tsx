@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-import { createClient } from "@/utils/supabase/component";
+import { createClient } from "utils/supabase/component";
 
 const LogOutButton = () => {
   const supabase = createClient();

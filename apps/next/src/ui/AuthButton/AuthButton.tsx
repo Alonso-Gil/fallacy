@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 import { AuthButtonProps as Props } from "./AuthButton.types";
 import Button from "../Button/Button";
-import { createClient } from "@/utils/supabase/component";
+import { createClient } from "utils/supabase/component";
 
 const AuthButton: React.FC<Props> = (props) => {
   const { signInProvider, signInIcon, className } = props;

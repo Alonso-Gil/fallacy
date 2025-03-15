@@ -1,70 +1,52 @@
-const setAssetsImportRule = (patterns) => {
-  return patterns.map((pattern) => ({
-    pattern,
-    patternOptions: {
-      matchBase: true,
-    },
-    group: "object",
-  }));
-};
+const path = require("path");
 
 module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: "module",
     ecmaFeatures: {
-      jsx: true,
-    },
-    parser: "babel-eslint",
+      jsx: true
+    }
   },
-  extends: ["eslint:recommended", "prettier", "next/core-web-vitals"],
+  extends: ["../../.eslintrc", "next"],
   rules: {
     "import/no-duplicates": "off",
-    "import/order": [
+    "jsx-a11y/anchor-is-valid": [
       "error",
       {
-        groups: [["builtin", "external"], ["internal", "parent", "sibling", "index"], ["object"]],
-        pathGroups: [
-          ...setAssetsImportRule([
-            "*.svg",
-            "*.svg?inline",
-            "*.svg?url",
-            "*.png",
-            "*.jpg",
-            "*.jpeg",
-            "*.gif",
-            "*.webp",
-            "*.avif",
-            "*.json",
-            "*.md",
-            "*.txt",
-            "*.tif",
-            "*.tiff",
-            "*.woff",
-            "*.woff2",
-          ]),
-        ],
-        "newlines-between": "always",
-        alphabetize: {
-          order: "asc",
-          caseInsensitive: false,
-        },
-      },
+        components: ["Link"],
+        specialLink: ["hrefLeft", "hrefRight"],
+        aspects: ["invalidHref", "preferButton"]
+      }
     ],
+    "no-unused-vars": "off"
   },
   env: {
     browser: true,
-    node: true,
+    node: true
   },
   overrides: [
     {
       files: "**/*.+(ts|tsx)",
       parser: "@typescript-eslint/parser",
       parserOptions: {
-        project: "./tsconfig.json",
+        project: "./tsconfig.json"
       },
       plugins: ["@typescript-eslint/eslint-plugin"],
-      extends: ["plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended"],
+      extends: [
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+      ],
+      settings: {
+        "import/resolver": {
+          node: {
+            paths: [path.resolve(__dirname, "src")]
+          },
+          typescript: {
+            project: path.resolve(__dirname, "tsconfig.json")
+          }
+        }
+      },
       rules: {
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/explicit-function-return-type": "off",
@@ -77,7 +59,11 @@ module.exports = {
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-namespace": "off",
-      },
-    },
-  ],
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          { vars: "all", args: "none", ignoreRestSiblings: true }
+        ]
+      }
+    }
+  ]
 };
