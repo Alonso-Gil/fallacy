@@ -9,7 +9,8 @@
     "check-types": "turbo run check-types",
     "lint": "turbo run lint",
     "format": "turbo run format",
-    "check-format": "turbo run check-format"
+    "check-format": "turbo run check-format",
+    "start:next": "yarn compile && cd apps/next && yarn start"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -65,5 +66,10 @@
       "packages/*"
     ]
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.19",
+  "resolutions": {
+    "strip-ansi": "6.0.1",
+    "string-width": "4.2.2",
+    "wrap-ansi": "7.0.0"
+  }
 }

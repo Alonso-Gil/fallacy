@@ -1,9 +1,9 @@
 {
-    "name": "fallacy-web",
-    "version": "0.0.1",
-    "private": true,
-    "scripts": {
-      "start": "start http://localhost:3000 & next dev",
+  "name": "fallacy-web",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "start http://localhost:3000 & next dev",
     "dev": "yarn start",
     "compile": "echo skipping compile",
     "build": "next build",
@@ -12,8 +12,7 @@
     "check-types": "tsc",
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different"
-    },
-    "dependencies": {},
-    "devDependencies": {}
-  }
-  
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
