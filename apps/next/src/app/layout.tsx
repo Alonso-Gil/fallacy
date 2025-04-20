@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "../globals.css";
+import Providers from "providers/Providers";
+import React from "react";
 import { twMerge } from "tailwind-merge";
 
-import Providers from "providers/Providers";
+import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
 // TODO: Add metadata
 export const metadata: Metadata = {
   title: "Fallacy",
-  description: "Official page for debates",
+  description: "Official page for debates"
 };
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
@@ -23,7 +24,7 @@ export default function RootLayout({
       <body
         className={twMerge(
           inter.className,
-          "relative h-screen w-screen overflow-hidden bg-background-contrast dark:bg-background-dark",
+          "relative h-screen w-screen overflow-hidden bg-background-contrast dark:bg-background-dark"
         )}
       >
         <Providers>{children}</Providers>

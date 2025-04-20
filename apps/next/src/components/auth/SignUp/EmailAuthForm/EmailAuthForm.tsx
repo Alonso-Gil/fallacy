@@ -1,8 +1,9 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { createClient } from "utils/supabase/component";
 
 import { getLoginEmailSchema } from "./EmailAuthForm.helpers";
 import { getSignUpEmailSchema } from "./EmailAuthForm.helpers";
@@ -11,25 +12,24 @@ import { EmailLoginFormSchema } from "./EmailAuthForm.types";
 import { EmailSignUpFormSchema } from "./EmailAuthForm.types";
 import Button from "ui/Button/Button";
 import Input from "ui/Input/Input";
-import { createClient } from "utils/supabase/component";
 
-const EmailAuthForm: React.FC<EmailAuthFormProps> = (props) => {
+const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
   const { context, className } = props;
   const supabase = createClient();
   const schema =
     context === "signUp" ? getSignUpEmailSchema() : getLoginEmailSchema();
   const formMethods = useForm<EmailSignUpFormSchema | EmailLoginFormSchema>({
     mode: "onBlur",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schema)
   });
   const { register, formState, handleSubmit } = formMethods;
   const { email, password } = formState.errors ?? {};
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const { push } = useRouter();
+  const router = useRouter();
 
   const submitHandler = async (
-    form: EmailSignUpFormSchema | EmailLoginFormSchema,
+    form: EmailSignUpFormSchema | EmailLoginFormSchema
   ) => {
     setIsLoading(true);
     setErrorMessage("");
@@ -39,11 +39,11 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = (props) => {
       if (context === "login") {
         const { data, error } = await supabase.auth.signInWithPassword({
           email,
-          password,
+          password
         });
 
         if (!!data && !error) {
-          push("/");
+          router.push("/");
         } else {
           setErrorMessage(error?.message ?? "Invalid email or password");
           setIsLoading(false);
@@ -53,12 +53,12 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = (props) => {
       if (context === "signUp") {
         const { data, error } = await supabase.auth.signUp({
           email,
-          password,
+          password
         });
 
         // TODO: Cambiar cuando se agregue zustand user
         if (!!data && !error) {
-          push("/");
+          router.push("/");
         } else {
           setErrorMessage(error?.message ?? "Invalid email or password");
           setIsLoading(false);
@@ -66,12 +66,12 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = (props) => {
       }
     } catch (error) {
       setIsLoading(false);
-      setErrorMessage("An unexpected error occurred.");
+      setErrorMessage(`An unexpected error occurred: ${error}`);
     }
   };
 
   return (
-    <form className={className} onSubmit={handleSubmit(submitHandler)}>
+    <form className={className} onSubmit={() => handleSubmit(submitHandler)}>
       <Input
         {...register("email")}
         className="mb-6"
@@ -88,7 +88,7 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = (props) => {
         errorMessage={password?.message}
         placeholder="********"
       />
-      {context === "signUp" && (
+      {/* {context === "signUp" && (
         <Input
           {...register("repeatPassword")}
           className="mb-6"
@@ -97,7 +97,7 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = (props) => {
           errorMessage={(formState.errors as any)?.repeatPassword?.message}
           placeholder="********"
         />
-      )}
+      )} */}
       <Button
         className="mb-2"
         text={context === "signUp" ? "Sign Up" : "Login"}

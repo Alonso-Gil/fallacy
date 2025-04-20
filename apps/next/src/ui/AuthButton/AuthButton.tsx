@@ -1,11 +1,12 @@
 "use client";
+import React from "react";
 import { twMerge } from "tailwind-merge";
-
-import { AuthButtonProps as Props } from "./AuthButton.types";
-import Button from "../Button/Button";
 import { createClient } from "utils/supabase/component";
 
-const AuthButton: React.FC<Props> = (props) => {
+import Button from "../Button/Button";
+import { AuthButtonProps as Props } from "./AuthButton.types";
+
+const AuthButton: React.FC<Props> = props => {
   const { signInProvider, signInIcon, className } = props;
   const supabase = createClient();
 
@@ -16,8 +17,8 @@ const AuthButton: React.FC<Props> = (props) => {
       provider: signInProvider,
       options: {
         // TODO: cambiar url
-        redirectTo: "http://localhost:3000/api/auth/callback?next=/",
-      },
+        redirectTo: "http://localhost:3000/api/auth/callback?next=/"
+      }
     });
   };
 
@@ -25,11 +26,11 @@ const AuthButton: React.FC<Props> = (props) => {
     <Button
       text={`Sign in with ${signInProvider}`}
       type="button"
-      onClick={handleSignIn}
+      onClick={() => handleSignIn}
       icon={signInIcon}
       className={twMerge(
         "bg-[#24292F] text-white dark:hover:bg-[#050708]/30 dark:focus:ring-gray-500",
-        className,
+        className
       )}
     />
   );

@@ -1,29 +1,28 @@
 {
-    "$schema": "https://turborepo.org/schema.json",
-    "pipeline": {
-      "compile": {
-        "dependsOn": ["^build"],
-        "inputs": ["src/**/*"],
-        "outputs": ["dist/**", ".next/**"]
-      },
-      "build": {
-        "dependsOn": ["^build"],
-        "inputs": ["src/**/*"],
-        "outputs": ["dist/**", ".next/**"]
-      },
-      "check-types": {
-        "dependsOn": ["^build", "compile"],
-        "inputs": ["src/**/*"]
-      },
-      "lint": {
-        "dependsOn": ["^build"]
-      },
-      "format": {
-        "dependsOn": ["^build"]
-      },
-      "check-format": {
-        "dependsOn": ["^build"]
-      }
+  "$schema": "https://turborepo.org/schema.json",
+  "pipeline": {
+    "compile": {
+      "dependsOn": ["^build"],
+      "inputs": ["src/**/*"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["src/**/*"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "check-types": {
+      "dependsOn": ["^build", "compile"],
+      "inputs": ["src/**/*"]
+    },
+    "lint": {
+      "dependsOn": ["^build"]
+    },
+    "format": {
+      "dependsOn": ["^build"]
+    },
+    "check-format": {
+      "dependsOn": ["^build"]
     }
   }
-  
+}

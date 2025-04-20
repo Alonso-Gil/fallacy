@@ -2,4 +2,4 @@
 import { InputProps as InputPropsNextUI } from "@nextui-org/react";
 
 // Component Props
-export interface InputProps extends InputPropsNextUI {}
+export type InputProps = InputPropsNextUI;

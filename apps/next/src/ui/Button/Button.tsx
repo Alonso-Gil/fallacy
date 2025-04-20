@@ -11,7 +11,7 @@ const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
     <ButtonNextUI
       className={twMerge(
         "h-12 w-full bg-background-primary text-base font-medium text-white dark:bg-background-dark-contrast",
-        className,
+        className
       )}
       ref={ref}
       {...rest}

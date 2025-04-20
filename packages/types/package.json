@@ -14,8 +14,8 @@
     "prebuild": "yarn clean",
     "build": "yarn compile",
     "check-types": "tsc --noEmit",
-    "lint": "eslint --max-warnings=0 --ignore-path .gitignore --ext .ts,.tsx .",
-    "prettier": "prettier --ignore-path .gitignore \"**/*.+(ts|tsx)\"",
+    "lint": "eslint . --ext .ts,.tsx --fix",
+    "prettier": "prettier --ignore-pattern .gitignore \"**/*.+(ts|tsx)\"",
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different"
   }

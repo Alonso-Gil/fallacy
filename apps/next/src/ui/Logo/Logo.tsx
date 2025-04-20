@@ -1,3 +1,4 @@
+import React from "react";
 import { twMerge } from "tailwind-merge";
 
 import { LogoProps as Props } from "./Logo.types";

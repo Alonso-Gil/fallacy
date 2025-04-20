@@ -1,7 +1,7 @@
 import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
-import esbuild from "rollup-plugin-esbuild";
 import dts from "rollup-plugin-dts";
+import esbuild from "rollup-plugin-esbuild";
 
 import globalPackageJSON from "./package.json";
 

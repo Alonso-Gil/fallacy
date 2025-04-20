@@ -9,7 +9,7 @@ function stringOrFirstString(item: string | string[] | undefined) {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ) {
   if (req.method !== "GET") {
     res.status(405).appendHeader("Allow", "GET").end();
@@ -26,7 +26,7 @@ export default async function handler(
     const supabase = createClient(req, res);
     const { error } = await supabase.auth.verifyOtp({
       type: type as EmailOtpType,
-      token_hash,
+      token_hash
     });
     if (error) {
       console.error(error);

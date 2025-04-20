@@ -1,9 +1,10 @@
 "use client";
 import { NextUIProvider } from "@nextui-org/react";
+import useListeners from "hooks/useListeners";
 import { ThemeProvider } from "next-themes";
+import React from "react";
 
 import { ProvidersProps as Props } from "./Providers.types";
-import useListeners from "hooks/useListeners";
 import ThemeSwitcherButton from "ui/ThemeSwitcherButton/ThemeSwitcherButton";
 
 const Providers: React.FC<Props> = ({ children }) => {

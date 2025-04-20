@@ -1,28 +1,9 @@
+// tsconfig.json (en la raíz del monorepo)
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "target": "ES2016",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "sourceMap": true,
-    "allowJs": false,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "declaration": true,
-    "noUncheckedIndexedAccess": true,
-    "useUnknownInCatchVariables": false
+    "module": "esnext",              
+    "outDir": "dist"
   },
-  "exclude": [
-    "node_modules"
-  ],
+  "exclude": ["node_modules"]
 }

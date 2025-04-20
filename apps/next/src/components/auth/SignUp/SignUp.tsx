@@ -15,7 +15,7 @@ const SignUp: React.FC<Props> = ({ className }) => {
     <div
       className={twMerge(
         className,
-        "SignUp flex flex-1 flex-col items-center justify-between overflow-y-auto bg-background p-2 dark:bg-background-dark-primary md:p-6",
+        "SignUp flex flex-1 flex-col items-center justify-between overflow-y-auto bg-background p-2 dark:bg-background-dark-primary md:p-6"
       )}
     >
       <Logo className="md:self-start" />
