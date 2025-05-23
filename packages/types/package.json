@@ -1,0 +1,22 @@
+{
+  "name": "@fallacy/types",
+  "version": "0.0.0",
+  "description": "Fallacy types and interfaces",
+  "private": true,
+  "main": "./dist/bundle.cjs.js",
+  "module": "./dist/bundle.esm.js",
+  "types": "./dist/bundle.d.ts",
+  "scripts": {
+    "start": "echo skipping",
+    "compile": "rollup -c",
+    "dev": "yarn compile -w",
+    "clean": "rimraf dist",
+    "prebuild": "yarn clean",
+    "build": "yarn compile",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx --fix",
+    "prettier": "prettier --ignore-pattern .gitignore \"**/*.+(ts|tsx)\"",
+    "format": "yarn prettier --write",
+    "check-format": "yarn prettier --list-different"
+  }
+}
