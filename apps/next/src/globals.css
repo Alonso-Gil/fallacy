@@ -1,5 +1,4 @@
-@tailwind base;
-@tailwind components;
+@import "tailwindcss";
 @tailwind utilities;
 
 @layer utilities {
@@ -8,7 +7,7 @@
   }
 
   h1 {
-    @apply text-3xl font-semibold md:text-4xl;
+    @apply text-2xl font-semibold md:text-4xl;
   }
 
   h2 {
@@ -26,8 +25,4 @@
   p {
     @apply text-balance;
   }
-}
-
-.after\:bg-primary::after {
-  @apply !bg-background-dark;
 }
