@@ -9,7 +9,7 @@ datasource db {
 }
 
 model app_parameters {
-  id                 String   @id(map: "features_pkey") @db.Uuid
+  id                 String   @id(map: "features_pkey") @default(uuid())
   out_of_service_web Boolean? @default(false)
 }
 
@@ -23,7 +23,7 @@ model message {
 }
 
 model room {
-  id                      String    @id(map: "room_pk") @db.Uuid
+  id                      String    @id(map: "room_pk") @default(uuid())
   title                   String?   @db.VarChar(255)
   description             String?   @db.VarChar(255)
   defender                String?   @db.VarChar

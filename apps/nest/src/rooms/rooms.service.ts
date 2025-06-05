@@ -1,23 +1,25 @@
 import { Injectable } from '@nestjs/common';
-import { CreateRoomDto } from './dto/create-room.dto';
-import { UpdateRoomDto } from './dto/update-room.dto';
+import { PrismaService } from '../prisma/prisma.service';
+import { Prisma } from 'generated/prisma/client';
 
 @Injectable()
 export class RoomsService {
-  create(createRoomDto: CreateRoomDto) {
-    return 'This action adds a new room';
+  constructor(private prisma: PrismaService) {}
+  create(createRoomDto: Prisma.roomCreateInput) {
+    return this.prisma.room.create({ data: createRoomDto });
   }
 
   findAll() {
-    return `This action returns all rooms`;
+    return this.prisma.room.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} room`;
+  findOne(room: Prisma.roomWhereUniqueInput) {
+    return this.prisma.room.findUnique({ where: room });
   }
 
-  update(id: number, updateRoomDto: UpdateRoomDto) {
-    return `This action updates a #${id} room`;
+  update(id: number, updateRoomDto: Prisma.roomUpdateInput) {
+    console.debug(updateRoomDto);
+    return `This action updates a #${id} room `;
   }
 
   remove(id: number) {
