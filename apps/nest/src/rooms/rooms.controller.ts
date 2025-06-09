@@ -8,7 +8,6 @@ import {
   Delete,
 } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
-import { UpdateRoomDto } from './dto/update-room.dto';
 import { Prisma } from 'generated/prisma/client';
 
 @Controller('rooms')
@@ -26,17 +25,20 @@ export class RoomsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.roomsService.findOne(+id);
+  findOne(@Param('id') id: Prisma.roomWhereUniqueInput) {
+    return this.roomsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRoomDto: UpdateRoomDto) {
-    return this.roomsService.update(+id, updateRoomDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateRoomDto: Prisma.roomUpdateInput,
+  ) {
+    return this.roomsService.update(id, updateRoomDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.roomsService.remove(+id);
+    return this.roomsService.remove(id);
   }
 }

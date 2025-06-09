@@ -9,20 +9,21 @@ export class RoomsService {
     return this.prisma.room.create({ data: createRoomDto });
   }
 
-  findAll() {
-    return this.prisma.room.findMany();
+  findAll(searchInput?: Prisma.roomWhereInput) {
+    searchInput = searchInput ?? undefined;
+    return this.prisma.room.findMany({ where: searchInput });
   }
 
   findOne(room: Prisma.roomWhereUniqueInput) {
     return this.prisma.room.findUnique({ where: room });
   }
 
-  update(id: number, updateRoomDto: Prisma.roomUpdateInput) {
+  update(id: string, updateRoomDto: Prisma.roomUpdateInput) {
     console.debug(updateRoomDto);
-    return `This action updates a #${id} room `;
+    return this.prisma.room.update({ where: { id }, data: updateRoomDto });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} room`;
+  remove(id: string) {
+    return this.prisma.room.delete({ where: { id } });
   }
 }
