@@ -18,5 +18,8 @@
     "prettier": "prettier --ignore-pattern .gitignore \"**/*.+(ts|tsx)\"",
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1"
   }
 }

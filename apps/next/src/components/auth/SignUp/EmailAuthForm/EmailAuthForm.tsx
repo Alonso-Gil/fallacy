@@ -1,5 +1,6 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { isSupabaseConfigured } from "config/supabase";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -15,7 +16,6 @@ import Input from "ui/Input/Input";
 
 const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
   const { context, className } = props;
-  const supabase = createClient();
   const schema =
     context === "signUp" ? getSignUpEmailSchema() : getLoginEmailSchema();
   const formMethods = useForm<EmailSignUpFormSchema | EmailLoginFormSchema>({
@@ -33,6 +33,22 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
   ) => {
     setIsLoading(true);
     setErrorMessage("");
+
+    // TODO(Supabase): Email/password requiere proyecto Auth activo
+    if (!isSupabaseConfigured()) {
+      setIsLoading(false);
+      setErrorMessage(
+        "Autenticación por email desactivada: configura NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY (ver TODOs en config/supabase)."
+      );
+      return;
+    }
+
+    const supabase = createClient();
+    if (!supabase) {
+      setIsLoading(false);
+      setErrorMessage("Cliente Supabase no disponible.");
+      return;
+    }
 
     const { email, password } = form;
     try {
@@ -71,7 +87,12 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
   };
 
   return (
-    <form className={className} onSubmit={() => handleSubmit(submitHandler)}>
+    <form
+      className={className}
+      onSubmit={event => {
+        void handleSubmit(submitHandler)(event);
+      }}
+    >
       <Input
         {...register("email")}
         className="mb-6"
@@ -103,6 +124,12 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
         text={context === "signUp" ? "Sign Up" : "Login"}
         type="submit"
         isLoading={isLoading}
+        isDisabled={!isSupabaseConfigured()}
+        title={
+          isSupabaseConfigured()
+            ? undefined
+            : "TODO: configura Supabase en .env"
+        }
       />
       {errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}
     </form>

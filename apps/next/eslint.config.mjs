@@ -16,6 +16,16 @@ const compat = new FlatCompat({
 });
 
 export default tseslint.config(
+  {
+    // ESLint flat config no usa .gitignore: sin esto, `eslint .` escanea `.next/` y se vuelve muy lento
+    ignores: [
+      ".next/**",
+      "node_modules/**",
+      "out/**",
+      "build/**",
+      "coverage/**"
+    ]
+  },
   ...tseslint.configs.recommendedTypeChecked,
   ...baseConfig,
   ...compat.extends("next/core-web-vitals", "next/typescript"),

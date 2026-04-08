@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "start http://localhost:3000 & next dev",
-    "dev": "yarn start",
+    "start": "next start",
+    "dev": "next dev",
     "compile": "echo skipping compile",
     "build": "next build",
     "clean": "rm -rf .next && rm -rf node_modules",
@@ -15,6 +15,7 @@
     "check-format": "yarn prettier --list-different"
   },
   "dependencies": {
+    "@fallacy/types": "*",
     "@hookform/resolvers": "^3.3.4",
     "@nextui-org/react": "^2.2.9",
     "@supabase/auth-helpers-nextjs": "^0.9.0",

@@ -10,8 +10,6 @@ import AuthButton from "ui/AuthButton/AuthButton";
 import Logo from "ui/Logo/Logo";
 import RandomFallacy from "components/RandomFallacy/RandomFallacy";
 
-import GoogleSVG from "images/google.svg";
-
 const Login: React.FC<Props> = ({ className }) => {
   return (
     <div
@@ -28,7 +26,15 @@ const Login: React.FC<Props> = ({ className }) => {
         </h1>
         <p className="pb-8 text-typography-soft">Sign in to your account</p>
         <AuthButton
-          signInIcon={<GoogleSVG className="h-6 w-6" />}
+          signInIcon={
+            <img
+              src="/assets/images/google.svg"
+              alt=""
+              className="h-6 w-6"
+              width={24}
+              height={24}
+            />
+          }
           signInProvider="google"
         />
         <Divider className="my-8" />

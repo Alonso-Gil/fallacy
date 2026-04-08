@@ -1,3 +1,4 @@
+// TODO(Supabase): Descomenta cuando quieras home solo para sesión iniciada
 // import { redirect } from "next/navigation";
 // import { createClient } from "utils/supabase/server-props";
 
@@ -7,12 +8,8 @@ import Page from "components/Page/Page";
 
 export default function HomePage() {
   // const supabase = createClient();
-
   // const { data, error } = await supabase.auth.getUser();
-
-  // if (error || !data) {
-  //   redirect("/login");
-  // }
+  // if (error || !data) redirect("/login");
 
   return (
     <Page>

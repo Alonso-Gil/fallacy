@@ -1,3 +1,7 @@
+/**
+ * TODO(Supabase): Cliente servidor con cookies (`next/headers`) para Server Components.
+ * El código de ejemplo está comentado; descomenta y adapta cuando reconectes el proyecto.
+ */
 // import { createServerClient } from "@supabase/ssr";
 // import { cookies } from "next/headers";
 

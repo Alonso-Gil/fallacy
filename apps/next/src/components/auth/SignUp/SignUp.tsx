@@ -8,8 +8,6 @@ import { SignUpProps as Props } from "./SignUp.types";
 import AuthButton from "ui/AuthButton/AuthButton";
 import Logo from "ui/Logo/Logo";
 
-import GoogleSVG from "images/google.svg";
-
 const SignUp: React.FC<Props> = ({ className }) => {
   return (
     <div
@@ -25,7 +23,15 @@ const SignUp: React.FC<Props> = ({ className }) => {
         </h3>
         <p className="pb-8 text-typography-soft">Create a new account</p>
         <AuthButton
-          signInIcon={<GoogleSVG className="h-6 w-6" />}
+          signInIcon={
+            <img
+              src="/assets/images/google.svg"
+              alt=""
+              className="h-6 w-6"
+              width={24}
+              height={24}
+            />
+          }
           signInProvider="google"
         />
         <Divider className="my-6" />
