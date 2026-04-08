@@ -1,3 +1,4 @@
+import { isSupabaseConfigured } from "config/supabase";
 import { useEffect } from "react";
 
 // import { AppParameters } from "@fallacy/types";
@@ -5,12 +6,21 @@ import { useAppParametersStore } from "../store/appParameters/appParameters.stor
 import { createClient } from "../utils/supabase/component";
 
 const useListenAppParameters = () => {
-  const supabase = createClient();
   const setAppParameters = useAppParametersStore(
     state => state.setAppParameters
   );
 
   useEffect(() => {
+    // TODO(Supabase): Reactivar fetch + realtime de `app_parameters` cuando exista la tabla
+    if (!isSupabaseConfigured()) {
+      return;
+    }
+
+    const supabase = createClient();
+    if (!supabase) {
+      return;
+    }
+
     try {
       // const fetchInitialConfig = async () => {
       //   const { data, error } = await supabase
@@ -44,7 +54,7 @@ const useListenAppParameters = () => {
     } catch (error) {
       console.log("Error in useListenAppParameters:", error);
     }
-  }, [setAppParameters, supabase]);
+  }, [setAppParameters]);
 };
 
 export default useListenAppParameters;

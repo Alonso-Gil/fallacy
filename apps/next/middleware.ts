@@ -2,27 +2,20 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
+import { isSupabaseConfigured } from "./src/config/supabase";
+
 export async function middleware(req: NextRequest) {
+  // TODO(Supabase): Refrescar sesión con cookies cuando el proyecto esté de nuevo en Supabase.
+  if (!isSupabaseConfigured()) {
+    return NextResponse.next();
+  }
+
   const res = NextResponse.next();
-
-  // Create a Supabase client configured to use cookies
   const supabase = createMiddlewareClient({ req, res });
-
-  // Refresh session if expired - required for Server Components
   await supabase.auth.getSession();
-
   return res;
 }
 
-// Ensure the middleware is only called for relevant paths.
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
-    "/((?!_next/static|_next/image|favicon.ico).*)"
-  ]
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|api/).*)"]
 };

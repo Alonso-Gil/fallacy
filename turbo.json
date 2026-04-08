@@ -15,14 +15,8 @@
       "dependsOn": ["^build", "compile"],
       "inputs": ["src/**/*"]
     },
-    "lint": {
-      "dependsOn": ["^build"]
-    },
-    "format": {
-      "dependsOn": ["^build"]
-    },
-    "check-format": {
-      "dependsOn": ["^build"]
-    }
+    "lint": {},
+    "format": {},
+    "check-format": {}
   }
 }

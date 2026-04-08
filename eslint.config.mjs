@@ -11,7 +11,13 @@ export default tseslint.config(
   eslint.configs.recommended,
   eslintPluginPrettierRecommended,
   {
-    ignores: ["environments/*"]
+    ignores: [
+      "environments/*",
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/.next/**",
+      "**/coverage/**"
+    ]
   },
   {
     languageOptions: {

@@ -1,4 +1,5 @@
 "use client";
+import { isSupabaseConfigured } from "config/supabase";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 import { createClient } from "utils/supabase/component";
@@ -8,25 +9,48 @@ import { AuthButtonProps as Props } from "./AuthButton.types";
 
 const AuthButton: React.FC<Props> = props => {
   const { signInProvider, signInIcon, className } = props;
-  const supabase = createClient();
+  const authAvailable = isSupabaseConfigured();
 
   const handleSignIn = async () => {
     if (!signInProvider) return;
+    if (typeof window === "undefined") return;
+
+    // TODO(Supabase): Quitar este early-return cuando NEXT_PUBLIC_SUPABASE_* estén en .env
+    if (!authAvailable) {
+      console.warn(
+        "[TODO Supabase] OAuth desactivado: añade NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY"
+      );
+      return;
+    }
+
+    const supabase = createClient();
+    if (!supabase) return;
+
+    const origin = window.location.origin;
 
     await supabase.auth.signInWithOAuth({
       provider: signInProvider,
       options: {
-        // TODO: cambiar url
-        redirectTo: "http://localhost:3000/api/auth/callback?next=/"
+        redirectTo: `${origin}/api/auth/callback?next=/`
       }
     });
   };
 
   return (
     <Button
-      text={`Sign in with ${signInProvider}`}
+      text={
+        authAvailable
+          ? `Sign in with ${signInProvider}`
+          : `Sign in with ${signInProvider} (Supabase desactivado)`
+      }
       type="button"
-      onClick={() => handleSignIn}
+      isDisabled={!authAvailable}
+      title={
+        authAvailable
+          ? undefined
+          : "TODO: configura Supabase en .env para habilitar OAuth"
+      }
+      onClick={() => void handleSignIn()}
       icon={signInIcon}
       className={twMerge(
         "bg-[#24292F] text-white dark:hover:bg-[#050708]/30 dark:focus:ring-gray-500",

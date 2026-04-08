@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev": "yarn workspace fallacy-web dev",
     "clean": "rm -rf node_modules && rm -rf packages/**/node_modules && rm -rf apps/**/node_modules && yarn clean:cache",
     "clean:cache": "rm -rf packages/**/.turbo && rm -rf apps/**/.turbo && rm -rf apps/**/.next",
     "compile": "turbo run compile",
@@ -10,7 +11,7 @@
     "lint": "turbo run lint",
     "format": "turbo run format",
     "check-format": "turbo run check-format",
-    "start:next": "yarn compile && cd apps/next && yarn start"
+    "start:next": "yarn compile && yarn workspace fallacy-web dev"
   },
   "dependencies": {},
   "devDependencies": {

@@ -1,9 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
+import { type EmailOtpType } from "@supabase/supabase-js";
 import { isSupabaseConfigured } from "config/supabase";
 import { type NextRequest, NextResponse } from "next/server";
 
-async function authCallback(request: NextRequest) {
-  // TODO(Supabase): OAuth PKCE — requiere URL y anon key en .env
+export async function GET(request: NextRequest) {
+  // TODO(Supabase): Verificación OTP por email — requiere proyecto y tablas/auth
   if (!isSupabaseConfigured()) {
     return NextResponse.redirect(
       new URL("/login?reason=supabase-disabled", request.url)
@@ -11,23 +12,15 @@ async function authCallback(request: NextRequest) {
   }
 
   const url = new URL(request.url);
-  let code = url.searchParams.get("code");
-  let nextParam = url.searchParams.get("next") ?? "/";
+  const token_hash = url.searchParams.get("token_hash");
+  const type = url.searchParams.get("type");
 
-  if (!code && request.method === "POST") {
-    const formData = await request.formData();
-    const fromForm = formData.get("code");
-    code = typeof fromForm === "string" ? fromForm : null;
-    const nextFromForm = formData.get("next");
-    if (typeof nextFromForm === "string" && nextFromForm.startsWith("/")) {
-      nextParam = nextFromForm;
-    }
-  }
+  if (token_hash && type) {
+    const nextParam = url.searchParams.get("next");
+    const successPath =
+      nextParam && nextParam.startsWith("/") ? nextParam : "/";
 
-  const next = nextParam.startsWith("/") ? nextParam : "/";
-
-  if (code) {
-    const response = NextResponse.redirect(`${url.origin}${next}`);
+    const response = NextResponse.redirect(`${url.origin}${successPath}`);
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -50,19 +43,16 @@ async function authCallback(request: NextRequest) {
       }
     );
 
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    const { error } = await supabase.auth.verifyOtp({
+      type: type as EmailOtpType,
+      token_hash
+    });
+
     if (!error) {
       return response;
     }
+    console.error(error);
   }
 
-  return NextResponse.redirect(`${url.origin}/auth/auth-code-error`);
-}
-
-export async function GET(request: NextRequest) {
-  return authCallback(request);
-}
-
-export async function POST(request: NextRequest) {
-  return authCallback(request);
+  return NextResponse.redirect(`${url.origin}/error`);
 }
