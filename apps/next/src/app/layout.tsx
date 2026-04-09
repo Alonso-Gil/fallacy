@@ -20,8 +20,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    // next-themes sets `class` on <html> from localStorage after hydration; suppress known mismatch
+    <html lang="en" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={twMerge(
           inter.className,
           "relative h-screen w-screen overflow-hidden bg-background-contrast dark:bg-background-dark"

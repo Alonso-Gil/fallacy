@@ -1,19 +1,25 @@
 "use client";
 import { useTheme } from "next-themes";
-import React, { useEffect, useState } from "react";
+import React, { useSyncExternalStore } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { ThemeSwitcherButtonProps as Props } from "./ThemeSwitcherButton.types";
 
+const emptySubscribe = () => () => {};
+
+/** Evita mismatch de hidratación con `next-themes` sin `setState` en un effect. */
+const useIsClient = () =>
+  useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+
 const ThemeSwitcher: React.FC<Props> = ({ className }) => {
-  const [mounted, setMounted] = useState(false);
+  const isClient = useIsClient();
   const { theme, setTheme } = useTheme();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
+  if (!isClient) {
     return null;
   }
 

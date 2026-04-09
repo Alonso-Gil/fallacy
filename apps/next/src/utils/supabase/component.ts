@@ -1,12 +1,11 @@
 import { createBrowserClient } from "@supabase/ssr";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { isSupabaseConfigured } from "config/supabase";
+import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
 let browserClient: SupabaseClient | null = null;
 
 /**
- * Cliente browser para Supabase. Devuelve `null` si no hay proyecto configurado (ver `config/supabase`).
- * TODO(Supabase): Los callers deben comprobar `null` o usar solo cuando `isSupabaseConfigured()` sea true.
+ * Cliente browser para Supabase. Devuelve `null` si no hay proyecto configurado (`config/supabase`).
  */
 export function createClient(): SupabaseClient | null {
   if (!isSupabaseConfigured()) {
@@ -15,7 +14,7 @@ export function createClient(): SupabaseClient | null {
   if (!browserClient) {
     browserClient = createBrowserClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      getSupabasePublicKey()!
     );
   }
   return browserClient;

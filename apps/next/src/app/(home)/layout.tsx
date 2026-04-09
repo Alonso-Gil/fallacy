@@ -1,21 +1,30 @@
-// TODO(Supabase): Descomenta cuando quieras home solo para sesión iniciada
-// import { redirect } from "next/navigation";
-// import { createClient } from "utils/supabase/server-props";
+import { isSupabaseConfigured } from "config/supabase";
+import { redirect } from "next/navigation";
+import type { ReactNode } from "react";
+import { createClient } from "utils/supabase/server-props";
 
-import Home from "components/home/Home/Home";
 import Main from "components/Main/Main";
 import Page from "components/Page/Page";
 
-export default function HomePage() {
-  // const supabase = createClient();
-  // const { data, error } = await supabase.auth.getUser();
-  // if (error || !data) redirect("/login");
+export default async function HomeLayout({
+  children
+}: Readonly<{
+  children: ReactNode;
+}>) {
+  if (isSupabaseConfigured()) {
+    const supabase = await createClient();
+    const {
+      data: { user },
+      error
+    } = await supabase.auth.getUser();
+    if (error || !user) {
+      redirect("/login");
+    }
+  }
 
   return (
     <Page>
-      <Main>
-        <Home />
-      </Main>
+      <Main>{children}</Main>
     </Page>
   );
 }

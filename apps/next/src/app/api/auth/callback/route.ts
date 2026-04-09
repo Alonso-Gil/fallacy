@@ -1,9 +1,8 @@
-import { createServerClient } from "@supabase/ssr";
-import { isSupabaseConfigured } from "config/supabase";
+import { createServerClient, type SetAllCookies } from "@supabase/ssr";
+import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 import { type NextRequest, NextResponse } from "next/server";
 
 async function authCallback(request: NextRequest) {
-  // TODO(Supabase): OAuth PKCE — requiere URL y anon key en .env
   if (!isSupabaseConfigured()) {
     return NextResponse.redirect(
       new URL("/login?reason=supabase-disabled", request.url)
@@ -30,16 +29,15 @@ async function authCallback(request: NextRequest) {
     const response = NextResponse.redirect(`${url.origin}${next}`);
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      getSupabasePublicKey()!,
       {
         cookies: {
           getAll() {
             return request.cookies.getAll();
           },
-          setAll(cookiesToSet) {
+          setAll(cookiesToSet: Parameters<SetAllCookies>[0]) {
             for (const { name, value, options } of cookiesToSet) {
               if (options) {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- opciones de cookie de Supabase
                 response.cookies.set(name, value, options);
               } else {
                 response.cookies.set(name, value);

@@ -1,10 +1,9 @@
-import { createServerClient } from "@supabase/ssr";
+import { createServerClient, type SetAllCookies } from "@supabase/ssr";
 import { type EmailOtpType } from "@supabase/supabase-js";
-import { isSupabaseConfigured } from "config/supabase";
+import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-  // TODO(Supabase): Verificación OTP por email — requiere proyecto y tablas/auth
   if (!isSupabaseConfigured()) {
     return NextResponse.redirect(
       new URL("/login?reason=supabase-disabled", request.url)
@@ -23,16 +22,15 @@ export async function GET(request: NextRequest) {
     const response = NextResponse.redirect(`${url.origin}${successPath}`);
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      getSupabasePublicKey()!,
       {
         cookies: {
           getAll() {
             return request.cookies.getAll();
           },
-          setAll(cookiesToSet) {
+          setAll(cookiesToSet: Parameters<SetAllCookies>[0]) {
             for (const { name, value, options } of cookiesToSet) {
               if (options) {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- opciones de cookie de Supabase
                 response.cookies.set(name, value, options);
               } else {
                 response.cookies.set(name, value);

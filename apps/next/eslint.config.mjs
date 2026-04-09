@@ -1,41 +1,65 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
+import { builtinModules } from "module";
+import { createRequire } from "module";
 
-import { FlatCompat } from "@eslint/eslintrc";
 import eslint from "@eslint/js";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
 import tseslint from "typescript-eslint";
 
-import baseConfig from "../../eslint.config.mjs";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname
-});
+const require = createRequire(import.meta.url);
+/** @type {import("eslint").Linter.Config[]} */
+const nextCoreWebVitals = require("eslint-config-next/core-web-vitals");
 
 export default tseslint.config(
   {
-    // ESLint flat config no usa .gitignore: sin esto, `eslint .` escanea `.next/` y se vuelve muy lento
     ignores: [
       ".next/**",
       "node_modules/**",
       "out/**",
       "build/**",
-      "coverage/**"
+      "coverage/**",
+      "eslint.config.mjs"
     ]
   },
-  ...tseslint.configs.recommendedTypeChecked,
-  ...baseConfig,
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...nextCoreWebVitals,
+  {
+    plugins: {
+      "simple-import-sort": simpleImportSort
+    },
+    rules: {
+      "simple-import-sort/exports": "error",
+      "simple-import-sort/imports": [
+        "error",
+        {
+          groups: [
+            ["^node:"],
+            [`^(${builtinModules.join("|")})(/|$)`],
+            ["^@?\\w"],
+            ["^@fallacy/"],
+            ["^\\.", "^ui/", "^types/", "^components/"],
+            ["^images/"],
+            ["^.+\\.s?css$"]
+          ]
+        }
+      ]
+    }
+  },
   eslint.configs.recommended,
   eslintPluginPrettierRecommended,
   {
+    files: ["**/*.ts", "**/*.tsx"],
     rules: {
-      // Desactiva el rule core de ESLint
-      "no-unused-vars": "off",
-      // Activa y personaliza la regla de TS para ignorar _args, _prev, _payload, etc.
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/ban-ts-ignore": "off",
+      "@typescript-eslint/no-empty-interface": "off",
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/no-var-requires": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "@typescript-eslint/ban-types": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-namespace": "off",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
@@ -44,6 +68,11 @@ export default tseslint.config(
         }
       ],
       "@typescript-eslint/no-empty-object-type": "off"
+    }
+  },
+  {
+    rules: {
+      "no-unused-vars": "off"
     }
   }
 );

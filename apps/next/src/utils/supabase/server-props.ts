@@ -1,32 +1,35 @@
+import { createServerClient } from "@supabase/ssr";
+import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
+import { cookies } from "next/headers";
+
 /**
- * TODO(Supabase): Cliente servidor con cookies (`next/headers`) para Server Components.
- * El código de ejemplo está comentado; descomenta y adapta cuando reconectes el proyecto.
+ * Cliente Supabase para Server Components / server actions (cookies de sesión).
  */
-// import { createServerClient } from "@supabase/ssr";
-// import { cookies } from "next/headers";
+export async function createClient() {
+  if (!isSupabaseConfigured()) {
+    throw new Error(
+      "Supabase no está configurado (NEXT_PUBLIC_SUPABASE_URL y clave pública)"
+    );
+  }
 
-// export function createClient() {
-//   const cookieStore = cookies();
+  const cookieStore = await cookies();
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const key = getSupabasePublicKey()!;
 
-//   const supabase = createServerClient(
-//     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-//     {
-//       cookies: {
-//         getAll() {
-//           return cookieStore.getAll().map(cookie => ({
-//             name: cookie.name,
-//             value: cookie.value ?? ""
-//           }));
-//         },
-//         setAll(cookiesToSet) {
-//           cookiesToSet.forEach(({ name, value, options }) => {
-//             cookieStore.set(name, value, options);
-//           });
-//         }
-//       }
-//     }
-//   );
-
-//   return supabase;
-// }
+  return createServerClient(url, key, {
+    cookies: {
+      getAll() {
+        return cookieStore.getAll();
+      },
+      setAll(cookiesToSet) {
+        try {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            cookieStore.set(name, value, options);
+          });
+        } catch {
+          // set puede fallar en Server Components; el middleware renueva la sesión
+        }
+      }
+    }
+  });
+}

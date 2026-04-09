@@ -15,10 +15,9 @@ const AuthButton: React.FC<Props> = props => {
     if (!signInProvider) return;
     if (typeof window === "undefined") return;
 
-    // TODO(Supabase): Quitar este early-return cuando NEXT_PUBLIC_SUPABASE_* estén en .env
     if (!authAvailable) {
       console.warn(
-        "[TODO Supabase] OAuth desactivado: añade NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY"
+        "[Auth] OAuth desactivado: configura NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
       );
       return;
     }
@@ -48,7 +47,7 @@ const AuthButton: React.FC<Props> = props => {
       title={
         authAvailable
           ? undefined
-          : "TODO: configura Supabase en .env para habilitar OAuth"
+          : "Configura Supabase en .env para habilitar OAuth"
       }
       onClick={() => void handleSignIn()}
       icon={signInIcon}

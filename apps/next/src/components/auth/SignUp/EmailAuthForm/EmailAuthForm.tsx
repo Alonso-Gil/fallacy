@@ -34,11 +34,10 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
     setIsLoading(true);
     setErrorMessage("");
 
-    // TODO(Supabase): Email/password requiere proyecto Auth activo
     if (!isSupabaseConfigured()) {
       setIsLoading(false);
       setErrorMessage(
-        "Autenticación por email desactivada: configura NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY (ver TODOs en config/supabase)."
+        "Autenticación por email desactivada: configura NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (ver config/supabase)."
       );
       return;
     }
