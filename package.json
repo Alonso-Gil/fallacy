@@ -9,6 +9,7 @@
     "compile": "turbo run compile",
     "check-types": "turbo run check-types",
     "lint": "turbo run lint",
+    "lint:ci": "turbo run lint:ci",
     "format": "turbo run format",
     "check-format": "turbo run check-format",
     "start:next": "yarn compile && yarn workspace fallacy-web dev"

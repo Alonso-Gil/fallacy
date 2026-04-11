@@ -1,5 +1,6 @@
 "use client";
 import { Divider } from "@nextui-org/react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { twMerge } from "tailwind-merge";
@@ -27,12 +28,13 @@ const Login: React.FC<Props> = ({ className }) => {
         <p className="pb-8 text-typography-soft">Sign in to your account</p>
         <AuthButton
           signInIcon={
-            <img
+            <Image
               src="/assets/images/google.svg"
               alt=""
               className="h-6 w-6"
               width={24}
               height={24}
+              unoptimized
             />
           }
           signInProvider="google"

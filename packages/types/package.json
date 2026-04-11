@@ -15,7 +15,8 @@
     "build": "yarn compile",
     "check-types": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.tsx --fix",
-    "prettier": "prettier --ignore-pattern .gitignore \"**/*.+(ts|tsx)\"",
+    "lint:ci": "eslint . --ext .ts,.tsx",
+    "prettier": "prettier --ignore-path .prettierignore \"src/**/*.ts\" \"*.{js,mjs,json}\"",
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different"
   },

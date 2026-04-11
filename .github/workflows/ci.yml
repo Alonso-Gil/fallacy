@@ -1,0 +1,45 @@
+# Comprueba formato, compilación, tipos y lint en cada PR y en pushes a main.
+# En GitHub: Settings → Branches → protege main y marca este workflow como check obligatorio.
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Format, compile, types, lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Prettier (check)
+        run: yarn check-format
+
+      - name: Compile
+        run: yarn compile
+
+      - name: TypeScript (check)
+        run: yarn check-types
+
+      - name: ESLint (check)
+        run: yarn lint:ci
