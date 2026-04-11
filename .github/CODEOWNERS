@@ -1,0 +1,18 @@
+# =============================================================================
+# CODEOWNERS for fallacy
+# =============================================================================
+# 
+# This file defines who should review changes in different parts
+# of the code. GitHub will automatically assign these reviewers when
+# a new Pull Request is created.
+#
+# Rules are processed from top to bottom - later rules override earlier ones.
+# Documentation: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+# =============================================================================
+
+# Default: Core team members are automatically assigned as reviewers
+* @Alonso-Gil
+
+# Configuration and CI/CD: Lead reviewer
+.github/** @Alonso-Gil
+*.config.* @Alonso-Gil
