@@ -16,6 +16,9 @@
       "inputs": ["src/**/*"]
     },
     "lint": {},
+    "lint:ci": {
+      "dependsOn": ["^build"]
+    },
     "format": {},
     "check-format": {}
   }

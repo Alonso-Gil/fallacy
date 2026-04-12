@@ -9,11 +9,15 @@
     "compile": "turbo run compile",
     "check-types": "turbo run check-types",
     "lint": "turbo run lint",
+    "lint:ci": "turbo run lint:ci",
     "format": "turbo run format",
     "check-format": "turbo run check-format",
     "start:next": "yarn compile && yarn workspace fallacy-web dev"
   },
-  "dependencies": {},
+  "resolutions": {
+    "es-iterator-helpers": "1.2.1",
+    "internal-slot": "1.1.0"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",

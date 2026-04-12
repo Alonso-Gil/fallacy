@@ -8,8 +8,8 @@
     "jsx": "preserve",
     "noEmit": true,
     "incremental": true,
-    "module": "esnext",              
-    "moduleResolution": "bundler", 
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "plugins": [
       {
         "name": "next"

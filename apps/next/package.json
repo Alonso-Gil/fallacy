@@ -9,8 +9,9 @@
     "build": "next build",
     "clean": "rm -rf .next && rm -rf node_modules",
     "lint": "eslint . --ext .ts,.tsx --fix",
+    "lint:ci": "eslint . --ext .ts,.tsx --max-warnings 0",
     "check-types": "tsc",
-    "prettier": "prettier --ignore-path .gitignore \"**/*.+(js|jsx|ts|tsx|json|css|scss|html)\"",
+    "prettier": "prettier --ignore-path .prettierignore \"src/**/*.{js,jsx,ts,tsx,json,css,scss,html}\" \"middleware.ts\" \"*.{ts,tsx,js,mjs,cjs,json}\"",
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different"
   },
