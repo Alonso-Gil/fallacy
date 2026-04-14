@@ -1,14 +1,15 @@
 // AuthButton types and interfaces
 
-import { ButtonProps as AuthButtonPropsNextUI } from "@nextui-org/react";
 import type { Provider } from "@supabase/supabase-js";
-import React from "react";
+
+import type { ButtonProps } from "ui/Button/Button.types";
+
+import type { ReactNode } from "react";
 
 export type AuthOAuthProvider = Extract<Provider, "google">;
 
 // Component Props
-export interface AuthButtonProps extends AuthButtonPropsNextUI {
+export interface AuthButtonProps extends ButtonProps {
   signInProvider: AuthOAuthProvider;
-  signInIcon?: React.ReactNode;
-  className?: string;
+  signInIcon?: ReactNode;
 }

@@ -1,9 +1,9 @@
-import { isSupabaseConfigured } from "config/supabase";
 import { useEffect } from "react";
 
+import { isSupabaseConfigured } from "config/supabase";
+import { createClient } from "utils/supabase/component";
 // import { AppParameters } from "@fallacy/types";
-import { useAppParametersStore } from "../store/appParameters/appParameters.store";
-import { createClient } from "../utils/supabase/component";
+import { useAppParametersStore } from "store/appParameters/appParameters.store";
 
 const useListenAppParameters = () => {
   const setAppParameters = useAppParametersStore(

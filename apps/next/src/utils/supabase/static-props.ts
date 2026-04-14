@@ -1,8 +1,5 @@
-/**
- * TODO(Supabase): Cliente sin cookies (getStaticProps / datos públicos).
- * Reconectar cuando tengas proyecto y políticas RLS definidas.
- */
 import { createClient as createClientPrimitive } from "@supabase/supabase-js";
+
 import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
 export function createClient() {

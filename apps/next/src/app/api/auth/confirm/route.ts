@@ -1,7 +1,8 @@
 import { createServerClient, type SetAllCookies } from "@supabase/ssr";
 import { type EmailOtpType } from "@supabase/supabase-js";
-import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 import { type NextRequest, NextResponse } from "next/server";
+
+import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
 export async function GET(request: NextRequest) {
   if (!isSupabaseConfigured()) {

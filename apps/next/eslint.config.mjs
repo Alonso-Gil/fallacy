@@ -10,6 +10,13 @@ const require = createRequire(import.meta.url);
 /** @type {import("eslint").Linter.Config[]} */
 const nextCoreWebVitals = require("eslint-config-next/core-web-vitals");
 
+/**
+ * Imports locales (baseUrl ./src y alias internos). Deben ir después de terceros.
+ * Ajustar si añades nuevos alias en tsconfig paths.
+ */
+const localPathPrefixes =
+  "^(?!ui/)(?!components/)(?!hooks/)(?!config/)(?!utils/)(?!providers/)(?!types/)(?!store/)(?!lib/)(?!images/)(?!globals\\.css$)";
+
 export default tseslint.config(
   {
     ignores: [
@@ -32,13 +39,31 @@ export default tseslint.config(
         "error",
         {
           groups: [
+            // 1) Side effects
+            ["^\\u0000"],
+            // 2) Node builtins
             ["^node:"],
             [`^(${builtinModules.join("|")})(/|$)`],
-            ["^@?\\w"],
-            ["^@fallacy/"],
-            ["^\\.", "^ui/", "^types/", "^components/"],
+            // 3) Terceros (un solo grupo: @scope/pkg y paquetes sin scope; si se parte en dos, ESLint inserta línea en blanco entre ellos)
+            ["^@(?!/).+", `${localPathPrefixes}[\\w@][\\w./@-]*$`],
+            // 4) Locales (alias src + relativos .ts/.tsx; excluye .css para el grupo de estilos)
+            [
+              "^ui/",
+              "^components/",
+              "^hooks/",
+              "^config/",
+              "^utils/",
+              "^lib/",
+              "^providers/",
+              "^types/",
+              "^store/",
+              "^\\.\\.(?!.*\\.(?:css|scss|sass|less)$)(?!/?$)",
+              "^\\./(?!.*\\.(?:css|scss|sass|less)$)"
+            ],
+            // 5) Alias images (public)
             ["^images/"],
-            ["^.+\\.s?css$"]
+            // 6) Estilos (después de locales; incluye ../globals.css)
+            ["^.+\\.(?:css|scss|sass|less)$"]
           ]
         }
       ]

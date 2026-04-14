@@ -1,10 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
-import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 import { cookies } from "next/headers";
 
-/**
- * Cliente Supabase para Server Components / server actions (cookies de sesión).
- */
+import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
+
 export async function createClient() {
   if (!isSupabaseConfigured()) {
     throw new Error(

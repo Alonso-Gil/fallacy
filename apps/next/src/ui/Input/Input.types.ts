@@ -1,5 +1,10 @@
 // Input types and interfaces
-import { InputProps as InputPropsNextUI } from "@nextui-org/react";
+import type { Input } from "components/ui/input";
+
+import type { ComponentProps } from "react";
 
 // Component Props
-export type InputProps = InputPropsNextUI;
+export type InputProps = ComponentProps<typeof Input> & {
+  label?: string;
+  errorMessage?: string;
+};

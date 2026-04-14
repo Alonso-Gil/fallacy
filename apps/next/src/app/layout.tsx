@@ -1,10 +1,14 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import Providers from "providers/Providers";
+import { type Metadata } from "next";
+import { Geist, Inter } from "next/font/google";
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-import "../globals.css";
+import { cn } from "lib/utils";
+import Providers from "providers/Providers";
+
+import "globals.css";
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,12 +25,16 @@ export default function RootLayout({
 }>) {
   return (
     // next-themes sets `class` on <html> from localStorage after hydration; suppress known mismatch
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn("font-sans", geist.variable)}
+    >
       <body
         suppressHydrationWarning
         className={twMerge(
           inter.className,
-          "relative h-screen w-screen overflow-hidden bg-background-contrast dark:bg-background-dark"
+          "bg-background-contrast dark:bg-background-dark relative h-screen w-screen overflow-hidden"
         )}
       >
         <Providers>{children}</Providers>

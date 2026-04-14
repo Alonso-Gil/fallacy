@@ -1,6 +1,7 @@
 import { createServerClient, type SetAllCookies } from "@supabase/ssr";
-import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 import { type NextRequest, NextResponse } from "next/server";
+
+import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
 async function authCallback(request: NextRequest) {
   if (!isSupabaseConfigured()) {

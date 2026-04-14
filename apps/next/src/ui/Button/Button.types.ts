@@ -1,11 +1,11 @@
-// Button types and interfaces
+import { Button } from "components/ui/button";
 
-import { ButtonProps as ButtonPropsNextUI } from "@nextui-org/react";
-import React from "react";
+import type { ComponentProps, ReactNode } from "react";
 
-// Component Props
-export interface ButtonProps extends ButtonPropsNextUI {
-  children?: React.ReactNode;
+export type ButtonProps = Omit<ComponentProps<typeof Button>, "className"> & {
+  className?: string;
   text?: string;
-  icon?: React.ReactNode;
-}
+  icon?: ReactNode;
+  isDisabled?: boolean;
+  isLoading?: boolean;
+};

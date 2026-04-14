@@ -1,10 +1,10 @@
 "use client";
-import { isSupabaseConfigured } from "config/supabase";
 import React from "react";
 import { twMerge } from "tailwind-merge";
-import { createClient } from "utils/supabase/component";
 
-import Button from "../Button/Button";
+import Button from "ui/Button/Button";
+import { isSupabaseConfigured } from "config/supabase";
+import { createClient } from "utils/supabase/component";
 import { AuthButtonProps as Props } from "./AuthButton.types";
 
 const AuthButton: React.FC<Props> = props => {

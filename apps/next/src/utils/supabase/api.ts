@@ -1,10 +1,7 @@
-/**
- * TODO(Supabase): Cliente server para Pages Router (`NextApiRequest`/`NextApiResponse`).
- * No se usa en la App Router actual; conservar al migrar rutas legacy o borrar si ya no aplica.
- */
 import { createServerClient, serializeCookieHeader } from "@supabase/ssr";
-import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 import { type NextApiRequest, type NextApiResponse } from "next";
+
+import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
 export default function createClient(
   req: NextApiRequest,

@@ -1,18 +1,14 @@
 // EmailAuthForm types and interfaces
 
+import { loginEmailSchema, signUpEmailSchema } from "./EmailAuthForm.helpers";
+
+import type { z } from "zod";
+
 // Component Props
 export interface EmailAuthFormProps {
   className?: string;
   context: "login" | "signUp";
 }
 
-export interface EmailSignUpFormSchema {
-  email: string;
-  password: string;
-  repeatPassword: string;
-}
-
-export interface EmailLoginFormSchema {
-  email: string;
-  password: string;
-}
+export type EmailLoginFormSchema = z.infer<typeof loginEmailSchema>;
+export type EmailSignUpFormSchema = z.infer<typeof signUpEmailSchema>;

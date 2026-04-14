@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 
-import { HomeProps as Props } from "./Home.types";
 import LogOutButton from "components/auth/LogOutButton";
+import { HomeProps as Props } from "./Home.types";
 
 const Home: React.FC<Props> = () => {
   return (

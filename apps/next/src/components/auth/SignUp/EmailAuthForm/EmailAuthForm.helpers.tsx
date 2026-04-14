@@ -1,19 +1,27 @@
-import { validationRules } from "utils/form.utils";
-import * as yup from "yup";
+import { z } from "zod";
 
-const { requiredEmail, requiredString, repeatPassword } = validationRules;
+import { validationMessages as msg } from "utils/form.utils";
 
-export const getSignUpEmailSchema = () => {
-  return yup.object().shape({
-    email: requiredEmail.trim(),
-    password: requiredString,
-    repeatPassword: repeatPassword
-  });
-};
+const emailSchema = z
+  .string()
+  .trim()
+  .min(1, { message: msg.required })
+  .email({ message: msg.invalidEmail })
+  .min(3, { message: msg.minLength(3) })
+  .max(50, { message: msg.maxLength(50) });
 
-export const getLoginEmailSchema = () => {
-  return yup.object().shape({
-    email: requiredEmail.trim(),
-    password: requiredString
-  });
-};
+const passwordSchema = z
+  .string()
+  .min(1, { message: msg.required })
+  .min(3, { message: msg.minLength(3) })
+  .max(50, { message: msg.maxLength(50) });
+
+export const loginEmailSchema = z.object({
+  email: emailSchema,
+  password: passwordSchema
+});
+
+export const signUpEmailSchema = loginEmailSchema;
+
+export const getLoginEmailSchema = () => loginEmailSchema;
+export const getSignUpEmailSchema = () => signUpEmailSchema;

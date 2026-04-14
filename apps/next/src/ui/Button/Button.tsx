@@ -1,24 +1,39 @@
-import { Button as ButtonNextUI } from "@nextui-org/react";
+import { Loader2 } from "lucide-react";
 import { forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
+import { Button as ShadcnButton } from "components/ui/button";
 import { ButtonProps as Props } from "./Button.types";
 
 const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
-  const { className, text, icon, children, ...rest } = props;
+  const {
+    className,
+    text,
+    icon,
+    children,
+    isDisabled,
+    isLoading,
+    disabled,
+    ...rest
+  } = props;
 
   return (
-    <ButtonNextUI
+    <ShadcnButton
       className={twMerge(
-        "h-12 w-full bg-background-primary text-base font-medium text-white dark:bg-background-dark-contrast",
+        "bg-background-primary dark:bg-background-dark-contrast h-12 w-full text-base font-medium text-white",
         className
       )}
       ref={ref}
+      disabled={disabled ?? isDisabled ?? isLoading}
       {...rest}
     >
-      {icon}
+      {isLoading ? (
+        <Loader2 className="mr-2 size-4 shrink-0 animate-spin" aria-hidden />
+      ) : (
+        icon
+      )}
       {text ?? children}
-    </ButtonNextUI>
+    </ShadcnButton>
   );
 });
 

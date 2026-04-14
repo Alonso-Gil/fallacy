@@ -7,7 +7,6 @@ import { ThemeSwitcherButtonProps as Props } from "./ThemeSwitcherButton.types";
 
 const emptySubscribe = () => () => {};
 
-/** Evita mismatch de hidratación con `next-themes` sin `setState` en un effect. */
 const useIsClient = () =>
   useSyncExternalStore(
     emptySubscribe,
@@ -27,7 +26,7 @@ const ThemeSwitcher: React.FC<Props> = ({ className }) => {
     <button
       className={twMerge(
         className,
-        "absolute bottom-4 right-4 rounded-xl bg-slate-200 px-10 py-2 duration-200 dark:bg-[#212933]"
+        "absolute right-4 bottom-4 rounded-xl bg-slate-200 px-10 py-2 duration-200 dark:bg-[#212933]"
       )}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >

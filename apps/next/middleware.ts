@@ -1,15 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 
-import {
-  getSupabasePublicKey,
-  isSupabaseConfigured
-} from "./src/config/supabase";
+import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
-/**
- * Refresca la sesión de Supabase en cookies (patrón oficial `@supabase/ssr`, sin `auth-helpers-nextjs`).
- */
 export async function middleware(request: NextRequest) {
   if (!isSupabaseConfigured()) {
     return NextResponse.next();

@@ -1,18 +1,22 @@
 "use client";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { isSupabaseConfigured } from "config/supabase";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { createClient } from "utils/supabase/component";
 
-import { getLoginEmailSchema } from "./EmailAuthForm.helpers";
-import { getSignUpEmailSchema } from "./EmailAuthForm.helpers";
-import { EmailAuthFormProps } from "./EmailAuthForm.types";
-import { EmailLoginFormSchema } from "./EmailAuthForm.types";
-import { EmailSignUpFormSchema } from "./EmailAuthForm.types";
 import Button from "ui/Button/Button";
 import Input from "ui/Input/Input";
+import { isSupabaseConfigured } from "config/supabase";
+import { createClient } from "utils/supabase/component";
+import {
+  getLoginEmailSchema,
+  getSignUpEmailSchema
+} from "./EmailAuthForm.helpers";
+import type {
+  EmailAuthFormProps,
+  EmailLoginFormSchema,
+  EmailSignUpFormSchema
+} from "./EmailAuthForm.types";
 
 const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
   const { context, className } = props;
@@ -20,7 +24,7 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
     context === "signUp" ? getSignUpEmailSchema() : getLoginEmailSchema();
   const formMethods = useForm<EmailSignUpFormSchema | EmailLoginFormSchema>({
     mode: "onBlur",
-    resolver: yupResolver(schema)
+    resolver: zodResolver(schema)
   });
   const { register, formState, handleSubmit } = formMethods;
   const { email, password } = formState.errors ?? {};
@@ -71,7 +75,6 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
           password
         });
 
-        // TODO: Cambiar cuando se agregue zustand user
         if (!!data && !error) {
           router.push("/");
         } else {
@@ -108,16 +111,6 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
         errorMessage={password?.message}
         placeholder="********"
       />
-      {/* {context === "signUp" && (
-        <Input
-          {...register("repeatPassword")}
-          className="mb-6"
-          label="Repeat Password"
-          type="password"
-          errorMessage={(formState.errors as any)?.repeatPassword?.message}
-          placeholder="********"
-        />
-      )} */}
       <Button
         className="mb-2"
         text={context === "signUp" ? "Sign Up" : "Login"}
