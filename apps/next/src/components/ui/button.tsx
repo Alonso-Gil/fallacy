@@ -41,24 +41,17 @@ const buttonVariants = cva(
   }
 );
 
-const Button = React.forwardRef(function Button(
-  {
-    className,
-    variant = "default",
-    size = "default",
-    ...props
-  }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>,
-  ref: React.ForwardedRef<HTMLButtonElement>
-) {
-  return (
-    <ButtonPrimitive
-      ref={ref}
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  );
-});
+const Button = React.forwardRef<
+  HTMLButtonElement,
+  ButtonPrimitive.Props & VariantProps<typeof buttonVariants>
+>(({ className, variant = "default", size = "default", ...props }, ref) => (
+  <ButtonPrimitive
+    ref={ref}
+    data-slot="button"
+    className={cn(buttonVariants({ variant, size, className }))}
+    {...props}
+  />
+));
 
 Button.displayName = "Button";
 

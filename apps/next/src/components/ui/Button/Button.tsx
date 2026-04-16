@@ -1,8 +1,8 @@
 import { Loader2 } from "lucide-react";
 import { forwardRef } from "react";
-import { twMerge } from "tailwind-merge";
 
 import { Button as ShadcnButton } from "components/ui/button";
+import { cn } from "lib/utils";
 import { ButtonProps as Props } from "./Button.types";
 
 const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
@@ -19,8 +19,8 @@ const Button = forwardRef<HTMLButtonElement, Props>((props, ref) => {
 
   return (
     <ShadcnButton
-      className={twMerge(
-        "bg-background-primary dark:bg-background-dark-contrast h-12 w-full text-base font-medium text-white",
+      className={cn(
+        "bg-primary hover:bg-primary-hover text-primary-foreground h-12 w-full text-base font-medium",
         className
       )}
       ref={ref}

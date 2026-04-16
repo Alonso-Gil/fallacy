@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 
 import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
-export async function createClient() {
+export const createClient = async () => {
   if (!isSupabaseConfigured()) {
     throw new Error(
       "Supabase no está configurado (NEXT_PUBLIC_SUPABASE_URL y clave pública)"
@@ -30,4 +30,4 @@ export async function createClient() {
       }
     }
   });
-}
+};

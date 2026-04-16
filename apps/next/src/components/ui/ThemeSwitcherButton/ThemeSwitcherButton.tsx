@@ -1,8 +1,8 @@
 "use client";
 import { useTheme } from "next-themes";
 import React, { useSyncExternalStore } from "react";
-import { twMerge } from "tailwind-merge";
 
+import { cn } from "lib/utils";
 import { ThemeSwitcherButtonProps as Props } from "./ThemeSwitcherButton.types";
 
 const emptySubscribe = () => () => {};
@@ -24,9 +24,9 @@ const ThemeSwitcher: React.FC<Props> = ({ className }) => {
 
   return (
     <button
-      className={twMerge(
+      className={cn(
         className,
-        "absolute right-4 bottom-4 rounded-xl bg-slate-200 px-10 py-2 duration-200 dark:bg-[#212933]"
+        "rounded-xl bg-slate-200 px-10 py-2 duration-200 dark:bg-[#212933]"
       )}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >

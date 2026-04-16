@@ -1,12 +1,13 @@
 import { redirect } from "next/navigation";
 import React from "react";
 
-import Login from "components/auth/Login/Login";
+import SignUp from "components/auth/SignUp/SignUp";
 import RandomFallacy from "components/RandomFallacy/RandomFallacy";
+import { Separator } from "components/ui/separator";
 import { isSupabaseConfigured } from "config/supabase";
 import { createClient } from "utils/supabase/server-props";
 
-export default async function SignInPage() {
+const SignUpPage = async () => {
   if (isSupabaseConfigured()) {
     const supabase = await createClient();
     const {
@@ -18,11 +19,17 @@ export default async function SignInPage() {
   }
 
   return (
-    <div className="Login flex flex-1">
+    <div className="SignUpPage bg-background flex flex-1">
+      <SignUp className="animate-fade-in-right-to-left flex-1" />
+      <Separator
+        orientation="vertical"
+        className="bg-border hidden self-stretch xl:block"
+      />
       <div className="animate-fade-in hidden flex-1 items-center justify-center md:w-1/2 xl:flex">
         <RandomFallacy />
       </div>
-      <Login className="animate-fade-in-right-to-left dark:border-border-color border-r" />
     </div>
   );
-}
+};
+
+export default SignUpPage;

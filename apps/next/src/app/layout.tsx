@@ -1,10 +1,9 @@
 import { type Metadata } from "next";
 import { Geist, Inter } from "next/font/google";
+import { getLocale } from "next-intl/server";
 import React from "react";
-import { twMerge } from "tailwind-merge";
 
 import { cn } from "lib/utils";
-import Providers from "providers/Providers";
 
 import "globals.css";
 
@@ -12,33 +11,35 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const inter = Inter({ subsets: ["latin"] });
 
-// TODO: Add metadata
 export const metadata: Metadata = {
   title: "Fallacy",
   description: "Official page for debates"
 };
 
-export default function RootLayout({
+const RootLayout = async ({
   children
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
+  const locale = await getLocale();
+
   return (
-    // next-themes sets `class` on <html> from localStorage after hydration; suppress known mismatch
     <html
-      lang="en"
+      lang={locale}
       suppressHydrationWarning
       className={cn("font-sans", geist.variable)}
     >
       <body
         suppressHydrationWarning
-        className={twMerge(
+        className={cn(
           inter.className,
-          "bg-background-contrast dark:bg-background-dark relative h-screen w-screen overflow-hidden"
+          "relative h-screen w-screen overflow-hidden"
         )}
       >
-        <Providers>{children}</Providers>
+        {children}
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

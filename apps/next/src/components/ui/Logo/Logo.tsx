@@ -1,12 +1,14 @@
 import React from "react";
-import { twMerge } from "tailwind-merge";
 
+import { cn } from "lib/utils";
 import { LogoProps as Props } from "./Logo.types";
 
 const Logo: React.FC<Props> = ({ className }) => {
   return (
-    <div className={twMerge(className, "")}>
-      <h1 className="text-4xl">Fallacy</h1>
+    <div className={cn(className)}>
+      <h1 className="text-foreground text-4xl font-semibold tracking-tight">
+        Fallacy
+      </h1>
     </div>
   );
 };

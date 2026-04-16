@@ -1,17 +1,15 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useRouter } from "i18n/navigation";
+import { useTranslations } from "next-intl";
+import React, { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import Button from "ui/Button/Button";
 import Input from "ui/Input/Input";
 import { isSupabaseConfigured } from "config/supabase";
 import { createClient } from "utils/supabase/component";
-import {
-  getLoginEmailSchema,
-  getSignUpEmailSchema
-} from "./EmailAuthForm.helpers";
+import { createLoginEmailSchema } from "./EmailAuthForm.helpers";
 import type {
   EmailAuthFormProps,
   EmailLoginFormSchema,
@@ -20,17 +18,29 @@ import type {
 
 const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
   const { context, className } = props;
-  const schema =
-    context === "signUp" ? getSignUpEmailSchema() : getLoginEmailSchema();
+  const t = useTranslations("Auth.form");
+  const tVal = useTranslations("Auth.form.validation");
+  const router = useRouter();
+
+  const schema = useMemo(
+    () =>
+      createLoginEmailSchema({
+        required: tVal("required"),
+        invalidEmail: tVal("invalidEmail"),
+        minLength: (min: number) => tVal("minLength", { min }),
+        maxLength: (max: number) => tVal("maxLength", { max })
+      }),
+    [tVal]
+  );
+
   const formMethods = useForm<EmailSignUpFormSchema | EmailLoginFormSchema>({
-    mode: "onBlur",
+    mode: "onSubmit",
     resolver: zodResolver(schema)
   });
   const { register, formState, handleSubmit } = formMethods;
   const { email, password } = formState.errors ?? {};
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const router = useRouter();
 
   const submitHandler = async (
     form: EmailSignUpFormSchema | EmailLoginFormSchema
@@ -40,16 +50,14 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
 
     if (!isSupabaseConfigured()) {
       setIsLoading(false);
-      setErrorMessage(
-        "Autenticación por email desactivada: configura NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (ver config/supabase)."
-      );
+      setErrorMessage(t("errors.supabaseConfig"));
       return;
     }
 
     const supabase = createClient();
     if (!supabase) {
       setIsLoading(false);
-      setErrorMessage("Cliente Supabase no disponible.");
+      setErrorMessage(t("errors.noClient"));
       return;
     }
 
@@ -63,13 +71,14 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
 
         if (!!data && !error) {
           router.push("/");
+          router.refresh();
         } else {
-          setErrorMessage(error?.message ?? "Invalid email or password");
+          setErrorMessage(error?.message ?? t("errors.invalidCredentials"));
           setIsLoading(false);
         }
       }
 
-      if (context === "signUp") {
+      if (context === "sign-up") {
         const { data, error } = await supabase.auth.signUp({
           email,
           password
@@ -77,14 +86,19 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
 
         if (!!data && !error) {
           router.push("/");
+          router.refresh();
         } else {
-          setErrorMessage(error?.message ?? "Invalid email or password");
+          setErrorMessage(error?.message ?? t("errors.invalidCredentials"));
           setIsLoading(false);
         }
       }
     } catch (error) {
       setIsLoading(false);
-      setErrorMessage(`An unexpected error occurred: ${error}`);
+      setErrorMessage(
+        t("errors.unexpected", {
+          message: error instanceof Error ? error.message : String(error)
+        })
+      );
     }
   };
 
@@ -98,30 +112,26 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
       <Input
         {...register("email")}
         className="mb-6"
-        label="Email"
+        label={t("email")}
         type="email"
         errorMessage={email?.message}
-        placeholder="email@example.com"
+        placeholder={t("emailPlaceholder")}
       />
       <Input
         {...register("password")}
         className="mb-6"
-        label="Password"
+        label={t("password")}
         type="password"
         errorMessage={password?.message}
-        placeholder="********"
+        placeholder={t("passwordPlaceholder")}
       />
       <Button
         className="mb-2"
-        text={context === "signUp" ? "Sign Up" : "Login"}
+        text={context === "sign-up" ? t("submitSignUp") : t("submitLogin")}
         type="submit"
         isLoading={isLoading}
         isDisabled={!isSupabaseConfigured()}
-        title={
-          isSupabaseConfigured()
-            ? undefined
-            : "TODO: configura Supabase en .env"
-        }
+        title={isSupabaseConfigured() ? undefined : t("supabaseDisabledButton")}
       />
       {errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}
     </form>

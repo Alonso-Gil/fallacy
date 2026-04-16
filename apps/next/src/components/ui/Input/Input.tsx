@@ -24,6 +24,7 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
         ref={ref}
         aria-invalid={errorMessage ? true : undefined}
         {...rest}
+        className="border-border bg-surface text-foreground placeholder:text-text-secondary/70 focus-visible:border-primary focus-visible:ring-primary/35"
       />
       {errorMessage ? (
         <p className="text-destructive text-sm" role="alert">

@@ -4,7 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
-export async function GET(request: NextRequest) {
+export const GET = async (request: NextRequest) => {
   if (!isSupabaseConfigured()) {
     return NextResponse.redirect(
       new URL("/login?reason=supabase-disabled", request.url)
@@ -53,5 +53,5 @@ export async function GET(request: NextRequest) {
     console.error(error);
   }
 
-  return NextResponse.redirect(`${url.origin}/error`);
-}
+  return NextResponse.redirect(`${url.origin}/login?reason=confirm`);
+};

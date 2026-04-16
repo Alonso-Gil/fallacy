@@ -5,7 +5,7 @@ import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
 let browserClient: SupabaseClient | null = null;
 
-export function createClient(): SupabaseClient | null {
+export const createClient = (): SupabaseClient | null => {
   if (!isSupabaseConfigured()) {
     return null;
   }
@@ -16,4 +16,4 @@ export function createClient(): SupabaseClient | null {
     );
   }
   return browserClient;
-}
+};

@@ -3,7 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 
 import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
-async function authCallback(request: NextRequest) {
+const authCallback = async (request: NextRequest) => {
   if (!isSupabaseConfigured()) {
     return NextResponse.redirect(
       new URL("/login?reason=supabase-disabled", request.url)
@@ -55,13 +55,9 @@ async function authCallback(request: NextRequest) {
     }
   }
 
-  return NextResponse.redirect(`${url.origin}/auth/auth-code-error`);
-}
+  return NextResponse.redirect(`${url.origin}/login?reason=oauth`);
+};
 
-export async function GET(request: NextRequest) {
-  return authCallback(request);
-}
+export const GET = async (request: NextRequest) => authCallback(request);
 
-export async function POST(request: NextRequest) {
-  return authCallback(request);
-}
+export const POST = async (request: NextRequest) => authCallback(request);

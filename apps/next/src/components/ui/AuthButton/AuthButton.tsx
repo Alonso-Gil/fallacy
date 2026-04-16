@@ -1,15 +1,19 @@
 "use client";
+import { routing } from "i18n/routing";
+import { useLocale, useTranslations } from "next-intl";
 import React from "react";
-import { twMerge } from "tailwind-merge";
 
 import Button from "ui/Button/Button";
 import { isSupabaseConfigured } from "config/supabase";
 import { createClient } from "utils/supabase/component";
+import { cn } from "lib/utils";
 import { AuthButtonProps as Props } from "./AuthButton.types";
 
 const AuthButton: React.FC<Props> = props => {
   const { signInProvider, signInIcon, className } = props;
   const authAvailable = isSupabaseConfigured();
+  const locale = useLocale();
+  const t = useTranslations("Auth.oauth");
 
   const handleSignIn = async () => {
     if (!signInProvider) return;
@@ -17,7 +21,7 @@ const AuthButton: React.FC<Props> = props => {
 
     if (!authAvailable) {
       console.warn(
-        "[Auth] OAuth desactivado: configura NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
+        "[Auth] OAuth disabled: set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
       );
       return;
     }
@@ -26,33 +30,35 @@ const AuthButton: React.FC<Props> = props => {
     if (!supabase) return;
 
     const origin = window.location.origin;
+    const nextPath = locale === routing.defaultLocale ? "/" : `/${locale}`;
 
     await supabase.auth.signInWithOAuth({
       provider: signInProvider,
       options: {
-        redirectTo: `${origin}/api/auth/callback?next=/`
+        redirectTo: `${origin}/api/auth/callback?next=${encodeURIComponent(nextPath)}`
       }
     });
   };
+
+  const providerLabelById: Record<typeof signInProvider, string> = {
+    google: "Google"
+  };
+  const providerLabel = providerLabelById[signInProvider];
 
   return (
     <Button
       text={
         authAvailable
-          ? `Sign in with ${signInProvider}`
-          : `Sign in with ${signInProvider} (Supabase desactivado)`
+          ? t("signIn", { provider: providerLabel })
+          : t("signInDisabled", { provider: providerLabel })
       }
       type="button"
       isDisabled={!authAvailable}
-      title={
-        authAvailable
-          ? undefined
-          : "Configura Supabase en .env para habilitar OAuth"
-      }
+      title={authAvailable ? undefined : t("configureSupabase")}
       onClick={() => void handleSignIn()}
       icon={signInIcon}
-      className={twMerge(
-        "bg-[#24292F] text-white dark:hover:bg-[#050708]/30 dark:focus:ring-gray-500",
+      className={cn(
+        "border-border bg-surface-secondary text-foreground hover:bg-surface focus-visible:ring-primary/40 h-12 w-full border text-base font-medium transition-colors",
         className
       )}
     />

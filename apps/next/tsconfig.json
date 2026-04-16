@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
-      "images/*": ["../public/assets/images/*"]
+      "images/*": ["../public/assets/images/*"],
+      "ui/*": ["components/ui/*"]
     },
     "jsx": "preserve",
     "noEmit": true,
