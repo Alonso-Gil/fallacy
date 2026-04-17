@@ -3,16 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev": "yarn workspace fallacy-web dev",
     "clean": "rm -rf node_modules && rm -rf packages/**/node_modules && rm -rf apps/**/node_modules && yarn clean:cache",
     "clean:cache": "rm -rf packages/**/.turbo && rm -rf apps/**/.turbo && rm -rf apps/**/.next",
     "compile": "turbo run compile",
     "check-types": "turbo run check-types",
     "lint": "turbo run lint",
+    "lint:ci": "turbo run lint:ci",
     "format": "turbo run format",
     "check-format": "turbo run check-format",
-    "start:next": "yarn compile && cd apps/next && yarn start"
+    "start:next": "yarn compile && yarn workspace fallacy-web dev",
+    "prepare": "husky"
   },
-  "dependencies": {},
+  "resolutions": {
+    "es-iterator-helpers": "1.2.1",
+    "internal-slot": "1.1.0"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.18.0",
@@ -26,6 +32,8 @@
     "eslint-plugin-prettier": "^5.2.5",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
     "prettier": "^3.4.2",
     "rollup": "^2.77.1",
     "rollup-plugin-dts": "^5.3.0",

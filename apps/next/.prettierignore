@@ -1,0 +1,13 @@
+# Prettier no interpreta .gitignore como Git. Con --ignore-path .gitignore suele seguir tocando .next (miles de archivos) → CI/local muy lentos.
+node_modules
+.next
+out
+build
+coverage
+.vercel
+android
+ios
+.env*
+!.env.template
+*.min.js
+*.min.css

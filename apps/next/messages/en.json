@@ -1,0 +1,58 @@
+{
+  "Common": {
+    "localeSwitcher": {
+      "ariaSwitchTo": "Switch to {locale}",
+      "label": {
+        "en": "English",
+        "es": "Spanish"
+      }
+    }
+  },
+  "Auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to your account",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up now",
+      "footer": "© Fallacy. All rights reserved. {year}"
+    },
+    "signUp": {
+      "title": "Get started",
+      "subtitle": "Create a new account",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Log in",
+      "footer": "© Fallacy. All rights reserved. {year}"
+    },
+    "form": {
+      "email": "Email",
+      "password": "Password",
+      "emailPlaceholder": "you@example.com",
+      "passwordPlaceholder": "••••••••",
+      "submitLogin": "Log in",
+      "submitSignUp": "Sign up",
+      "supabaseDisabledButton": "Configure Supabase in .env",
+      "errors": {
+        "supabaseConfig": "Email sign-in is disabled: set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (see config).",
+        "noClient": "Supabase client is not available.",
+        "invalidCredentials": "Invalid email or password",
+        "unexpected": "An unexpected error occurred: {message}"
+      },
+      "validation": {
+        "required": "This field is required",
+        "invalidEmail": "Invalid email address",
+        "minLength": "Must be at least {min} characters",
+        "maxLength": "Must be at most {max} characters"
+      }
+    },
+    "oauth": {
+      "signIn": "Sign in with {provider}",
+      "signInDisabled": "Sign in with {provider} (Supabase disabled)",
+      "configureSupabase": "Configure Supabase in .env to enable OAuth"
+    },
+    "logOut": "Log out"
+  },
+  "RandomFallacy": {
+    "title": "- False analogy fallacy",
+    "description": "It is a reasoning error that occurs when drawing a comparison between two things that are not sufficiently similar to justify the conclusion. This fallacy assumes that because two things share some similarities, they must also be alike in other important respects."
+  }
+}

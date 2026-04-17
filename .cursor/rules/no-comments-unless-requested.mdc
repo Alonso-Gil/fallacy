@@ -1,0 +1,13 @@
+---
+description: No añadir comentarios en código salvo petición explícita del usuario
+alwaysApply: true
+---
+
+# Comentarios en código
+
+- **No añadir** comentarios nuevos en el código (ni `//`, ni `/* */`, ni bloques explicativos, ni separadores de sección, ni `TODO`/`FIXME`, ni JSDoc/TSDoc) **a menos que el usuario lo pida de forma explícita**.
+- **No “documentar”** funciones, tipos o componentes con comentarios salvo que se solicite.
+- **No sustituir** código claro por comentarios; priorizar nombres y estructura legibles.
+- **No eliminar** comentarios existentes salvo que forme parte explícita de la tarea (refactor, archivo obsoleto, etc.).
+
+Si el usuario pide comentarios en un ámbito concreto (por ejemplo “documenta esta API”), aplicar solo ahí.

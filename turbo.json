@@ -15,14 +15,11 @@
       "dependsOn": ["^build", "compile"],
       "inputs": ["src/**/*"]
     },
-    "lint": {
+    "lint": {},
+    "lint:ci": {
       "dependsOn": ["^build"]
     },
-    "format": {
-      "dependsOn": ["^build"]
-    },
-    "check-format": {
-      "dependsOn": ["^build"]
-    }
+    "format": {},
+    "check-format": {}
   }
 }

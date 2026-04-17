@@ -1,10 +1,18 @@
 import { createClient as createClientPrimitive } from "@supabase/supabase-js";
 
-export function createClient() {
+import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
+
+export const createClient = () => {
+  if (!isSupabaseConfigured()) {
+    throw new Error(
+      "[TODO Supabase] Configura NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (o ANON_KEY legacy)"
+    );
+  }
+
   const supabase = createClientPrimitive(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    getSupabasePublicKey()!
   );
 
   return supabase;
-}
+};

@@ -1,31 +1,63 @@
-// import { NextResponse } from "next/server";
-// import { createClient } from "utils/supabase/server-props";
+import { createServerClient, type SetAllCookies } from "@supabase/ssr";
+import { type NextRequest, NextResponse } from "next/server";
 
-// // The client you created from the Server-Side Auth instructions
+import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
-// export async function GET(request: Request) {
-//   const { searchParams, origin } = new URL(request.url);
-//   const code = searchParams.get("code");
-//   // if "next" is in param, use it as the redirect URL
-//   const next = searchParams.get("next") ?? "/";
+const authCallback = async (request: NextRequest) => {
+  if (!isSupabaseConfigured()) {
+    return NextResponse.redirect(
+      new URL("/login?reason=supabase-disabled", request.url)
+    );
+  }
 
-//   if (code) {
-//     const supabase = createClient();
-//     const { error } = await supabase.auth.exchangeCodeForSession(code);
-//     if (!error) {
-//       const forwardedHost = request.headers.get("x-forwarded-host"); // original origin before load balancer
-//       const isLocalEnv = process.env.NODE_ENV === "development";
-//       if (isLocalEnv) {
-//         // we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
-//         return NextResponse.redirect(`${origin}${next}`);
-//       } else if (forwardedHost) {
-//         return NextResponse.redirect(`https://${forwardedHost}${next}`);
-//       } else {
-//         return NextResponse.redirect(`${origin}${next}`);
-//       }
-//     }
-//   }
+  const url = new URL(request.url);
+  let code = url.searchParams.get("code");
+  let nextParam = url.searchParams.get("next") ?? "/";
 
-//   // return the user to an error page with instructionsa
-//   return NextResponse.redirect(`${origin}/auth/auth-code-error`);
-// }
+  if (!code && request.method === "POST") {
+    const formData = await request.formData();
+    const fromForm = formData.get("code");
+    code = typeof fromForm === "string" ? fromForm : null;
+    const nextFromForm = formData.get("next");
+    if (typeof nextFromForm === "string" && nextFromForm.startsWith("/")) {
+      nextParam = nextFromForm;
+    }
+  }
+
+  const next = nextParam.startsWith("/") ? nextParam : "/";
+
+  if (code) {
+    const response = NextResponse.redirect(`${url.origin}${next}`);
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      getSupabasePublicKey()!,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll();
+          },
+          setAll(cookiesToSet: Parameters<SetAllCookies>[0]) {
+            for (const { name, value, options } of cookiesToSet) {
+              if (options) {
+                response.cookies.set(name, value, options);
+              } else {
+                response.cookies.set(name, value);
+              }
+            }
+          }
+        }
+      }
+    );
+
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (!error) {
+      return response;
+    }
+  }
+
+  return NextResponse.redirect(`${url.origin}/login?reason=oauth`);
+};
+
+export const GET = async (request: NextRequest) => authCallback(request);
+
+export const POST = async (request: NextRequest) => authCallback(request);

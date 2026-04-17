@@ -1,8 +1,8 @@
 // Auth store
-import { getStoreSetState } from "utils/common.utils";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
+import { getStoreSetState } from "utils/common.utils";
 import { defaultValues } from "./appParameters.store.helpers";
 import { AppParametersStoreValues } from "./appParameters.store.types";
 

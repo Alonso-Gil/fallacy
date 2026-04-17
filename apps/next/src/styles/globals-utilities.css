@@ -1,0 +1,53 @@
+@layer utilities {
+  .login-side-glow {
+    background-color: var(--background);
+    background-image: radial-gradient(
+      ellipse 85% 70% at 45% 42%,
+      rgb(49 46 129 / 0.14) 0%,
+      rgb(30 27 75 / 0.055) 52%,
+      transparent 72%
+    );
+  }
+
+  .dark .login-side-glow {
+    background-image: radial-gradient(
+      ellipse 85% 70% at 45% 42%,
+      rgb(49 46 129 / 0.18) 0%,
+      rgb(30 27 75 / 0.075) 52%,
+      transparent 72%
+    );
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  h1 {
+    @apply text-2xl font-semibold md:text-4xl;
+  }
+
+  h2 {
+    @apply text-3xl font-semibold;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold;
+  }
+
+  h4 {
+    @apply text-xl font-semibold;
+  }
+
+  p {
+    @apply text-balance;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+}

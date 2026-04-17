@@ -1,19 +1,29 @@
-import React from "react";
-import { twMerge } from "tailwind-merge";
+import { Playfair_Display } from "next/font/google";
+import { getTranslations } from "next-intl/server";
 
+import { cn } from "lib/utils";
 import { RandomFallacyProps as Props } from "./RandomFallacytypes";
 
-const RandomFallacy: React.FC<Props> = ({ className }) => {
+const fallacyTitle = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  style: ["italic"]
+});
+
+const RandomFallacy = async ({ className }: Props) => {
+  const t = await getTranslations("RandomFallacy");
+
   return (
-    <article className={twMerge(className, "2x1:p-0 p-12 md:max-w-screen-md")}>
-      <h2 className="pb-4">- Falacia de falsa analogía</h2>
-      <p className="text-typography-soft dark:text-typography-dark-accent">
-        Es un error de razonamiento que se comete al establecer una comparación
-        entre dos cosas que, en realidad, no son lo suficientemente similares
-        como para justificar la conclusión que se extrae. Esta falacia asume que
-        porque dos cosas comparten algunas similitudes, también deben ser
-        similares en otros aspectos importantes.
-      </p>
+    <article className={cn(className, "2x1:p-0 p-12 md:max-w-screen-md")}>
+      <h2
+        className={cn(
+          fallacyTitle.className,
+          "text-foreground pb-4 text-3xl font-semibold md:text-4xl"
+        )}
+      >
+        {t("title")}
+      </h2>
+      <p className="text-text-secondary">{t("description")}</p>
     </article>
   );
 };

@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Fallacy
 
-## Getting Started
+Plataforma de debates: salas con reglas, participantes y espectadores. Este repositorio es un **monorepo** gestionado con **Yarn workspaces** y **Turborepo**.
 
-First, run the development server:
+## Contenido del repositorio
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+| Ruta             | Descripción                                       |
+| ---------------- | ------------------------------------------------- |
+| `apps/next`      | Frontend **Next.js** (`fallacy-web`)              |
+| `apps/nest`      | API **NestJS** (`fallacy-nest`)                   |
+| `packages/types` | Tipos e interfaces compartidos (`@fallacy/types`) |
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Requisitos previos
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Node.js** 22 (recomendado usar [nvm](https://github.com/nvm-sh/nvm) o similar; en la raíz hay un archivo `.nvmrc`).
+- **Yarn** 1.x (el proyecto declara `packageManager: yarn@1.22.19`).
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Cómo levantar el proyecto
 
-## Learn More
+1. **Clonar** el repositorio e ir a la carpeta raíz.
 
-To learn more about Next.js, take a look at the following resources:
+2. **Instalar dependencias** (desde la raíz del monorepo):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```bash
+   yarn install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. **Variables de entorno (app web)**  
+   En `apps/next`, copia la plantilla y rellena los valores (por ejemplo credenciales de Supabase):
 
-## Deploy on Vercel
+   ```bash
+   cp apps/next/.env.template apps/next/.env.local
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   Edita `apps/next/.env.local` y asigna `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` según tu proyecto.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+4. **Arrancar en desarrollo**  
+   Desde la **raíz**:
+
+   ```bash
+   yarn dev
+   ```
+
+   Eso levanta la aplicación Next en modo desarrollo (por defecto en [http://localhost:3000](http://localhost:3000), salvo que el puerto esté ocupado).
+
+   Alternativa si necesitas compilar paquetes compartidos antes:
+
+   ```bash
+   yarn start:next
+   ```
+
+5. **API Nest (opcional)**  
+   Si trabajas en el backend:
+
+   ```bash
+   yarn workspace fallacy-nest start:dev
+   ```
+
+## Scripts útiles (raíz)
+
+| Comando                             | Uso                                     |
+| ----------------------------------- | --------------------------------------- |
+| `yarn dev`                          | Desarrollo del frontend Next            |
+| `yarn compile`                      | Compilación vía Turborepo               |
+| `yarn check-types`                  | Comprobación de tipos en los workspaces |
+| `yarn lint` / `yarn lint:ci`        | ESLint                                  |
+| `yarn format` / `yarn check-format` | Prettier                                |
+
+Tras `yarn install`, el hook **Husky** (`prepare`) configura el **pre-commit** con **lint-staged** (formato y lint sobre archivos staged).
+
+## Integración continua
+
+En GitHub, el workflow `.github/workflows/ci.yml` ejecuta comprobaciones de formato, compilación, tipos y lint en pushes y pull requests hacia `main`.
+
+## Contribuir
+
+Flujo de ramas, PR y buenas prácticas: **[CONTRIBUTING.md](./CONTRIBUTING.md)**.

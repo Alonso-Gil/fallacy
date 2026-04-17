@@ -1,0 +1,58 @@
+{
+  "Common": {
+    "localeSwitcher": {
+      "ariaSwitchTo": "Cambiar a {locale}",
+      "label": {
+        "en": "inglés",
+        "es": "español"
+      }
+    }
+  },
+  "Auth": {
+    "login": {
+      "title": "Bienvenido de nuevo",
+      "subtitle": "Inicia sesión en tu cuenta",
+      "noAccount": "¿No tienes cuenta?",
+      "signUpLink": "Regístrate",
+      "footer": "© Fallacy. Todos los derechos reservados. {year}"
+    },
+    "signUp": {
+      "title": "Empezar",
+      "subtitle": "Crea una cuenta nueva",
+      "hasAccount": "¿Ya tienes cuenta?",
+      "loginLink": "Inicia sesión",
+      "footer": "© Fallacy. Todos los derechos reservados. {year}"
+    },
+    "form": {
+      "email": "Correo",
+      "password": "Contraseña",
+      "emailPlaceholder": "correo@ejemplo.com",
+      "passwordPlaceholder": "••••••••",
+      "submitLogin": "Entrar",
+      "submitSignUp": "Registrarse",
+      "supabaseDisabledButton": "Configura Supabase en .env",
+      "errors": {
+        "supabaseConfig": "Autenticación por correo desactivada: configura NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (ver config).",
+        "noClient": "Cliente Supabase no disponible.",
+        "invalidCredentials": "Correo o contraseña no válidos",
+        "unexpected": "Error inesperado: {message}"
+      },
+      "validation": {
+        "required": "Campo obligatorio",
+        "invalidEmail": "Correo electrónico no válido",
+        "minLength": "Mínimo {min} caracteres",
+        "maxLength": "Máximo {max} caracteres"
+      }
+    },
+    "oauth": {
+      "signIn": "Entrar con {provider}",
+      "signInDisabled": "Entrar con {provider} (Supabase desactivado)",
+      "configureSupabase": "Configura Supabase en .env para habilitar OAuth"
+    },
+    "logOut": "Cerrar sesión"
+  },
+  "RandomFallacy": {
+    "title": "- Falacia de falsa analogía",
+    "description": "Es un error de razonamiento que se comete al establecer una comparación entre dos cosas que, en realidad, no son lo suficientemente similares como para justificar la conclusión que se extrae. Esta falacia asume que porque dos cosas comparten algunas similitudes, también deben ser similares en otros aspectos importantes."
+  }
+}

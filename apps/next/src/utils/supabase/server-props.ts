@@ -1,28 +1,33 @@
-// import { createServerClient } from "@supabase/ssr";
-// import { cookies } from "next/headers";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
-// export function createClient() {
-//   const cookieStore = cookies();
+import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
-//   const supabase = createServerClient(
-//     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-//     {
-//       cookies: {
-//         getAll() {
-//           return cookieStore.getAll().map(cookie => ({
-//             name: cookie.name,
-//             value: cookie.value ?? ""
-//           }));
-//         },
-//         setAll(cookiesToSet) {
-//           cookiesToSet.forEach(({ name, value, options }) => {
-//             cookieStore.set(name, value, options);
-//           });
-//         }
-//       }
-//     }
-//   );
+export const createClient = async () => {
+  if (!isSupabaseConfigured()) {
+    throw new Error(
+      "Supabase no está configurado (NEXT_PUBLIC_SUPABASE_URL y clave pública)"
+    );
+  }
 
-//   return supabase;
-// }
+  const cookieStore = await cookies();
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+  const key = getSupabasePublicKey()!;
+
+  return createServerClient(url, key, {
+    cookies: {
+      getAll() {
+        return cookieStore.getAll();
+      },
+      setAll(cookiesToSet) {
+        try {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            cookieStore.set(name, value, options);
+          });
+        } catch {
+          // set puede fallar en Server Components; el middleware renueva la sesión
+        }
+      }
+    }
+  });
+};

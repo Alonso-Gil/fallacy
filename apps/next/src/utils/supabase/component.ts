@@ -1,10 +1,19 @@
 import { createBrowserClient } from "@supabase/ssr";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
-export function createClient() {
-  const supabase = createBrowserClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
-  return supabase;
-}
+let browserClient: SupabaseClient | null = null;
+
+export const createClient = (): SupabaseClient | null => {
+  if (!isSupabaseConfigured()) {
+    return null;
+  }
+  if (!browserClient) {
+    browserClient = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      getSupabasePublicKey()!
+    );
+  }
+  return browserClient;
+};

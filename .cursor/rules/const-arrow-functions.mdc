@@ -1,0 +1,24 @@
+---
+description: Preferir const con función flecha frente a declaraciones function
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Funciones: `const` + arrow
+
+- Cuando **no** haga falta una declaración `function` (p. ej. hoisting, restricción de framework), definir funciones como **`const nombre = (...) => { ... }`** (o **`async`**: `const nombre = async (...) => { ... }`).
+- **Export default:** `const Componente = () => { ... }; export default Componente;` (no `export default function`).
+- **Export nombrado:** `export const getX = () => { ... };` en lugar de `export function getX()`.
+- **Componentes React:** `const MiComponente = (props: Props) => { ... };` y `export { MiComponente }` o `export default MiComponente` según convenga.
+- **`React.forwardRef`:** usar callback flecha en el interior; si hace falta nombre en devtools, asignar `displayName` en la constante (como ya se hace con `Button`).
+- **Excepciones razonables:** métodos cortos dentro de objetos literales (`cookies: { getAll() { ... } }`), y código generado o APIs que exijan forma concreta.
+
+```tsx
+// Preferir
+const Separator = ({ className }: Props) => <hr className={className} />;
+
+// Evitar salvo necesidad
+function Separator({ className }: Props) {
+  return <hr className={className} />;
+}
+```

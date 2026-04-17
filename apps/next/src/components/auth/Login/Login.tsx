@@ -1,47 +1,59 @@
 "use client";
-import { Divider } from "@nextui-org/react";
-import Link from "next/link";
+import { Link } from "i18n/navigation";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
 import React from "react";
-import { twMerge } from "tailwind-merge";
 
-import EmailSignUp from "../SignUp/EmailAuthForm/EmailAuthForm";
-import { LoginProps as Props } from "./Login.types";
 import AuthButton from "ui/AuthButton/AuthButton";
 import Logo from "ui/Logo/Logo";
-import RandomFallacy from "components/RandomFallacy/RandomFallacy";
-
-import GoogleSVG from "images/google.svg";
+import { cn } from "lib/utils";
+import EmailAuthForm from "../SignUp/EmailAuthForm/EmailAuthForm";
+import { LoginProps as Props } from "./Login.types";
 
 const Login: React.FC<Props> = ({ className }) => {
+  const t = useTranslations("Auth.login");
+
   return (
     <div
-      className={twMerge(
+      className={cn(
         className,
-        "Login flex flex-1 flex-col items-center justify-between overflow-y-auto bg-background p-2 dark:bg-background-dark-primary md:p-6"
+        "Login flex flex-1 flex-col items-center justify-between overflow-y-auto p-2 md:p-6"
       )}
     >
       <Logo className="md:self-start" />
-      <RandomFallacy />
       <div className="flex w-full max-w-[400px] flex-1 flex-col justify-center pb-6">
-        <h1 className="pb-6 pt-4 font-semibold text-typography dark:text-white lg:pt-20">
-          Welcome back
+        <h1 className="text-foreground pt-4 pb-6 font-semibold lg:pt-20">
+          {t("title")}
         </h1>
-        <p className="pb-8 text-typography-soft">Sign in to your account</p>
+        <p className="text-text-secondary pb-8">{t("subtitle")}</p>
         <AuthButton
-          signInIcon={<GoogleSVG className="h-6 w-6" />}
+          signInIcon={
+            <Image
+              src="/assets/images/google.svg"
+              alt=""
+              className="h-6 w-6"
+              width={24}
+              height={24}
+              unoptimized
+              suppressHydrationWarning
+            />
+          }
           signInProvider="google"
         />
-        <Divider className="my-8" />
-        <EmailSignUp context="login" className="mb-4 w-full" />
-        <Link className="text-center" href={"/sign-up"}>
+        <hr className="border-border my-8 w-full border-t" />
+        <EmailAuthForm context="login" className="mb-4 w-full" />
+        <Link
+          className="text-text-secondary hover:text-accent text-center transition-colors"
+          href="/sign-up"
+        >
           <p>
-            Don&lsquo;t have an account?{" "}
-            <span className="underline">Sign Up Now</span>
+            {t("noAccount")}{" "}
+            <span className="text-accent underline">{t("signUpLink")}</span>
           </p>
         </Link>
       </div>
-      <p className="text-sm">
-        &copy; Fallacy. All rights reserved. {new Date().getFullYear()}
+      <p className="text-text-secondary text-sm">
+        {t("footer", { year: new Date().getFullYear() })}
       </p>
     </div>
   );

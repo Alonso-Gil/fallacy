@@ -1,18 +1,9 @@
-// EmailAuthForm types and interfaces
+import type { EmailFormValues } from "./EmailAuthForm.helpers";
 
-// Component Props
 export interface EmailAuthFormProps {
   className?: string;
-  context: "login" | "signUp";
+  context: "login" | "sign-up";
 }
 
-export interface EmailSignUpFormSchema {
-  email: string;
-  password: string;
-  repeatPassword: string;
-}
-
-export interface EmailLoginFormSchema {
-  email: string;
-  password: string;
-}
+export type EmailLoginFormSchema = EmailFormValues;
+export type EmailSignUpFormSchema = EmailFormValues;

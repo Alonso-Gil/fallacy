@@ -1,6 +1,6 @@
 import React from "react";
-import { twMerge } from "tailwind-merge";
 
+import { cn } from "lib/utils";
 import { PageProps as Props } from "./Page.types";
 
 const Page: React.FC<Props> = props => {
@@ -8,7 +8,7 @@ const Page: React.FC<Props> = props => {
 
   return (
     <div
-      className={twMerge(
+      className={cn(
         "Page h-screen-dynamic flex min-h-full flex-col",
         className
       )}

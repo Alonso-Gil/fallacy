@@ -1,21 +1,12 @@
 import React from "react";
-import { twMerge } from "tailwind-merge";
 
+import { cn } from "lib/utils";
 import { MainProps as Props } from "./Main.types";
 
 const Main: React.FC<Props> = props => {
   const { className, children } = props;
 
-  return (
-    <main
-      className={twMerge(
-        "Main flex flex-1 bg-background-contrast dark:bg-background-dark",
-        className
-      )}
-    >
-      {children}
-    </main>
-  );
+  return <main className={cn("Main flex flex-1", className)}>{children}</main>;
 };
 
 export default Main;
