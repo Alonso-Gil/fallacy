@@ -6,15 +6,38 @@ import RandomFallacy from "components/RandomFallacy/RandomFallacy";
 import { Separator } from "components/ui/separator";
 import { isSupabaseConfigured } from "config/supabase";
 import { createClient } from "utils/supabase/server-props";
+import { buildPageMetadata, localePath } from "lib/site";
 
-const SignInPage = async () => {
+import type { Metadata } from "next";
+
+export const generateMetadata = async ({
+  params
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> => {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/login",
+    titleKey: "login.title",
+    descriptionKey: "login.description"
+  });
+};
+
+const SignInPage = async ({
+  params
+}: {
+  params: Promise<{ locale: string }>;
+}) => {
+  const { locale } = await params;
+
   if (isSupabaseConfigured()) {
     const supabase = await createClient();
     const {
       data: { user }
     } = await supabase.auth.getUser();
     if (user) {
-      redirect("/");
+      redirect(localePath(locale, "/"));
     }
   }
 

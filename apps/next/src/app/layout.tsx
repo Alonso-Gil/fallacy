@@ -3,6 +3,7 @@ import { Geist, Inter } from "next/font/google";
 import { getLocale } from "next-intl/server";
 import React from "react";
 
+import { getMetadataBase } from "lib/site";
 import { cn } from "lib/utils";
 
 import "globals.css";
@@ -12,8 +13,27 @@ const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Fallacy",
-  description: "Official page for debates"
+  metadataBase: getMetadataBase(),
+  title: {
+    default: "Fallacy",
+    template: "%s | Fallacy"
+  },
+  description:
+    "Join structured debates and argue with clarity. Fallacy is the home for serious online discussion.",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true
+    }
+  },
+  openGraph: {
+    type: "website"
+  },
+  twitter: {
+    card: "summary_large_image"
+  }
 };
 
 const RootLayout = async ({

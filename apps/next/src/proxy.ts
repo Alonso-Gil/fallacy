@@ -23,7 +23,10 @@ const proxy = async (request: NextRequest) => {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet: Parameters<SetAllCookies>[0]) {
+        setAll(
+          cookiesToSet: Parameters<SetAllCookies>[0],
+          headers?: Parameters<SetAllCookies>[1]
+        ) {
           cookiesToSet.forEach(({ name, value, options }) => {
             if (options) {
               response.cookies.set(name, value, options);
@@ -31,6 +34,13 @@ const proxy = async (request: NextRequest) => {
               response.cookies.set(name, value);
             }
           });
+          if (headers && typeof headers === "object") {
+            Object.entries(headers).forEach(([key, value]) => {
+              if (typeof value === "string") {
+                response.headers.set(key, value);
+              }
+            });
+          }
         }
       }
     }

@@ -1,4 +1,19 @@
 {
+  "SEO": {
+    "siteName": "Fallacy",
+    "home": {
+      "title": "Fallacy — Live debates",
+      "description": "Join structured debates, follow the lobby, and argue with clarity. Fallacy is the home for serious online discussion."
+    },
+    "login": {
+      "title": "Sign in",
+      "description": "Sign in to your Fallacy account to join debates and manage your profile."
+    },
+    "signUp": {
+      "title": "Create account",
+      "description": "Create your Fallacy account to join structured debates and build your profile."
+    }
+  },
   "Common": {
     "localeSwitcher": {
       "ariaSwitchTo": "Switch to {locale}",

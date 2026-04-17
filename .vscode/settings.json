@@ -43,5 +43,13 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  "typescript.preferences.importModuleSpecifierEnding": "minimal"
+  "typescript.preferences.importModuleSpecifierEnding": "minimal",
+  "jest.disabledWorkspaceFolders": ["fallacy"],
+  "jest.virtualFolders": [
+    {
+      "name": "nest",
+      "rootPath": "apps/nest",
+      "runMode": "on-demand"
+    }
+  ]
 }

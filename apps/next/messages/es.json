@@ -1,4 +1,19 @@
 {
+  "SEO": {
+    "siteName": "Fallacy",
+    "home": {
+      "title": "Fallacy — Debates en directo",
+      "description": "Participa en debates estructurados, sigue el lobby y argumenta con claridad. Fallacy es el hogar del debate serio en línea."
+    },
+    "login": {
+      "title": "Iniciar sesión",
+      "description": "Inicia sesión en tu cuenta de Fallacy para unirte a debates y gestionar tu perfil."
+    },
+    "signUp": {
+      "title": "Crear cuenta",
+      "description": "Crea tu cuenta en Fallacy para unirte a debates estructurados y completar tu perfil."
+    }
+  },
   "Common": {
     "localeSwitcher": {
       "ariaSwitchTo": "Cambiar a {locale}",
