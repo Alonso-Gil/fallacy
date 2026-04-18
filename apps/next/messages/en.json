@@ -67,6 +67,13 @@
     "logOut": "Log out",
     "signIn": "Sign in"
   },
+  "Settings": {
+    "title": "Settings",
+    "description": "Manage your preferences",
+    "openLabel": "Open settings",
+    "appearance": "Appearance",
+    "language": "Language"
+  },
   "RandomFallacy": {
     "title": "- False analogy fallacy",
     "description": "It is a reasoning error that occurs when drawing a comparison between two things that are not sufficiently similar to justify the conclusion. This fallacy assumes that because two things share some similarities, they must also be alike in other important respects."

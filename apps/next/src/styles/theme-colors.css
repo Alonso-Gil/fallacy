@@ -4,6 +4,7 @@
   --surface-secondary: #eef2ff;
   --primary: #4f46e5;
   --primary-hover: #4338ca;
+  --primary-foreground: #fafafa;
   --accent: #d97706;
   --text: #0f172a;
   --text-secondary: #475569;
@@ -13,7 +14,6 @@
   --card-foreground: var(--text);
   --popover: var(--surface);
   --popover-foreground: var(--text);
-  --primary-foreground: #fafafa;
   --secondary: var(--surface-secondary);
   --secondary-foreground: var(--text);
   --muted: var(--surface-secondary);
@@ -22,57 +22,16 @@
   --destructive: oklch(0.577 0.245 27.325);
   --input: var(--border);
   --ring: var(--primary);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
-  --sidebar: var(--surface);
-  --sidebar-foreground: var(--text);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: var(--surface-secondary);
-  --sidebar-accent-foreground: var(--text);
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--ring);
 }
 
 .dark {
   --background: #0f172a;
   --surface: #111827;
   --surface-secondary: #1f2937;
-  --primary: #4f46e5;
-  --primary-hover: #4338ca;
   --accent: #f59e0b;
   --text: #f9fafb;
   --text-secondary: #cbd5e1;
   --border: #334155;
-  --foreground: var(--text);
-  --card: var(--surface);
-  --card-foreground: var(--text);
-  --popover: var(--surface);
-  --popover-foreground: var(--text);
-  --primary-foreground: #fafafa;
-  --secondary: var(--surface-secondary);
-  --secondary-foreground: var(--text);
-  --muted: var(--surface-secondary);
-  --muted-foreground: var(--text-secondary);
-  --accent-foreground: var(--text);
   --destructive: oklch(0.704 0.191 22.216);
-  --input: var(--border);
-  --ring: var(--primary);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: var(--surface);
-  --sidebar-foreground: var(--text);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: var(--surface-secondary);
-  --sidebar-accent-foreground: var(--text);
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--ring);
 }

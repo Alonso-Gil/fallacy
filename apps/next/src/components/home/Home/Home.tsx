@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-import AuthActionButton from "ui/AuthActionButton";
+import UserPanel from "components/UserPanel/UserPanel";
 import { HomeProps as Props } from "./Home.types";
 
 const Home: React.FC<Props> = () => {
@@ -15,9 +15,8 @@ const Home: React.FC<Props> = () => {
           <div className="flex h-full w-full items-center justify-center bg-red-500">
             Lobby users - w 288px
           </div>
-          <div className="flex h-28 w-full flex-col items-center justify-center gap-2 bg-gray-500">
-            <span className="text-sm text-white">User Info - h 112px</span>
-            <AuthActionButton />
+          <div className="flex h-28 w-full flex-col items-center justify-center gap-2">
+            <UserPanel />
           </div>
         </div>
         <div className="flex w-full items-center justify-center bg-green-500">
