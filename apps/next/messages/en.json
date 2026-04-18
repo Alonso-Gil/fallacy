@@ -64,7 +64,8 @@
       "signInDisabled": "Sign in with {provider} (Supabase disabled)",
       "configureSupabase": "Configure Supabase in .env to enable OAuth"
     },
-    "logOut": "Log out"
+    "logOut": "Log out",
+    "signIn": "Sign in"
   },
   "RandomFallacy": {
     "title": "- False analogy fallacy",

@@ -5,11 +5,11 @@ export const getStoreSetState = <T = unknown>(
   payload: Parameters<StoreSetState<T>>[0],
   prev: T
 ): T => {
-  let selectedBillingData: StorePreviousValue<T> | T;
+  let nextValue: T;
   if (typeof payload === "function") {
-    selectedBillingData = (payload as StorePreviousValue<T>)(prev);
+    nextValue = (payload as StorePreviousValue<T>)(prev);
   } else {
-    selectedBillingData = payload;
+    nextValue = payload;
   }
-  return selectedBillingData;
+  return nextValue;
 };

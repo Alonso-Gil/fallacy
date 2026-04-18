@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-import LogOutButton from "components/auth/LogOutButton";
+import AuthActionButton from "ui/AuthActionButton";
 import { HomeProps as Props } from "./Home.types";
 
 const Home: React.FC<Props> = () => {
@@ -17,7 +17,7 @@ const Home: React.FC<Props> = () => {
           </div>
           <div className="flex h-28 w-full flex-col items-center justify-center gap-2 bg-gray-500">
             <span className="text-sm text-white">User Info - h 112px</span>
-            <LogOutButton />
+            <AuthActionButton />
           </div>
         </div>
         <div className="flex w-full items-center justify-center bg-green-500">

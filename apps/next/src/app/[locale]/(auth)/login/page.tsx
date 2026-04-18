@@ -4,8 +4,7 @@ import React from "react";
 import Login from "components/auth/Login/Login";
 import RandomFallacy from "components/RandomFallacy/RandomFallacy";
 import { Separator } from "components/ui/separator";
-import { isSupabaseConfigured } from "config/supabase";
-import { createClient } from "utils/supabase/server-props";
+import { getCurrentUser } from "utils/supabase/getCurrentUser";
 import { buildPageMetadata, localePath } from "lib/site";
 
 import type { Metadata } from "next";
@@ -31,14 +30,9 @@ const SignInPage = async ({
 }) => {
   const { locale } = await params;
 
-  if (isSupabaseConfigured()) {
-    const supabase = await createClient();
-    const {
-      data: { user }
-    } = await supabase.auth.getUser();
-    if (user) {
-      redirect(localePath(locale, "/"));
-    }
+  const { status } = await getCurrentUser();
+  if (status === "authenticated") {
+    redirect(localePath(locale, "/"));
   }
 
   return (

@@ -4,6 +4,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import React from "react";
 
+import { getCurrentUser } from "utils/supabase/getCurrentUser";
 import Providers from "providers/Providers";
 
 type Props = {
@@ -22,10 +23,11 @@ const LocaleLayout = async ({ children, params }: Props) => {
 
   setRequestLocale(locale);
   const messages = await getMessages();
+  const { user } = await getCurrentUser();
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <Providers>{children}</Providers>
+      <Providers initialUser={user}>{children}</Providers>
     </NextIntlClientProvider>
   );
 };

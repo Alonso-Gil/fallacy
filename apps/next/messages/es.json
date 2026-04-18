@@ -64,7 +64,8 @@
       "signInDisabled": "Entrar con {provider} (Supabase desactivado)",
       "configureSupabase": "Configura Supabase en .env para habilitar OAuth"
     },
-    "logOut": "Cerrar sesión"
+    "logOut": "Cerrar sesión",
+    "signIn": "Iniciar sesión"
   },
   "RandomFallacy": {
     "title": "- Falacia de falsa analogía",

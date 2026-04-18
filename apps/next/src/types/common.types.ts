@@ -1,13 +1,13 @@
 // Common types and interfaces
 import React from "react";
 
-type StoreValueKeys<T extends object> = {
-  [K in keyof T]: T[K] extends (..._args: unknown[]) => void ? never : K;
-};
+type StoreNonFunctionKeys<T extends object> = {
+  [K in keyof T]: T[K] extends (..._args: never[]) => unknown ? never : K;
+}[keyof T];
 
 export type StoreInitialValues<T extends object> = Pick<
   T,
-  StoreValueKeys<T>[keyof StoreValueKeys<T>]
+  StoreNonFunctionKeys<T>
 >;
 
 export type StorePreviousValue<T = unknown> = (_prev: T) => T;
