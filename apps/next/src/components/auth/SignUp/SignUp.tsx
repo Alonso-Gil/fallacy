@@ -17,9 +17,7 @@ const SignUp: React.FC<Props> = ({ className }) => {
   const tAuth = useTranslations("Auth");
 
   return (
-    <div
-      className={cn(className, "SignUpPage bg-background relative flex flex-1")}
-    >
+    <div className={cn(className, "SignUp bg-background relative flex flex-1")}>
       <Link
         href="/"
         className="text-text-secondary hover:text-foreground hover:bg-muted absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm transition-colors"
@@ -27,12 +25,12 @@ const SignUp: React.FC<Props> = ({ className }) => {
         <ArrowLeft className="size-4" />
         {tAuth("backToLobby")}
       </Link>
-      <div className="SignUp animate-fade-in-right-to-left bg-background flex flex-1 flex-col items-center justify-between overflow-y-auto p-2 md:p-6">
+      <div className="bg-surface flex flex-1 flex-col items-center justify-between overflow-y-auto p-2 md:p-6">
         <Logo className="md:self-start" />
-        <div className="flex w-full max-w-[400px] flex-1 flex-col justify-center pb-6">
-          <h3 className="text-foreground pt-4 pb-6 font-semibold lg:pt-20">
+        <div className="animate-fade-in-right-to-left flex w-full max-w-[400px] flex-1 flex-col justify-center pb-6">
+          <h1 className="text-foreground pt-4 pb-6 font-semibold lg:pt-20">
             {t("title")}
-          </h3>
+          </h1>
           <p className="text-text-secondary pb-8">{t("subtitle")}</p>
           <AuthButton
             signInIcon={
@@ -48,7 +46,7 @@ const SignUp: React.FC<Props> = ({ className }) => {
             }
             signInProvider="google"
           />
-          <Separator className="my-6 w-full" variant="fade" />
+          <Separator className="my-8 w-full" variant="fade" />
           <EmailAuthForm context="sign-up" className="mb-4 w-full" />
           <Link
             className="text-text-secondary hover:text-accent text-center transition-colors"
@@ -68,8 +66,8 @@ const SignUp: React.FC<Props> = ({ className }) => {
         orientation="vertical"
         className="hidden self-stretch xl:block"
       />
-      <div className="animate-fade-in hidden flex-1 items-center justify-center md:w-1/2 xl:flex">
-        <RandomFallacy />
+      <div className="auth-side-glow relative hidden flex-1 items-center justify-center overflow-hidden md:w-1/2 xl:flex">
+        <RandomFallacy className="animate-fade-in" />
       </div>
     </div>
   );

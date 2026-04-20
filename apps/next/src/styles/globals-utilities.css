@@ -1,5 +1,5 @@
 @layer utilities {
-  .login-side-glow {
+  .auth-side-glow {
     background-color: var(--background);
     background-image: radial-gradient(
       ellipse 85% 70% at 45% 42%,
@@ -9,7 +9,7 @@
     );
   }
 
-  .dark .login-side-glow {
+  .dark .auth-side-glow {
     background-image: radial-gradient(
       ellipse 85% 70% at 45% 42%,
       rgb(49 46 129 / 0.18) 0%,

@@ -17,7 +17,7 @@ const Login: React.FC<Props> = ({ className }) => {
   const tAuth = useTranslations("Auth");
 
   return (
-    <div className={cn(className, "Login relative flex flex-1")}>
+    <div className={cn(className, "Login bg-background relative flex flex-1")}>
       <Link
         href="/"
         className="text-text-secondary hover:text-foreground hover:bg-muted absolute top-4 left-4 z-10 inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm transition-colors"
@@ -25,8 +25,8 @@ const Login: React.FC<Props> = ({ className }) => {
         <ArrowLeft className="size-4" />
         {tAuth("backToLobby")}
       </Link>
-      <div className="login-side-glow animate-fade-in relative hidden flex-1 items-center justify-center overflow-hidden md:w-1/2 xl:flex">
-        <RandomFallacy />
+      <div className="auth-side-glow relative hidden flex-1 items-center justify-center overflow-hidden md:w-1/2 xl:flex">
+        <RandomFallacy className="animate-fade-in" />
       </div>
       <Separator
         orientation="vertical"
