@@ -1,18 +1,10 @@
 "use client";
 import { useTheme } from "next-themes";
-import React, { useSyncExternalStore } from "react";
+import React from "react";
 
+import { useIsClient } from "hooks/useIsClient";
 import { cn } from "lib/utils";
 import { ThemeSwitcherButtonProps as Props } from "./ThemeSwitcherButton.types";
-
-const emptySubscribe = () => () => {};
-
-const useIsClient = () =>
-  useSyncExternalStore(
-    emptySubscribe,
-    () => true,
-    () => false
-  );
 
 const ThemeSwitcher: React.FC<Props> = ({ className }) => {
   const isClient = useIsClient();
@@ -26,7 +18,7 @@ const ThemeSwitcher: React.FC<Props> = ({ className }) => {
     <button
       className={cn(
         className,
-        "rounded-xl bg-slate-200 px-10 py-2 duration-200 dark:bg-[#212933]"
+        "cursor-pointer rounded-xl bg-slate-200 px-10 py-2 duration-200 dark:bg-[#212933]"
       )}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >

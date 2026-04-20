@@ -15,6 +15,14 @@ const proxy = async (request: NextRequest) => {
     return response;
   }
 
+  const hasSupabaseSessionCookie = request.cookies
+    .getAll()
+    .some(cookie => cookie.name.startsWith("sb-"));
+
+  if (!hasSupabaseSessionCookie) {
+    return response;
+  }
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     getSupabasePublicKey()!,

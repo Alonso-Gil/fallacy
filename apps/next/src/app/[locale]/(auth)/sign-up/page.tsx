@@ -1,9 +1,6 @@
 import { redirect } from "next/navigation";
-import React from "react";
 
 import SignUp from "components/auth/SignUp/SignUp";
-import RandomFallacy from "components/RandomFallacy/RandomFallacy";
-import { Separator } from "components/ui/separator";
 import { getCurrentUser } from "utils/supabase/getCurrentUser";
 import { buildPageMetadata, localePath } from "lib/site";
 
@@ -29,24 +26,13 @@ const SignUpPage = async ({
   params: Promise<{ locale: string }>;
 }) => {
   const { locale } = await params;
-
   const { status } = await getCurrentUser();
+
   if (status === "authenticated") {
     redirect(localePath(locale, "/"));
   }
 
-  return (
-    <div className="SignUpPage bg-background flex flex-1">
-      <SignUp className="animate-fade-in-right-to-left flex-1" />
-      <Separator
-        orientation="vertical"
-        className="bg-border hidden self-stretch xl:block"
-      />
-      <div className="animate-fade-in hidden flex-1 items-center justify-center md:w-1/2 xl:flex">
-        <RandomFallacy />
-      </div>
-    </div>
-  );
+  return <SignUp />;
 };
 
 export default SignUpPage;

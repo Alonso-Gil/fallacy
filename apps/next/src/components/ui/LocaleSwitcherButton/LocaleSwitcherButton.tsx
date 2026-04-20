@@ -2,19 +2,11 @@
 import { usePathname, useRouter } from "i18n/navigation";
 import { routing } from "i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
-import React, { useSyncExternalStore } from "react";
+import React from "react";
 
+import { useIsClient } from "hooks/useIsClient";
 import { cn } from "lib/utils";
 import { LocaleSwitcherButtonProps as Props } from "./LocaleSwitcherButton.types";
-
-const emptySubscribe = () => () => {};
-
-const useIsClient = () =>
-  useSyncExternalStore(
-    emptySubscribe,
-    () => true,
-    () => false
-  );
 
 const LocaleSwitcherButton: React.FC<Props> = ({ className }) => {
   const isClient = useIsClient();
@@ -35,7 +27,7 @@ const LocaleSwitcherButton: React.FC<Props> = ({ className }) => {
       type="button"
       className={cn(
         className,
-        "rounded-xl bg-slate-200 px-10 py-2 duration-200 dark:bg-[#212933]"
+        "cursor-pointer rounded-xl bg-slate-200 px-10 py-2 duration-200 dark:bg-[#212933]"
       )}
       aria-label={t("ariaSwitchTo", {
         locale: t(`label.${targetLocale}`)

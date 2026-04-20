@@ -65,17 +65,70 @@
       "configureSupabase": "Configure Supabase in .env to enable OAuth"
     },
     "logOut": "Log out",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "backToLobby": "Back to lobby"
   },
   "Settings": {
     "title": "Settings",
     "description": "Manage your preferences",
     "openLabel": "Open settings",
     "appearance": "Appearance",
-    "language": "Language"
+    "appearanceDescription": "Choose the visual theme of the app",
+    "darkMode": "Dark mode",
+    "themeDark": "Dark theme enabled",
+    "themeLight": "Light theme enabled",
+    "language": "Language",
+    "languageDescription": "Select the interface language",
+    "notifications": "Notifications",
+    "notificationsDescription": "Manage which alerts you receive and how",
+    "privacy": "Privacy",
+    "privacyDescription": "Control what information you share and with whom",
+    "security": "Security",
+    "securityDescription": "Protect your account with password and two-factor auth",
+    "account": "Account",
+    "accountDescription": "Manage your account data and preferences"
   },
   "RandomFallacy": {
-    "title": "- False analogy fallacy",
-    "description": "It is a reasoning error that occurs when drawing a comparison between two things that are not sufficiently similar to justify the conclusion. This fallacy assumes that because two things share some similarities, they must also be alike in other important respects."
+    "previous": "Previous fallacy",
+    "next": "Next fallacy",
+    "goTo": "Go to fallacy {index}",
+    "items": [
+      {
+        "title": "- False analogy fallacy",
+        "description": "It is a reasoning error that occurs when drawing a comparison between two things that are not sufficiently similar to justify the conclusion. This fallacy assumes that because two things share some similarities, they must also be alike in other important respects."
+      },
+      {
+        "title": "- Ad hominem fallacy",
+        "description": "It consists of attacking the person making the argument instead of refuting the argument itself. Shifting the discussion toward the opponent's personal traits neither invalidates nor validates the idea under debate."
+      },
+      {
+        "title": "- Straw man",
+        "description": "The opponent's position is distorted or exaggerated to refute a weaker version they never defended. Instead of engaging the real argument, a caricature is built to be knocked down more easily."
+      },
+      {
+        "title": "- Slippery slope",
+        "description": "It claims that a small first step, usually harmless, will inevitably lead to a chain of extreme consequences, without justifying why each link is necessary."
+      },
+      {
+        "title": "- False dichotomy",
+        "description": "Only two options are presented as if they were the only possibilities, ignoring other alternatives or nuanced middle grounds that could also be valid."
+      },
+      {
+        "title": "- Appeal to ignorance",
+        "description": "It argues that something is true because it has not been proven false, or false because it has not been proven true. A lack of evidence is not proof in either direction."
+      }
+    ]
+  },
+  "Lobby": {
+    "brand": {
+      "subtitle": "Where ideas clash"
+    },
+    "users": {
+      "label": "Connected",
+      "empty": "No one is in the lobby yet"
+    },
+    "account": {
+      "helper": "Sign in to debate"
+    }
   }
 }

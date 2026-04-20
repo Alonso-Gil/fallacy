@@ -1,6 +1,6 @@
 :root {
   --background: #f8fafc;
-  --surface: #ffffff;
+  --surface: #f3f6fe;
   --surface-secondary: #eef2ff;
   --primary: #4f46e5;
   --primary-hover: #4338ca;
@@ -27,7 +27,7 @@
 
 .dark {
   --background: #0f172a;
-  --surface: #111827;
+  --surface: #172031;
   --surface-secondary: #1f2937;
   --accent: #f59e0b;
   --text: #f9fafb;

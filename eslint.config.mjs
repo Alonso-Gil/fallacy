@@ -55,6 +55,10 @@ export default tseslint.config(
       "@typescript-eslint/explicit-module-boundary-types": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-namespace": "off",
+      "padding-line-between-statements": [
+        "error",
+        { blankLine: "never", prev: "directive", next: "import" }
+      ],
       "simple-import-sort/exports": "error",
       "simple-import-sort/imports": [
         "error",

@@ -18,8 +18,8 @@
     "localeSwitcher": {
       "ariaSwitchTo": "Cambiar a {locale}",
       "label": {
-        "en": "inglés",
-        "es": "español"
+        "en": "Inglés",
+        "es": "Español"
       }
     }
   },
@@ -43,7 +43,7 @@
       "password": "Contraseña",
       "emailPlaceholder": "correo@ejemplo.com",
       "passwordPlaceholder": "••••••••",
-      "submitLogin": "Entrar",
+      "submitLogin": "Iniciar sesión",
       "submitSignUp": "Registrarse",
       "supabaseDisabledButton": "Configura Supabase en .env",
       "errors": {
@@ -65,17 +65,70 @@
       "configureSupabase": "Configura Supabase en .env para habilitar OAuth"
     },
     "logOut": "Cerrar sesión",
-    "signIn": "Iniciar sesión"
+    "signIn": "Iniciar sesión",
+    "backToLobby": "Volver al lobby"
   },
   "Settings": {
     "title": "Configuración",
     "description": "Ajusta tus preferencias",
     "openLabel": "Abrir configuración",
     "appearance": "Apariencia",
-    "language": "Idioma"
+    "appearanceDescription": "Elige el tema visual de la aplicación",
+    "darkMode": "Modo oscuro",
+    "themeDark": "Tema oscuro activado",
+    "themeLight": "Tema claro activado",
+    "language": "Idioma",
+    "languageDescription": "Selecciona el idioma de la interfaz",
+    "notifications": "Notificaciones",
+    "notificationsDescription": "Gestiona qué avisos quieres recibir y cómo",
+    "privacy": "Privacidad",
+    "privacyDescription": "Controla qué información compartes y con quién",
+    "security": "Seguridad",
+    "securityDescription": "Protege tu cuenta con contraseña y verificación en dos pasos",
+    "account": "Cuenta",
+    "accountDescription": "Administra los datos y preferencias de tu cuenta"
   },
   "RandomFallacy": {
-    "title": "- Falacia de falsa analogía",
-    "description": "Es un error de razonamiento que se comete al establecer una comparación entre dos cosas que, en realidad, no son lo suficientemente similares como para justificar la conclusión que se extrae. Esta falacia asume que porque dos cosas comparten algunas similitudes, también deben ser similares en otros aspectos importantes."
+    "previous": "Falacia anterior",
+    "next": "Siguiente falacia",
+    "goTo": "Ir a la falacia {index}",
+    "items": [
+      {
+        "title": "- Falacia de falsa analogía",
+        "description": "Es un error de razonamiento que se comete al establecer una comparación entre dos cosas que, en realidad, no son lo suficientemente similares como para justificar la conclusión que se extrae. Esta falacia asume que porque dos cosas comparten algunas similitudes, también deben ser similares en otros aspectos importantes."
+      },
+      {
+        "title": "- Falacia ad hominem",
+        "description": "Consiste en atacar a la persona que defiende un argumento en lugar de rebatir el argumento mismo. Desviar la discusión hacia las características personales del oponente no invalida ni valida la idea que se está debatiendo."
+      },
+      {
+        "title": "- Hombre de paja",
+        "description": "Se distorsiona o exagera la postura del oponente para refutar una versión más débil que nunca defendió. En lugar de discutir el argumento real, se inventa una caricatura más fácil de derribar."
+      },
+      {
+        "title": "- Pendiente resbaladiza",
+        "description": "Se afirma que un primer paso, generalmente inocuo, conducirá inevitablemente a una cadena de consecuencias extremas, sin justificar por qué cada eslabón es necesario."
+      },
+      {
+        "title": "- Falsa dicotomía",
+        "description": "Se presentan únicamente dos opciones como si fueran las únicas posibles, ignorando otras alternativas o matices intermedios que también podrían ser válidos."
+      },
+      {
+        "title": "- Apelación a la ignorancia",
+        "description": "Se sostiene que algo es verdadero porque no se ha demostrado lo contrario, o que es falso porque no se ha demostrado que sea cierto. La falta de evidencia no constituye prueba en ninguna dirección."
+      }
+    ]
+  },
+  "Lobby": {
+    "brand": {
+      "subtitle": "Donde las ideas se enfrentan"
+    },
+    "users": {
+      "label": "Conectados",
+      "empty": "Aún no hay nadie en el lobby"
+    },
+    "account": {
+      "helper": "Inicia sesión para debatir"
+    }
   }
 }

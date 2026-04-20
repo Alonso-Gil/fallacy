@@ -1,8 +1,10 @@
 "use client";
 import { useRouter } from "i18n/navigation";
+import { LogIn, LogOut } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React from "react";
 
+import { Button } from "components/ui/button";
 import { createClient } from "utils/supabase/component";
 import { useAuthStore } from "store/auth/auth.store";
 
@@ -27,9 +29,11 @@ const AuthActionButton = () => {
   };
 
   return (
-    <button
+    <Button
       type="button"
-      className="inline-flex items-center rounded-lg bg-[#24292F] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#24292F]/90 focus:ring-4 focus:ring-[#24292F]/50 focus:outline-none dark:hover:bg-[#050708]/30 dark:focus:ring-gray-500"
+      variant="default"
+      size="lg"
+      className="hover:bg-primary-hover shadow-primary/25 hover:shadow-primary/35 w-full shadow-md transition-shadow"
       onClick={() => {
         if (isAuthenticated) {
           void handleSignOut();
@@ -38,8 +42,13 @@ const AuthActionButton = () => {
         handleSignIn();
       }}
     >
+      {isAuthenticated ? (
+        <LogOut data-icon="inline-start" />
+      ) : (
+        <LogIn data-icon="inline-start" />
+      )}
       {isAuthenticated ? t("logOut") : t("signIn")}
-    </button>
+    </Button>
   );
 };
 

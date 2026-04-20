@@ -126,7 +126,7 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
         placeholder={t("passwordPlaceholder")}
       />
       <Button
-        className="mb-2"
+        className="shadow-primary/25 hover:shadow-primary/35 mb-2 shadow-md transition-shadow"
         text={context === "sign-up" ? t("submitSignUp") : t("submitLogin")}
         type="submit"
         isLoading={isLoading}

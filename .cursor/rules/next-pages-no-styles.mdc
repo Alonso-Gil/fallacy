@@ -1,0 +1,89 @@
+---
+description: Las pages y layouts del App Router no contienen estilos ni JSX de presentación; solo orquestan
+globs: "apps/next/src/app/**/{page,layout}.tsx"
+alwaysApply: false
+---
+
+# Pages y layouts del App Router: solo orquestación
+
+Los archivos `page.tsx` y `layout.tsx` dentro de `apps/next/src/app/**` se consideran **puntos de entrada**. Su única responsabilidad es:
+
+- Resolver `params`/`searchParams`.
+- Hacer fetching de datos en el servidor (Supabase, headers, cookies, etc.).
+- Aplicar guards y `redirect()` si corresponde.
+- Exportar `generateMetadata` / `generateStaticParams` cuando aplique.
+- Renderizar **un único componente** con los datos como props.
+
+## Reglas
+
+- **No incluir clases de Tailwind** ni estilos en `page.tsx` / `layout.tsx`. Si hace falta layout o presentación, vive en un componente bajo `apps/next/src/components/...`.
+- **No anidar JSX de presentación** (`<div className="...">`, `<Separator />`, wrappers, etc.) directamente en la page. El componente que importa la page debe encargarse de su propio layout completo.
+- **Pasar datos, no estilos**: si el componente necesita variantes visuales, expónlas como props (`variant`, `size`, etc.), no metas `className` desde la page.
+- **Una page = un componente**. Si necesitas combinar varios, crea un componente "screen" (`Login`, `Home`, `SignUp`...) que los componga.
+- **Animaciones, fondos y separadores** son responsabilidad del componente, no de la page.
+- Mantener la lógica de servidor (async, `getCurrentUser`, `redirect`, `headers()`, etc.) en la page; mover el JSX al componente.
+
+## Forma canónica
+
+```tsx
+import { redirect } from "next/navigation";
+
+import Login from "components/auth/Login/Login";
+import { getCurrentUser } from "utils/supabase/getCurrentUser";
+import { buildPageMetadata, localePath } from "lib/site";
+
+import type { Metadata } from "next";
+
+export const generateMetadata = async ({
+  params
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> => {
+  const { locale } = await params;
+  return buildPageMetadata({
+    locale,
+    path: "/login",
+    titleKey: "login.title",
+    descriptionKey: "login.description"
+  });
+};
+
+const LoginPage = async ({
+  params
+}: {
+  params: Promise<{ locale: string }>;
+}) => {
+  const { locale } = await params;
+  const { status } = await getCurrentUser();
+
+  if (status === "authenticated") {
+    redirect(localePath(locale, "/"));
+  }
+
+  return <Login />;
+};
+
+export default LoginPage;
+```
+
+## Anti-patrones
+
+```tsx
+// MAL: la page contiene layout y estilos
+const LoginPage = async () => {
+  return (
+    <div className="Login flex flex-1">
+      <div className="login-side-glow ...">
+        <RandomFallacy />
+      </div>
+      <Separator orientation="vertical" className="hidden ..." />
+      <Login className="animate-fade-in-right-to-left" />
+    </div>
+  );
+};
+```
+
+```tsx
+// MAL: la page inyecta clases o variantes visuales
+return <Home className="bg-surface min-h-screen" />;
+```

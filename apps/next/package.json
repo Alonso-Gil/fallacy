@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "next start",
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "compile": "echo skipping compile",
     "build": "next build",
     "clean": "rm -rf .next && rm -rf node_modules",

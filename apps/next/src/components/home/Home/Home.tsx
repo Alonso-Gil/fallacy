@@ -1,29 +1,38 @@
-"use client";
 import React from "react";
 
+import { Separator } from "ui/separator";
+import BrandHeader from "components/home/BrandHeader/BrandHeader";
+import LobbyUsersPanel from "components/home/LobbyUsersPanel/LobbyUsersPanel";
 import UserPanel from "components/UserPanel/UserPanel";
 import { HomeProps as Props } from "./Home.types";
 
 const Home: React.FC<Props> = () => {
   return (
-    <div className="flex flex-1 flex-col">
-      <div className="flex h-16 w-full items-center justify-center bg-blue-500">
-        Notificaciones - h 64px
-      </div>
+    <main className="flex flex-1 flex-col">
+      <h1 className="sr-only">Lobby</h1>
       <div className="flex h-full w-full">
-        <div className="hidden min-w-72 flex-1 flex-col items-center justify-center md:flex">
-          <div className="flex h-full w-full items-center justify-center bg-red-500">
-            Lobby users - w 288px
-          </div>
-          <div className="flex h-28 w-full flex-col items-center justify-center gap-2">
-            <UserPanel />
-          </div>
-        </div>
-        <div className="flex w-full items-center justify-center bg-green-500">
+        <aside
+          aria-label="Usuarios y panel del usuario"
+          className="hidden min-w-72 flex-1 flex-col md:flex"
+        >
+          <BrandHeader />
+          <Separator variant="fade" />
+          <LobbyUsersPanel />
+          <Separator variant="fade" />
+          <UserPanel />
+        </aside>
+        <Separator orientation="vertical" className="hidden md:block" />
+        <section
+          aria-labelledby="lobby-info-title"
+          className="bg-surface flex w-full flex-col items-center justify-center"
+        >
+          <h2 id="lobby-info-title" className="sr-only">
+            Información del lobby
+          </h2>
           Lobby info
-        </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 

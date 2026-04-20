@@ -1,9 +1,6 @@
 import { redirect } from "next/navigation";
-import React from "react";
 
 import Login from "components/auth/Login/Login";
-import RandomFallacy from "components/RandomFallacy/RandomFallacy";
-import { Separator } from "components/ui/separator";
 import { getCurrentUser } from "utils/supabase/getCurrentUser";
 import { buildPageMetadata, localePath } from "lib/site";
 
@@ -23,32 +20,19 @@ export const generateMetadata = async ({
   });
 };
 
-const SignInPage = async ({
+const LoginPage = async ({
   params
 }: {
   params: Promise<{ locale: string }>;
 }) => {
   const { locale } = await params;
-
   const { status } = await getCurrentUser();
+
   if (status === "authenticated") {
     redirect(localePath(locale, "/"));
   }
 
-  return (
-    <div className="Login flex flex-1">
-      <div className="login-side-glow animate-fade-in relative hidden flex-1 items-center justify-center overflow-hidden md:w-1/2 xl:flex">
-        <RandomFallacy />
-      </div>
-      <Separator
-        orientation="vertical"
-        className="bg-border hidden self-stretch xl:block"
-      />
-      <div className="bg-surface flex flex-1 flex-col">
-        <Login className="animate-fade-in-right-to-left" />
-      </div>
-    </div>
-  );
+  return <Login />;
 };
 
-export default SignInPage;
+export default LoginPage;
