@@ -25,7 +25,7 @@ const SignUp: React.FC<Props> = ({ className }) => {
         <ArrowLeft className="size-4" />
         {tAuth("backToLobby")}
       </Link>
-      <div className="bg-surface flex flex-1 flex-col items-center justify-between overflow-y-auto p-2 md:p-6">
+      <div className="bg-surface flex flex-1 flex-col items-center justify-between overflow-y-auto p-2 md:p-6 xl:grow-0 xl:basis-2/5">
         <Logo className="md:self-start" />
         <div className="animate-fade-in-right-to-left flex w-full max-w-[400px] flex-1 flex-col justify-center pb-6">
           <h1 className="text-foreground pt-4 pb-6 font-semibold lg:pt-20">
@@ -66,7 +66,7 @@ const SignUp: React.FC<Props> = ({ className }) => {
         orientation="vertical"
         className="hidden self-stretch xl:block"
       />
-      <div className="auth-side-glow relative hidden flex-1 items-center justify-center overflow-hidden md:w-1/2 xl:flex">
+      <div className="auth-side-glow relative hidden flex-1 items-center justify-center overflow-hidden md:w-1/2 xl:flex xl:grow-0 xl:basis-3/5">
         <RandomFallacy className="animate-fade-in" />
       </div>
     </div>
