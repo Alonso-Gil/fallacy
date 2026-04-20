@@ -66,7 +66,8 @@
     },
     "logOut": "Log out",
     "signIn": "Sign in",
-    "backToLobby": "Back to lobby"
+    "backToLobby": "Back to lobby",
+    "photoCredit": "Photo by <author>{name}</author> on <site>Unsplash</site>"
   },
   "Settings": {
     "title": "Settings",
@@ -116,6 +117,22 @@
       {
         "title": "- Appeal to ignorance",
         "description": "It argues that something is true because it has not been proven false, or false because it has not been proven true. A lack of evidence is not proof in either direction."
+      },
+      {
+        "title": "- Appeal to popularity",
+        "description": "A claim is assumed to be true simply because many people believe or accept it. The popularity of an idea does not make it correct: truth is not decided by majority vote."
+      },
+      {
+        "title": "- Appeal to authority",
+        "description": "A statement is taken as valid solely because it is endorsed by a prestigious or well-known figure, without examining the underlying reasons or evidence. Authorities can be wrong or speak outside their area of expertise."
+      },
+      {
+        "title": "- False cause",
+        "description": "It concludes that one event caused another only because it happened earlier or at the same time. Correlation or temporal proximity does not imply a real causal link between two events."
+      },
+      {
+        "title": "- Circular reasoning",
+        "description": "A claim is justified by using the very conclusion as a premise, instead of providing independent reasons. The argument seems to advance, but really just repeats what it sets out to prove."
       }
     ]
   },

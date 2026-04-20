@@ -15,7 +15,7 @@ const BrandHeader: React.FC<Props> = ({ className }) => {
         "bg-background flex items-center gap-3 px-4 py-6"
       )}
     >
-      <div className="bg-primary/10 text-primary shadow-primary/25 ring-primary/15 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl shadow-lg ring-1 ring-inset">
+      <div className="bg-surface text-primary shadow-primary/30 ring-primary/30 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl shadow-lg ring-1 ring-inset">
         <MessageSquareQuote className="h-6 w-6" />
       </div>
       <div className="flex min-w-0 flex-col gap-1">

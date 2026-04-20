@@ -9,18 +9,21 @@ import Logo from "ui/Logo/Logo";
 import RandomFallacy from "components/RandomFallacy/RandomFallacy";
 import { Separator } from "components/ui/separator";
 import { cn } from "lib/utils";
+import { pickRandomAuthBackground } from "../authBackgrounds";
+import AuthPhotoCredit from "../AuthPhotoCredit/AuthPhotoCredit";
 import EmailAuthForm from "./EmailAuthForm/EmailAuthForm";
 import { SignUpProps as Props } from "./SignUp.types";
 
 const SignUp: React.FC<Props> = ({ className }) => {
   const t = useTranslations("Auth.signUp");
   const tAuth = useTranslations("Auth");
+  const background = pickRandomAuthBackground();
 
   return (
     <div className={cn(className, "SignUp bg-background relative flex flex-1")}>
       <Link
         href="/"
-        className="text-text-secondary hover:text-foreground hover:bg-muted absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm transition-colors"
+        className="text-text-secondary hover:text-foreground hover:bg-muted absolute top-4 right-4 z-50 inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm transition-colors xl:text-white/80 xl:hover:bg-white/10 xl:hover:text-white"
       >
         <ArrowLeft className="size-4" />
         {tAuth("backToLobby")}
@@ -67,7 +70,20 @@ const SignUp: React.FC<Props> = ({ className }) => {
         className="hidden self-stretch xl:block"
       />
       <div className="auth-side-glow relative hidden flex-1 items-center justify-center overflow-hidden md:w-1/2 xl:flex xl:grow-0 xl:basis-3/5">
-        <RandomFallacy className="animate-fade-in" />
+        <Image
+          src={background.src}
+          alt=""
+          fill
+          priority
+          sizes="(min-width: 1280px) 60vw, 50vw"
+          className="scale-105 object-cover object-center opacity-25 blur-[2px]"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-black/70 via-black/55 to-black/40" />
+        <RandomFallacy
+          className="animate-fade-in relative z-10"
+          controlsAlign="left"
+        />
+        <AuthPhotoCredit background={background} className="right-4 bottom-3" />
       </div>
     </div>
   );

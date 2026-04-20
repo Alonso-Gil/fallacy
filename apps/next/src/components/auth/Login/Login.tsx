@@ -9,24 +9,37 @@ import Logo from "ui/Logo/Logo";
 import RandomFallacy from "components/RandomFallacy/RandomFallacy";
 import { Separator } from "components/ui/separator";
 import { cn } from "lib/utils";
+import { pickRandomAuthBackground } from "../authBackgrounds";
+import AuthPhotoCredit from "../AuthPhotoCredit/AuthPhotoCredit";
 import EmailAuthForm from "../SignUp/EmailAuthForm/EmailAuthForm";
 import { LoginProps as Props } from "./Login.types";
 
 const Login: React.FC<Props> = ({ className }) => {
   const t = useTranslations("Auth.login");
   const tAuth = useTranslations("Auth");
+  const background = pickRandomAuthBackground();
 
   return (
     <div className={cn(className, "Login bg-background relative flex flex-1")}>
       <Link
         href="/"
-        className="text-text-secondary hover:text-foreground hover:bg-muted absolute top-4 left-4 z-10 inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm transition-colors"
+        className="text-text-secondary hover:text-foreground hover:bg-muted absolute top-4 left-4 z-50 inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm transition-colors xl:text-white/80 xl:hover:bg-white/10 xl:hover:text-white"
       >
         <ArrowLeft className="size-4" />
         {tAuth("backToLobby")}
       </Link>
       <div className="auth-side-glow relative hidden flex-1 items-center justify-center overflow-hidden md:w-1/2 xl:flex xl:grow-0 xl:basis-3/5">
-        <RandomFallacy className="animate-fade-in" />
+        <Image
+          src={background.src}
+          alt=""
+          fill
+          priority
+          sizes="(min-width: 1280px) 60vw, 50vw"
+          className="scale-105 object-cover object-center opacity-25 blur-[2px]"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-black/70 via-black/55 to-black/40" />
+        <RandomFallacy className="animate-fade-in relative z-10" />
+        <AuthPhotoCredit background={background} className="bottom-3 left-4" />
       </div>
       <Separator
         orientation="vertical"

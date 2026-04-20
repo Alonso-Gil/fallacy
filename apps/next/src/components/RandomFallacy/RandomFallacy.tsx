@@ -6,7 +6,10 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import { Button } from "components/ui/button";
 import { cn } from "lib/utils";
-import { RandomFallacyProps as Props } from "./RandomFallacytypes";
+import {
+  RandomFallacyItem,
+  RandomFallacyProps as Props
+} from "./RandomFallacytypes";
 
 const fallacyTitle = Playfair_Display({
   subsets: ["latin"],
@@ -16,14 +19,12 @@ const fallacyTitle = Playfair_Display({
 
 const AUTOPLAY_INTERVAL_MS = 8000;
 
-type FallacyItem = {
-  title: string;
-  description: string;
-};
-
-const RandomFallacy: React.FC<Props> = ({ className }) => {
+const RandomFallacy: React.FC<Props> = ({
+  className,
+  controlsAlign = "right"
+}) => {
   const t = useTranslations("RandomFallacy");
-  const items = t.raw("items") as FallacyItem[];
+  const items = t.raw("items") as RandomFallacyItem[];
   const total = items.length;
 
   const [index, setIndex] = useState(0);
@@ -61,7 +62,7 @@ const RandomFallacy: React.FC<Props> = ({ className }) => {
       aria-label="Fallacies"
       className={cn(
         className,
-        "relative mx-auto flex w-full max-w-2xl flex-col items-stretch gap-6 px-6 md:px-12"
+        "relative flex h-full w-full flex-col px-6 pt-12 pb-20 md:px-12"
       )}
       onMouseEnter={pause}
       onMouseLeave={resume}
@@ -72,74 +73,77 @@ const RandomFallacy: React.FC<Props> = ({ className }) => {
         key={index}
         aria-roledescription="slide"
         aria-label={`${index + 1} / ${total}`}
-        className="animate-fade-in flex min-h-64 w-full flex-col justify-center"
+        className="animate-fade-in mx-auto flex w-full max-w-[720px] flex-1 flex-col justify-center"
       >
         <h2
           className={cn(
             fallacyTitle.className,
-            "text-foreground pb-4 text-3xl font-semibold md:text-4xl"
+            "pb-4 text-3xl font-semibold text-white md:text-4xl"
           )}
         >
           {current.title}
         </h2>
-        <p className="text-text-secondary leading-relaxed">
+        <p className="text-pretty text-white/75 md:text-lg md:leading-relaxed">
           {current.description}
         </p>
       </article>
 
-      <div className="flex w-full items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            size="icon-lg"
-            aria-label={t("previous")}
-            onClick={handlePrev}
-            className="border-border/60 hover:bg-surface-secondary hover:border-border rounded-full"
-          >
-            <ChevronLeft />
-          </Button>
+      <div
+        className={cn(
+          "absolute bottom-3 z-20 flex items-center gap-3",
+          controlsAlign === "right" ? "right-4" : "left-4"
+        )}
+      >
+        <Button
+          type="button"
+          variant="outline"
+          size="icon-lg"
+          aria-label={t("previous")}
+          onClick={handlePrev}
+          className="rounded-full border-white/30 bg-transparent text-white hover:border-white/60 hover:bg-white/10 hover:text-white"
+        >
+          <ChevronLeft />
+        </Button>
 
-          <div
-            role="tablist"
-            aria-label="Pagination"
-            className="flex items-center gap-2"
-          >
-            {items.map((item, dotIndex) => {
-              const isActive = dotIndex === index;
-              return (
-                <button
-                  key={item.title}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  aria-label={t("goTo", { index: dotIndex + 1 })}
-                  onClick={() => goTo(dotIndex)}
-                  className={cn(
-                    "h-1.5 cursor-pointer rounded-full transition-all duration-300",
-                    isActive
-                      ? "bg-primary w-6"
-                      : "bg-border hover:bg-text-secondary/60 w-1.5"
-                  )}
-                />
-              );
-            })}
-          </div>
-
-          <Button
-            type="button"
-            variant="outline"
-            size="icon-lg"
-            aria-label={t("next")}
-            onClick={handleNext}
-            className="border-border/60 hover:bg-surface-secondary hover:border-border rounded-full"
-          >
-            <ChevronRight />
-          </Button>
+        <div
+          role="tablist"
+          aria-label="Pagination"
+          className="flex items-center gap-2"
+        >
+          {items.map((item, dotIndex) => {
+            const isActive = dotIndex === index;
+            return (
+              <button
+                key={item.title}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                aria-label={t("goTo", { index: dotIndex + 1 })}
+                onClick={() => goTo(dotIndex)}
+                className={cn(
+                  "h-1.5 cursor-pointer rounded-full transition-all duration-300",
+                  isActive
+                    ? "w-6 bg-white"
+                    : "w-1.5 bg-white/30 hover:bg-white/60"
+                )}
+              />
+            );
+          })}
         </div>
 
-        <span className="text-text-secondary/60 text-xs font-medium tracking-wider tabular-nums">
-          <span className="text-text-secondary">
+        <Button
+          type="button"
+          variant="outline"
+          size="icon-lg"
+          aria-label={t("next")}
+          onClick={handleNext}
+          className="rounded-full border-white/30 bg-transparent text-white hover:border-white/60 hover:bg-white/10 hover:text-white"
+        >
+          <ChevronRight />
+        </Button>
+
+        <span className="ml-1 text-xs font-medium tracking-wider text-white/50 tabular-nums">
+          <span className="text-white/80">
             {String(index + 1).padStart(2, "0")}
           </span>
           <span className="px-1.5">/</span>

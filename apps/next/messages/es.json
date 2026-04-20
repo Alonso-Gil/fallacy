@@ -66,7 +66,8 @@
     },
     "logOut": "Cerrar sesión",
     "signIn": "Iniciar sesión",
-    "backToLobby": "Volver al lobby"
+    "backToLobby": "Volver al lobby",
+    "photoCredit": "Foto de <author>{name}</author> en <site>Unsplash</site>"
   },
   "Settings": {
     "title": "Configuración",
@@ -116,6 +117,22 @@
       {
         "title": "- Apelación a la ignorancia",
         "description": "Se sostiene que algo es verdadero porque no se ha demostrado lo contrario, o que es falso porque no se ha demostrado que sea cierto. La falta de evidencia no constituye prueba en ninguna dirección."
+      },
+      {
+        "title": "- Apelación a la mayoría",
+        "description": "Se asume que una afirmación es verdadera simplemente porque mucha gente la cree o la acepta. Que una idea sea popular no la convierte en correcta: la verdad no se decide por votación."
+      },
+      {
+        "title": "- Apelación a la autoridad",
+        "description": "Se da por válida una afirmación únicamente porque la sostiene alguien con prestigio o renombre, sin examinar las razones ni las pruebas que la respaldan. Una autoridad puede equivocarse o pronunciarse fuera de su campo de competencia."
+      },
+      {
+        "title": "- Causa falsa",
+        "description": "Se concluye que un hecho es la causa de otro solo porque ocurrió antes o sucedió al mismo tiempo. La correlación o la cercanía temporal no implican una relación causal real entre ambos sucesos."
+      },
+      {
+        "title": "- Razonamiento circular",
+        "description": "Se intenta justificar una afirmación usando como premisa la propia conclusión, en lugar de aportar razones independientes. El argumento parece avanzar, pero en realidad se limita a repetir lo que pretende demostrar."
       }
     ]
   },
