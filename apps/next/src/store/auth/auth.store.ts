@@ -19,7 +19,10 @@ export const useAuthStore = create<AuthStoreValues>()(
             payload
           });
         },
-        reset: () => set({ ...defaultValues }, false, { type: "reset" })
+        reset: () =>
+          set({ user: null }, false, {
+            type: "reset"
+          })
       };
       return store;
     },

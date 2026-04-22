@@ -1,0 +1,56 @@
+---
+description: Estructura de carpetas de componentes React (tsx + types; utils solo si aplica; estilos en tsx)
+globs: apps/next/src/components/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Componentes React: carpeta base y archivos
+
+Referencia: `auth/EmailAuthForm/` (formulario de correo compartido por login y registro).
+
+## Regla
+
+Cada **componente con nombre propio** vive en una carpeta **`NombreComponente/`** con **al menos**:
+
+| Archivo | Contenido |
+|--------|-----------|
+| **`NombreComponente.tsx`** | Componente React (JSX, hooks, efectos). **Incluye clases Tailwind y `cn()` aquí**; no extraer estilos a `.utils` solo por ordenar strings. Ver **firma** abajo. |
+| **`NombreComponente.types.ts`** | Tipos e interfaces: al menos **`NombreComponenteProps`**. Sin lógica de negocio. Puede reexportar tipos inferidos desde `.utils` si hace falta (p. ej. `z.infer`). |
+
+**`NombreComponente.utils.ts`** — **solo si aporta valor**: lógica no trivial (schemas Zod, funciones puras largas, llamadas a APIs, parseo). **No** crear `.utils` vacío ni solo para constantes de clases CSS. Si el componente no necesita ese archivo, la carpeta queda con **dos** archivos (`.tsx` + `.types.ts`).
+
+## Subcomponentes
+
+Si un bloque merece **otro nombre**, crear **`OtroComponente/`** con el mismo criterio: **`OtroComponente.tsx`**, **`OtroComponente.types.ts`**, y **`OtroComponente.utils.ts`** únicamente cuando haya lógica que extraer (misma regla que arriba).
+
+Imports típicos desde el padre: `./OtroComponente/OtroComponente`.
+
+## Firma del componente (`.tsx`)
+
+Definir el componente como **const** con **`React.FC<…Props>`** y parámetro único **`props`**, importando el tipo de props desde el `.types.ts`:
+
+```tsx
+import type { EmailAuthFormProps } from "./EmailAuthForm.types";
+
+const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
+  const { className } = props;
+  return <div className={className}>...</div>;
+};
+
+export default EmailAuthForm;
+```
+
+- Sustituir `EmailAuthForm` / `EmailAuthFormProps` por el nombre real del componente y su interfaz de props.
+- Cerrar con **`export default NombreComponente`** (no `export default function`).
+- Si hace falta **alias** del tipo de props en el archivo (p. ej. `Props`), usarlo solo en la firma: `React.FC<Props>` con `import type { EmailAuthFormProps as Props }`.
+
+## Qué no hacer en esa carpeta
+
+- No añadir `helpers.ts`, `constants.ts`, `types.ts` genéricos ni más nombres salvo decisión explícita del equipo.
+- No mezclar en `.types.ts` lógica que deba vivir en `.utils.ts` cuando exista ese archivo.
+
+## Excepciones razonables
+
+- **Módulos sin UI** (solo tipos + datos o helpers, sin `.tsx`): mantener **un único `.ts`** en la ruta que toque (p. ej. `auth/authBackgrounds.ts`), **sin** carpeta solo para partir tipos/utils si no aporta nada.
+- Componentes **legacy** en un solo archivo: no reestructurar solo por la regla; al **tocarlos o extraer lógica**, alinear con este formato.
+- Archivos de test (`*.test.ts`) o Storybook si el repo los añade después: pueden convivir fuera del par/trio o con convención que se documente aparte.

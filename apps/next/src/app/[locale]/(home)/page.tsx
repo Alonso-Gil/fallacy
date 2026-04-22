@@ -1,4 +1,5 @@
 import Home from "components/home/Home/Home";
+import { getCurrentUser } from "utils/supabase/getCurrentUser";
 import { buildPageMetadata } from "lib/site";
 
 import type { Metadata } from "next";
@@ -18,6 +19,9 @@ export const generateMetadata = async ({
   });
 };
 
-const HomePage = () => <Home />;
+const HomePage = async () => {
+  const { user } = await getCurrentUser();
+  return <Home initialUser={user} />;
+};
 
 export default HomePage;

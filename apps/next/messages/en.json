@@ -43,20 +43,41 @@
       "password": "Password",
       "emailPlaceholder": "you@example.com",
       "passwordPlaceholder": "••••••••",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "passwordRules": {
+        "uppercase": "Uppercase letter",
+        "lowercase": "Lowercase letter",
+        "number": "Number",
+        "special": "Special character (e.g. !?<>@#$%)",
+        "minLength": "8 characters or more"
+      },
       "submitLogin": "Log in",
       "submitSignUp": "Sign up",
+      "loginSuccess": "Signed in successfully",
+      "signUpCheckEmail": "If this email can receive mail, we've sent a link. Open it to confirm your account, then you can sign in.",
       "supabaseDisabledButton": "Configure Supabase in .env",
       "errors": {
         "supabaseConfig": "Email sign-in is disabled: set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (see config).",
         "noClient": "Supabase client is not available.",
         "invalidCredentials": "Invalid email or password",
-        "unexpected": "An unexpected error occurred: {message}"
+        "emailNotConfirmed": "Confirm your email before signing in.",
+        "userAlreadyRegistered": "That email is already registered.",
+        "signupDisabled": "Sign up is disabled.",
+        "rateLimited": "Too many attempts. Please wait a moment.",
+        "weakPassword": "The password does not meet the requirements.",
+        "generic": "Something went wrong. Please try again.",
+        "unexpected": "An unexpected error occurred. Please try again."
       },
       "validation": {
         "required": "This field is required",
         "invalidEmail": "Invalid email address",
         "minLength": "Must be at least {min} characters",
-        "maxLength": "Must be at most {max} characters"
+        "maxLength": "Must be at most {max} characters",
+        "passwordUppercase": "Include at least one uppercase letter",
+        "passwordLowercase": "Include at least one lowercase letter",
+        "passwordNumber": "Include at least one number",
+        "passwordSpecial": "Include at least one special character"
       }
     },
     "oauth": {
@@ -71,6 +92,7 @@
   },
   "Settings": {
     "title": "Settings",
+    "navAriaLabel": "Settings sections",
     "description": "Manage your preferences",
     "openLabel": "Open settings",
     "appearance": "Appearance",
@@ -87,7 +109,9 @@
     "security": "Security",
     "securityDescription": "Protect your account with password and two-factor auth",
     "account": "Account",
-    "accountDescription": "Manage your account data and preferences"
+    "accountDescription": "Manage your account data and preferences",
+    "accountPanelBody": "To sign out, use the button at the bottom of the side menu.",
+    "accountSignInHint": "Sign in to manage your account and sign out."
   },
   "RandomFallacy": {
     "previous": "Previous fallacy",
@@ -145,7 +169,9 @@
       "empty": "No one is in the lobby yet"
     },
     "account": {
-      "helper": "Sign in to debate"
+      "helper": "Sign in to debate",
+      "statusDoNotDisturb": "Do not disturb",
+      "authLoading": "Loading session"
     }
   }
 }

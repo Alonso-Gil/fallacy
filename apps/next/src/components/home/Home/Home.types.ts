@@ -1,4 +1,5 @@
-// Interfaces and types from component Home
+import type { User } from "@supabase/supabase-js";
 
-// Component Props
-export interface HomeProps {}
+export interface HomeProps {
+  initialUser: User | null;
+}

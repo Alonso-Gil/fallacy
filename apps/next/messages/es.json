@@ -43,20 +43,41 @@
       "password": "Contraseña",
       "emailPlaceholder": "correo@ejemplo.com",
       "passwordPlaceholder": "••••••••",
+      "showPassword": "Mostrar contraseña",
+      "hidePassword": "Ocultar contraseña",
+      "passwordRules": {
+        "uppercase": "Letra mayúscula",
+        "lowercase": "Letra minúscula",
+        "number": "Número",
+        "special": "Carácter especial (p. ej. !?<>@#$%)",
+        "minLength": "8 caracteres o más"
+      },
       "submitLogin": "Iniciar sesión",
       "submitSignUp": "Registrarse",
+      "loginSuccess": "Sesión iniciada correctamente",
+      "signUpCheckEmail": "Si el correo es válido, te hemos enviado un enlace. Ábrelo para confirmar la cuenta y luego podrás iniciar sesión.",
       "supabaseDisabledButton": "Configura Supabase en .env",
       "errors": {
         "supabaseConfig": "Autenticación por correo desactivada: configura NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (ver config).",
         "noClient": "Cliente Supabase no disponible.",
         "invalidCredentials": "Correo o contraseña no válidos",
-        "unexpected": "Error inesperado: {message}"
+        "emailNotConfirmed": "Confirma tu correo antes de iniciar sesión.",
+        "userAlreadyRegistered": "Ese correo ya está registrado.",
+        "signupDisabled": "El registro está desactivado.",
+        "rateLimited": "Demasiados intentos. Espera un momento.",
+        "weakPassword": "La contraseña no cumple los requisitos.",
+        "generic": "No se pudo completar la acción. Inténtalo de nuevo.",
+        "unexpected": "Ha ocurrido un error inesperado. Inténtalo de nuevo."
       },
       "validation": {
         "required": "Campo obligatorio",
         "invalidEmail": "Correo electrónico no válido",
         "minLength": "Mínimo {min} caracteres",
-        "maxLength": "Máximo {max} caracteres"
+        "maxLength": "Máximo {max} caracteres",
+        "passwordUppercase": "Incluye al menos una letra mayúscula",
+        "passwordLowercase": "Incluye al menos una letra minúscula",
+        "passwordNumber": "Incluye al menos un número",
+        "passwordSpecial": "Incluye al menos un carácter especial"
       }
     },
     "oauth": {
@@ -71,6 +92,7 @@
   },
   "Settings": {
     "title": "Configuración",
+    "navAriaLabel": "Secciones de configuración",
     "description": "Ajusta tus preferencias",
     "openLabel": "Abrir configuración",
     "appearance": "Apariencia",
@@ -87,7 +109,9 @@
     "security": "Seguridad",
     "securityDescription": "Protege tu cuenta con contraseña y verificación en dos pasos",
     "account": "Cuenta",
-    "accountDescription": "Administra los datos y preferencias de tu cuenta"
+    "accountDescription": "Administra los datos y preferencias de tu cuenta",
+    "accountPanelBody": "Para cerrar sesión usa el botón inferior del menú lateral.",
+    "accountSignInHint": "Inicia sesión para gestionar tu cuenta y cerrar sesión."
   },
   "RandomFallacy": {
     "previous": "Falacia anterior",
@@ -145,7 +169,9 @@
       "empty": "Aún no hay nadie en el lobby"
     },
     "account": {
-      "helper": "Inicia sesión para debatir"
+      "helper": "Inicia sesión para debatir",
+      "statusDoNotDisturb": "No molestar",
+      "authLoading": "Cargando sesión"
     }
   }
 }

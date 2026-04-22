@@ -1,6 +1,5 @@
-// Logo types and interfaces
-
-// Component Props
 export interface LogoProps {
   className?: string;
+  description?: string;
+  variant?: "default" | "compact";
 }

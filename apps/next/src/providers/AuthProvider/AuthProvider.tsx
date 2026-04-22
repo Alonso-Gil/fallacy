@@ -13,7 +13,10 @@ const AuthProvider: React.FC<Props> = ({ initialUser, children }) => {
 
   if (!hydratedRef.current) {
     hydratedRef.current = true;
-    useAuthStore.setState({ user: initialUser });
+    useAuthStore.setState({
+      user: initialUser,
+      sessionResolved: true
+    });
   }
 
   useEffect(() => {

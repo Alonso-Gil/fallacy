@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 
 import { cn } from "lib/utils";
-import { AuthPhotoCreditProps as Props } from "./AuthPhotoCredit.types";
+import type { AuthPhotoCreditProps } from "./AuthPhotoCredit.types";
 
 const renderLink = (href: string) => {
   const Link = (chunks: ReactNode) => (
@@ -19,7 +19,8 @@ const renderLink = (href: string) => {
   return Link;
 };
 
-const AuthPhotoCredit: React.FC<Props> = ({ background, className }) => {
+const AuthPhotoCredit: React.FC<AuthPhotoCreditProps> = props => {
+  const { background, className } = props;
   const t = useTranslations("Auth");
 
   return (

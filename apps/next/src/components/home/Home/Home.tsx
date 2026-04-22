@@ -6,7 +6,9 @@ import LobbyUsersPanel from "components/home/LobbyUsersPanel/LobbyUsersPanel";
 import UserPanel from "components/UserPanel/UserPanel";
 import { HomeProps as Props } from "./Home.types";
 
-const Home: React.FC<Props> = () => {
+const Home: React.FC<Props> = props => {
+  const { initialUser } = props;
+
   return (
     <main className="flex flex-1 flex-col">
       <h1 className="sr-only">Lobby</h1>
@@ -19,7 +21,7 @@ const Home: React.FC<Props> = () => {
           <Separator variant="fade" />
           <LobbyUsersPanel />
           <Separator variant="fade" />
-          <UserPanel />
+          <UserPanel initialUser={initialUser} />
         </aside>
         <Separator orientation="vertical" className="hidden md:block" />
         <section

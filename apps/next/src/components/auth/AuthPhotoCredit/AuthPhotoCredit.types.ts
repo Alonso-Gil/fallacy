@@ -1,4 +1,4 @@
-import { AuthBackground } from "../authBackgrounds";
+import type { AuthBackground } from "../authBackgrounds";
 
 export interface AuthPhotoCreditProps {
   background: AuthBackground;

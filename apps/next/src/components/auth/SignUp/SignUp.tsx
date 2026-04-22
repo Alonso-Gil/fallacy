@@ -9,12 +9,14 @@ import Logo from "ui/Logo/Logo";
 import RandomFallacy from "components/RandomFallacy/RandomFallacy";
 import { Separator } from "components/ui/separator";
 import { cn } from "lib/utils";
+import AuthBackgroundImage from "../AuthBackgroundImage/AuthBackgroundImage";
 import { pickRandomAuthBackground } from "../authBackgrounds";
 import AuthPhotoCredit from "../AuthPhotoCredit/AuthPhotoCredit";
-import EmailAuthForm from "./EmailAuthForm/EmailAuthForm";
-import { SignUpProps as Props } from "./SignUp.types";
+import EmailAuthForm from "../EmailAuthForm/EmailAuthForm";
+import type { SignUpProps } from "./SignUp.types";
 
-const SignUp: React.FC<Props> = ({ className }) => {
+const SignUp: React.FC<SignUpProps> = props => {
+  const { className } = props;
   const t = useTranslations("Auth.signUp");
   const tAuth = useTranslations("Auth");
   const background = pickRandomAuthBackground();
@@ -31,7 +33,7 @@ const SignUp: React.FC<Props> = ({ className }) => {
       <div className="bg-surface flex flex-1 flex-col items-center justify-between overflow-y-auto p-2 md:p-6 xl:grow-0 xl:basis-2/5">
         <Logo className="md:self-start" />
         <div className="animate-fade-in-right-to-left flex w-full max-w-[400px] flex-1 flex-col justify-center pb-6">
-          <h1 className="text-foreground pt-4 pb-6 font-semibold lg:pt-20">
+          <h1 className="text-foreground pt-4 pb-2 font-semibold lg:pt-20">
             {t("title")}
           </h1>
           <p className="text-text-secondary pb-8">{t("subtitle")}</p>
@@ -70,14 +72,7 @@ const SignUp: React.FC<Props> = ({ className }) => {
         className="hidden self-stretch xl:block"
       />
       <div className="auth-side-glow relative hidden flex-1 items-center justify-center overflow-hidden md:w-1/2 xl:flex xl:grow-0 xl:basis-3/5">
-        <Image
-          src={background.src}
-          alt=""
-          fill
-          priority
-          sizes="(min-width: 1280px) 60vw, 50vw"
-          className="scale-105 object-cover object-center opacity-25 blur-[2px]"
-        />
+        <AuthBackgroundImage src={background.src} />
         <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-black/70 via-black/55 to-black/40" />
         <RandomFallacy
           className="animate-fade-in relative z-10"

@@ -1,6 +1,6 @@
 import type { User } from "@supabase/supabase-js";
 
-export interface UserPanelProps {
+export interface SidebarUserCardProps {
   className?: string;
-  initialUser: User | null;
+  user: User;
 }

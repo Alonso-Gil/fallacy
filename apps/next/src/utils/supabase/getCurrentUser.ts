@@ -1,4 +1,5 @@
 import { User } from "@supabase/supabase-js";
+import { cache } from "react";
 
 import { isSupabaseConfigured } from "config/supabase";
 import { createClient } from "./server-props";
@@ -7,7 +8,7 @@ export type CurrentUser =
   | { status: "authenticated"; user: User }
   | { status: "anonymous"; user: null };
 
-export const getCurrentUser = async (): Promise<CurrentUser> => {
+const loadCurrentUser = async (): Promise<CurrentUser> => {
   if (!isSupabaseConfigured()) {
     return { status: "anonymous", user: null };
   }
@@ -24,3 +25,5 @@ export const getCurrentUser = async (): Promise<CurrentUser> => {
 
   return { status: "authenticated", user };
 };
+
+export const getCurrentUser = cache(loadCurrentUser);

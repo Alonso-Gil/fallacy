@@ -58,7 +58,10 @@ const AuthButton: React.FC<Props> = props => {
       onClick={() => void handleSignIn()}
       icon={signInIcon}
       className={cn(
-        "border-border bg-surface-secondary text-foreground hover:bg-surface focus-visible:ring-primary/40 h-12 w-full border text-base font-medium transition-colors",
+        "border-border bg-surface-secondary text-foreground focus-visible:ring-primary/40 h-12 w-full border text-base font-medium",
+        "transition-[background-color,border-color,filter,box-shadow] duration-200 ease-out",
+        "hover:bg-surface hover:border-border hover:shadow-sm",
+        "dark:hover:bg-surface-secondary! dark:hover:border-white/15 dark:hover:shadow-[0_0_0_1px_rgba(255,255,255,0.06)] dark:hover:brightness-110",
         className
       )}
     />

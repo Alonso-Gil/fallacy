@@ -27,7 +27,9 @@ const authCallback = async (request: NextRequest) => {
   const next = nextParam.startsWith("/") ? nextParam : "/";
 
   if (code) {
-    const response = NextResponse.redirect(`${url.origin}${next}`);
+    const successUrl = new URL(next, url.origin);
+    successUrl.searchParams.set("signedIn", "1");
+    const response = NextResponse.redirect(successUrl);
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       getSupabasePublicKey()!,
