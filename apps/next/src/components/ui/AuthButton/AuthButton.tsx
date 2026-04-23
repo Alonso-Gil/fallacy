@@ -17,19 +17,17 @@ const AuthButton: React.FC<Props> = props => {
 
   const handleSignIn = async () => {
     if (!signInProvider) return;
-    if (typeof window === "undefined") return;
-
-    if (!authAvailable) {
-      console.warn(
-        "[Auth] OAuth disabled: set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"
-      );
+    if (globalThis.window === undefined) {
       return;
     }
 
-    const supabase = createClient();
-    if (!supabase) return;
+    if (!authAvailable) {
+      return;
+    }
 
-    const origin = window.location.origin;
+    const supabase = createClient()!;
+
+    const origin = globalThis.window.location.origin;
     const nextPath = locale === routing.defaultLocale ? "/" : `/${locale}`;
 
     await supabase.auth.signInWithOAuth({

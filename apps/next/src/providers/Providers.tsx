@@ -3,7 +3,6 @@ import { useTheme } from "next-themes";
 import React from "react";
 import { Toaster } from "sonner";
 
-import useListeners from "hooks/useListeners";
 import { AppThemeProvider } from "providers/AppThemeProvider";
 import AuthProvider from "providers/AuthProvider/AuthProvider";
 import OAuthLoginToast from "providers/OAuthLoginToast/OAuthLoginToast";
@@ -23,7 +22,6 @@ const SonnerToaster = () => {
 
 const Providers: React.FC<Props> = props => {
   const { initialUser, children } = props;
-  useListeners();
 
   return (
     <AppThemeProvider attribute="class" defaultTheme="system" enableSystem>

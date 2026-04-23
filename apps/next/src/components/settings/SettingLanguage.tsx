@@ -9,7 +9,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue
-} from "components/ui/select";
+} from "ui/shadcnComponents/select";
 
 const SettingLanguage = () => {
   const locale = useLocale();

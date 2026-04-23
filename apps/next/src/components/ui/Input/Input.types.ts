@@ -1,5 +1,5 @@
 // Input types and interfaces
-import type { Input } from "components/ui/input";
+import type { Input } from "ui/shadcnComponents/input";
 
 import type { ComponentProps } from "react";
 

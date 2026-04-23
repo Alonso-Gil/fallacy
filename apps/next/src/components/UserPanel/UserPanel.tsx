@@ -4,8 +4,8 @@ import { useTranslations } from "next-intl";
 import React from "react";
 
 import AuthActionButton from "ui/AuthActionButton";
+import { Button } from "ui/shadcnComponents/button";
 import SettingsDialog from "components/SettingsDialog/SettingsDialog";
-import { Button } from "components/ui/button";
 import { cn } from "lib/utils";
 import { useAuthStore } from "store/auth/auth.store";
 import SidebarUserCard from "./SidebarUserCard/SidebarUserCard";
@@ -31,7 +31,7 @@ const UserPanel: React.FC<Props> = props => {
         </p>
       )}
       <div className="flex min-h-11 items-center gap-3">
-        {showAuthLoader ? (
+        {showAuthLoader && (
           <div
             className="flex min-h-11 min-w-0 flex-1 items-center gap-3"
             aria-busy
@@ -39,13 +39,15 @@ const UserPanel: React.FC<Props> = props => {
           >
             <div className="bg-muted/50 size-11 shrink-0 animate-pulse rounded-full" />
             <div className="flex min-h-0 min-w-0 flex-1 flex-col justify-center gap-1.5">
-              <div className="bg-muted/50 h-3.5 w-[7.5rem] max-w-[85%] animate-pulse rounded-md" />
+              <div className="bg-muted/50 h-3.5 w-30 max-w-[85%] animate-pulse rounded-md" />
               <div className="bg-muted/50 h-3 w-24 max-w-[65%] animate-pulse rounded-md" />
             </div>
           </div>
-        ) : isAuthenticated ? (
+        )}
+        {!showAuthLoader && isAuthenticated && (
           <SidebarUserCard user={user} className="min-w-0 flex-1" />
-        ) : (
+        )}
+        {!showAuthLoader && !isAuthenticated && (
           <div className="flex min-h-11 min-w-0 flex-1 items-center">
             <AuthActionButton />
           </div>

@@ -1,25 +1,14 @@
 "use client";
-
 import { Eye, EyeOff } from "lucide-react";
 import React, { useId, useState } from "react";
 
-import { Input as ShadcnInput } from "components/ui/input";
+import { Input as ShadcnInput } from "ui/shadcnComponents/input";
 import { cn } from "lib/utils";
-import type { PasswordFieldWithToggleProps } from "./PasswordFieldWithToggle.types";
+import type { PasswordFieldProps } from "./PasswordField.types";
 
-const PasswordFieldWithToggle: React.FC<
-  PasswordFieldWithToggleProps
-> = props => {
-  const {
-    label,
-    placeholder,
-    errorMessage,
-    autoComplete,
-    className,
-    showPasswordLabel,
-    hidePasswordLabel,
-    registration
-  } = props;
+const PasswordField: React.FC<PasswordFieldProps> = props => {
+  const { label, placeholder, errorMessage, autoComplete, className } = props;
+  const { showPasswordLabel, hidePasswordLabel, registration } = props;
   const inputId = useId();
   const [visible, setVisible] = useState(false);
 
@@ -64,4 +53,4 @@ const PasswordFieldWithToggle: React.FC<
   );
 };
 
-export default PasswordFieldWithToggle;
+export default PasswordField;

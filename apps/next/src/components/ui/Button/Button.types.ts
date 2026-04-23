@@ -1,4 +1,4 @@
-import { Button } from "components/ui/button";
+import { Button } from "ui/shadcnComponents/button";
 
 import type { ComponentProps, ReactNode } from "react";
 

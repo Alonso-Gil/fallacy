@@ -1,6 +1,6 @@
 import type { UseFormRegisterReturn } from "react-hook-form";
 
-export interface PasswordFieldWithToggleProps {
+export interface PasswordFieldProps {
   label: string;
   placeholder?: string;
   errorMessage?: string;

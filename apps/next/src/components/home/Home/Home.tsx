@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Separator } from "ui/separator";
+import { Separator } from "ui/shadcnComponents/separator";
 import BrandHeader from "components/home/BrandHeader/BrandHeader";
 import LobbyUsersPanel from "components/home/LobbyUsersPanel/LobbyUsersPanel";
 import UserPanel from "components/UserPanel/UserPanel";

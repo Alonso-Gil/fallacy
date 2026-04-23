@@ -4,7 +4,7 @@ import { Playfair_Display } from "next/font/google";
 import { useTranslations } from "next-intl";
 import React, { useCallback, useEffect, useState } from "react";
 
-import { Button } from "components/ui/button";
+import { Button } from "ui/shadcnComponents/button";
 import { cn } from "lib/utils";
 import {
   RandomFallacyItem,

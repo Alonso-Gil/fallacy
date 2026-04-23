@@ -1,0 +1,47 @@
+---
+description: Reglas generales (estilo, comentarios, ternarios, nombres, UI, funciones)
+alwaysApply: true
+---
+
+# Reglas generales
+
+Aplican en todo el proyecto. Las reglas **largas o muy específicas** (p. ej. estructura de componentes, pages del App Router) viven en archivos aparte bajo `.cursor/rules/`.
+
+## Comentarios
+
+- **No añadir** comentarios nuevos (`//`, `/* */`, JSDoc, `TODO`/`FIXME`, separadores) **salvo** petición explícita del usuario.
+- **No** documentar con comentarios en sustitución de nombres claros. **No eliminar** comentarios existentes salvo que la tarea lo pida.
+- Si el usuario pide documentar un ámbito concreto, limitarse a ahí.
+
+## Funciones: `const` + flecha
+
+- Salvo `function` por hoisting, framework o generador, usar **`const nombre = (...) => { ... }`** (o `async` igual).
+- **Default:** `const C = () => { ... }; export default C;` (no `export default function`).
+- **Nombrado:** `export const getX = () => { ... }` en vez de `export function getX`.
+- **Componentes React:** `const C: React.FC<Props> = props => { ... }` y export acorde.
+- **`forwardRef`:** callback flecha; `displayName` en la constante si hace falta.
+- **Excepciones:** métodos en objetos literales, código generado, APIs que exijan `function`.
+
+```tsx
+const Separator = ({ className }: Props) => <hr className={className} />;
+```
+
+## Booleanos: prefijo `is`
+
+- Variables, props, parámetros o porciones de estado cuyo valor sea **lógico** (o se use en `if` / render condicional): nombres con prefijo **`is`**, p. ej. `isSatisfied`, `isOpen`, `isLoading`, `isValid` (no `met`, `open`, `satisfied` sueltos).
+- Excepciones: claves fijas de **APIs/JSON/DTOs** que no controléis, props de **librerías** o contratos ajenos, y nombres que la convención del lenguaje ya fija (p. ej. flags generados).
+
+## Ternarios: no anidar
+
+- **No** `a ? b : c ? d : e`. Preferir: varios `cond &&` en JSX con estados excluyentes, `if/else` en un helper, o un solo `if/else` para valores.
+
+```tsx
+{loading && <Skeleton />}
+{!loading && user && <Profile u={user} />}
+{!loading && !user && <Login />}
+```
+
+## UI (Next: `components/ui/`)
+
+- Los **primitivos** de shadcn (y piezas de la misma “capa base”) viven bajo **`components/ui/shadcnComponents/`**; imports típicos: `ui/shadcnComponents/button`, etc. El alias `ui` del CLI de shadcn en `components.json` apunta ahí para instalar allí versiones nuevas.
+- **Encima** (misma `components/ui/`): envoltorios y piezas de producto (`Button/`, `Input/`, `AuthButton/`, `icons/`, `Logo/`, …) con lógica, copy o composición concreta del app; **no** mezclar en los mismos archivos que los primitivos, salvo que un cambio pida otra estructura explícitamente.

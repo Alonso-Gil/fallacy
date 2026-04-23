@@ -1,7 +1,7 @@
 import { Loader2 } from "lucide-react";
 import { forwardRef } from "react";
 
-import { Button as ShadcnButton } from "components/ui/button";
+import { Button as ShadcnButton } from "ui/shadcnComponents/button";
 import { cn } from "lib/utils";
 import { ButtonProps as Props } from "./Button.types";
 

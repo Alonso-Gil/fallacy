@@ -2,7 +2,7 @@
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 
-import { Switch } from "components/ui/switch";
+import { Switch } from "ui/shadcnComponents/switch";
 import { useIsClient } from "hooks/useIsClient";
 
 const SettingAppearance = () => {

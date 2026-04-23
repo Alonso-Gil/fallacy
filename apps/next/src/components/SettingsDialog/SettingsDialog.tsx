@@ -2,25 +2,29 @@
 import { useTranslations } from "next-intl";
 import React from "react";
 
-import { Separator } from "ui/separator";
-import SettingAccount from "components/settings/SettingAccount/SettingAccount";
-import SettingAppearance from "components/settings/SettingAppearance";
-import SettingLanguage from "components/settings/SettingLanguage";
-import SettingsSidebarLogout from "components/SettingsDialog/SettingsSidebarLogout/SettingsSidebarLogout";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
   DialogTrigger
-} from "components/ui/dialog";
+} from "ui/shadcnComponents/dialog";
+import { Separator } from "ui/shadcnComponents/separator";
+import SettingAccount from "components/settings/SettingAccount/SettingAccount";
+import SettingAppearance from "components/settings/SettingAppearance";
+import SettingLanguage from "components/settings/SettingLanguage";
+import SettingsSidebarLogout from "components/SettingsDialog/SettingsSidebarLogout/SettingsSidebarLogout";
 import { cn } from "lib/utils";
+import { useAuthStore } from "store/auth/auth.store";
 import { useSettingsDialogStore } from "store/settingsDialog/settingsDialog.store";
 import { SettingsDialogProps as Props } from "./SettingsDialog.types";
 import { SETTINGS_SECTIONS } from "./SettingsDialog.utils";
 
 const SettingsDialog: React.FC<Props> = ({ children }) => {
   const t = useTranslations("Settings");
+  const sessionResolved = useAuthStore(state => state.sessionResolved);
+  const user = useAuthStore(state => state.user);
+  const showLogoutArea = sessionResolved && user !== null;
   const isOpen = useSettingsDialogStore(state => state.isOpen);
   const selectedSetting = useSettingsDialogStore(
     state => state.selectedSetting
@@ -66,10 +70,14 @@ const SettingsDialog: React.FC<Props> = ({ children }) => {
                 })}
               </nav>
             </div>
-            <Separator variant="fade" className="shrink-0" />
-            <div className="bg-background shrink-0 px-3 pt-2 pb-3">
-              <SettingsSidebarLogout />
-            </div>
+            {showLogoutArea && (
+              <>
+                <Separator variant="fade" className="shrink-0" />
+                <div className="bg-background shrink-0 px-3 pt-2 pb-3">
+                  <SettingsSidebarLogout />
+                </div>
+              </>
+            )}
           </aside>
 
           <section className="bg-surface flex flex-1 flex-col overflow-y-auto p-8">

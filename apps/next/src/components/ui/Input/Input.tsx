@@ -1,6 +1,6 @@
 import { forwardRef, useId } from "react";
 
-import { Input as ShadcnInput } from "components/ui/input";
+import { Input as ShadcnInput } from "ui/shadcnComponents/input";
 import { cn } from "lib/utils";
 import { InputProps as Props } from "./Input.types";
 

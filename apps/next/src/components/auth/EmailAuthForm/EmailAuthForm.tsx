@@ -23,7 +23,7 @@ import {
   signInWithEmailPassword,
   signUpWithEmailPassword
 } from "./EmailAuthForm.utils";
-import PasswordFieldWithToggle from "./PasswordFieldWithToggle/PasswordFieldWithToggle";
+import PasswordField from "./PasswordField/PasswordField";
 import PasswordRuleChecklist from "./PasswordRuleChecklist/PasswordRuleChecklist";
 
 const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
@@ -56,6 +56,8 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
   });
   const { register, formState, handleSubmit, watch } = formMethods;
   const passwordValue = watch("password") ?? "";
+  const { email, password } = formState.errors ?? {};
+  const isSignUp = context === "sign-up";
 
   const passwordRuleLabels = useMemo(
     () => ({
@@ -67,11 +69,11 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
     }),
     [t]
   );
-  const { email, password } = formState.errors ?? {};
 
   const submitHandler = async (
     form: EmailSignUpFormSchema | EmailLoginFormSchema
   ) => {
+    const { email, password } = form;
     setIsLoading(true);
 
     const toastAuthError = (key: AuthFormErrorKey) => {
@@ -84,14 +86,7 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
       return;
     }
 
-    const supabase = createClient();
-    if (!supabase) {
-      setIsLoading(false);
-      toast.error(t("errors.noClient"));
-      return;
-    }
-
-    const { email, password } = form;
+    const supabase = createClient()!;
 
     try {
       if (context === "login") {
@@ -142,38 +137,25 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
         errorMessage={email?.message}
         placeholder={t("emailPlaceholder")}
       />
-      {context === "sign-up" ? (
-        <>
-          <PasswordFieldWithToggle
-            registration={register("password")}
-            label={t("password")}
-            placeholder={t("passwordPlaceholder")}
-            errorMessage={password?.message}
-            autoComplete="new-password"
-            showPasswordLabel={t("showPassword")}
-            hidePasswordLabel={t("hidePassword")}
-            className="mb-4"
-          />
-          <PasswordRuleChecklist
-            rules={evaluatePasswordRules(passwordValue)}
-            labels={passwordRuleLabels}
-          />
-        </>
-      ) : (
-        <PasswordFieldWithToggle
-          registration={register("password")}
-          label={t("password")}
-          placeholder={t("passwordPlaceholder")}
-          errorMessage={password?.message}
-          autoComplete="current-password"
-          showPasswordLabel={t("showPassword")}
-          hidePasswordLabel={t("hidePassword")}
-          className="mb-6"
+      <PasswordField
+        registration={register("password")}
+        label={t("password")}
+        placeholder={t("passwordPlaceholder")}
+        errorMessage={password?.message}
+        autoComplete={isSignUp ? "new-password" : "current-password"}
+        showPasswordLabel={t("showPassword")}
+        hidePasswordLabel={t("hidePassword")}
+        className={isSignUp ? "mb-4" : "mb-6"}
+      />
+      {isSignUp && (
+        <PasswordRuleChecklist
+          rules={evaluatePasswordRules(passwordValue)}
+          labels={passwordRuleLabels}
         />
       )}
       <Button
         className="shadow-primary/25 hover:shadow-primary/35 mb-2 shadow-md transition-shadow"
-        text={context === "sign-up" ? t("submitSignUp") : t("submitLogin")}
+        text={isSignUp ? t("submitSignUp") : t("submitLogin")}
         type="submit"
         isLoading={isLoading}
         isDisabled={!isSupabaseConfigured()}
