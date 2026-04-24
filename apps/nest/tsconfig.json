@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",                       
+    "module": "commonjs",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -17,6 +17,6 @@
     "noFallthroughCasesInSwitch": false,
     "moduleResolution": "node"
   },
-  "include": ["src/**/*", "test/**/*"],
+  "include": ["src/**/*", "prisma.config.ts", "test/**/*"],
   "exclude": ["node_modules", "dist"]
 }
