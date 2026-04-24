@@ -1,6 +1,3 @@
-import type { User } from "@supabase/supabase-js";
-
 export interface UserPanelProps {
   className?: string;
-  initialUser: User | null;
 }

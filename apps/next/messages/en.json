@@ -161,6 +161,7 @@
     ]
   },
   "Lobby": {
+    "lobbyContentRegion": "Main lobby",
     "brand": {
       "subtitle": "Where ideas clash"
     },
@@ -172,6 +173,8 @@
       "helper": "Sign in to debate",
       "statusDoNotDisturb": "Do not disturb",
       "authLoading": "Loading session"
-    }
+    },
+    "searchBarLabel": "Search rooms, topics, or motions (live search coming later)",
+    "searchPlaceholder": "Search by title, motion, or room context"
   }
 }

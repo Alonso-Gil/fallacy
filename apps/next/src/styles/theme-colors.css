@@ -23,6 +23,7 @@
   --input: var(--border);
   --ring: var(--primary);
   --radius: 0.625rem;
+  --lobby-canvas: color-mix(in srgb, var(--background) 92%, var(--text) 0.4%);
 }
 
 .dark {
