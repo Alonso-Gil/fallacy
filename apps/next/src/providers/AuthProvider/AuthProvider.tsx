@@ -9,10 +9,10 @@ import { AuthProviderProps as Props } from "./AuthProvider.types";
 const AuthProvider: React.FC<Props> = ({ initialUser, children }) => {
   const router = useRouter();
   const setUser = useAuthStore(state => state.setUser);
-  const hydratedRef = useRef(false);
+  const hasHydrated = useRef<true | null>(null);
 
-  if (!hydratedRef.current) {
-    hydratedRef.current = true;
+  if (hasHydrated.current == null) {
+    hasHydrated.current = true;
     useAuthStore.setState({
       user: initialUser,
       sessionResolved: true

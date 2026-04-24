@@ -1,4 +1,5 @@
 import { builtinModules } from "module";
+import { fileURLToPath } from "node:url";
 
 import eslint from "@eslint/js";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
@@ -29,7 +30,7 @@ export default tseslint.config(
       sourceType: "module",
       parserOptions: {
         projectService: true,
-        tsconfigRootDir: new URL(".", import.meta.url).pathname,
+        tsconfigRootDir: fileURLToPath(new URL(".", import.meta.url)),
         ecmaVersion: 2020,
         sourceType: "module",
         ecmaFeatures: {

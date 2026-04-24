@@ -10,7 +10,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
-    "compile": "echo skipping compile",
+    "compile": "prisma generate",
     "build": "nest build",
     "clean": "rm -rf node_modules",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
