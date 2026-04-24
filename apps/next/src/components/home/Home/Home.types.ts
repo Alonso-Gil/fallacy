@@ -1,5 +1,1 @@
-import type { User } from "@supabase/supabase-js";
-
-export interface HomeProps {
-  initialUser: User | null;
-}
+export type HomeProps = Record<string, never>;

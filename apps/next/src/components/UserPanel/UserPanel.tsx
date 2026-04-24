@@ -12,12 +12,11 @@ import SidebarUserCard from "./SidebarUserCard/SidebarUserCard";
 import { UserPanelProps as Props } from "./UserPanel.types";
 
 const UserPanel: React.FC<Props> = props => {
-  const { className, initialUser } = props;
+  const { className } = props;
   const tSettings = useTranslations("Settings");
   const tLobby = useTranslations("Lobby");
   const sessionResolved = useAuthStore(state => state.sessionResolved);
-  const storeUser = useAuthStore(state => state.user);
-  const user = storeUser ?? initialUser;
+  const user = useAuthStore(state => state.user);
   const isAuthenticated = user !== null;
   const showAuthLoader = !sessionResolved;
 

@@ -161,6 +161,7 @@
     ]
   },
   "Lobby": {
+    "lobbyContentRegion": "Zona principal del lobby",
     "brand": {
       "subtitle": "Donde las ideas se enfrentan"
     },
@@ -172,6 +173,8 @@
       "helper": "Inicia sesión para debatir",
       "statusDoNotDisturb": "No molestar",
       "authLoading": "Cargando sesión"
-    }
+    },
+    "searchBarLabel": "Buscar salas, temas o mociones (próximamente con filtros y buscado en vivo)",
+    "searchPlaceholder": "Busca por título, moción o contexto de la sala"
   }
 }

@@ -13,7 +13,7 @@ const BrandHeader: React.FC<Props> = ({ className }) => {
     <header
       className={cn(
         className,
-        "bg-background flex items-center gap-3 px-4 py-6"
+        "from-background/90 border-border/25 flex items-center gap-3 border-b bg-gradient-to-b to-transparent px-4 py-5"
       )}
     >
       <Logo

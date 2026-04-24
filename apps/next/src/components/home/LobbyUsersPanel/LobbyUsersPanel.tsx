@@ -12,7 +12,7 @@ const LobbyUsersPanel: React.FC<Props> = ({ className }) => {
       aria-labelledby="lobby-users-title"
       className={cn(
         className,
-        "bg-background flex w-full flex-1 flex-col items-center justify-center gap-2 px-6 py-8"
+        "bg-background/30 flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-1.5 overflow-y-auto px-4 py-5"
       )}
     >
       <h2

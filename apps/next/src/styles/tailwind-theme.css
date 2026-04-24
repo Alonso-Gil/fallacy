@@ -23,6 +23,7 @@
   --color-surface: var(--surface);
   --color-text-secondary: var(--text-secondary);
   --color-text: var(--text);
+  --color-lobby-canvas: var(--lobby-canvas);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
