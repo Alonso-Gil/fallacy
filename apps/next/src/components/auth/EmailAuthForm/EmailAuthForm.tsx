@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "i18n/navigation";
 import { useTranslations } from "next-intl";
 import React, { useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 
 import Button from "ui/Button/Button";
@@ -54,8 +54,12 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
     resolver: zodResolver(schema),
     defaultValues: { email: "", password: "" }
   });
-  const { register, formState, handleSubmit, watch } = formMethods;
-  const passwordValue = watch("password") ?? "";
+  const { control, register, formState, handleSubmit } = formMethods;
+  const passwordValue = useWatch({
+    control,
+    name: "password",
+    defaultValue: ""
+  });
   const { email, password } = formState.errors ?? {};
   const isSignUp = context === "sign-up";
 
@@ -149,7 +153,7 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
       />
       {isSignUp && (
         <PasswordRuleChecklist
-          rules={evaluatePasswordRules(passwordValue)}
+          rules={evaluatePasswordRules(passwordValue ?? "")}
           labels={passwordRuleLabels}
         />
       )}
