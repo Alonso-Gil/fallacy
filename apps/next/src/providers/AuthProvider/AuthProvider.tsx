@@ -1,9 +1,9 @@
 "use client";
-import { useRouter } from "i18n/navigation";
 import React, { useEffect, useRef } from "react";
 
 import { createClient } from "utils/supabase/component";
 import { useAuthStore } from "store/auth/auth.store";
+import { useRouter } from "i18n/navigation";
 import { AuthProviderProps as Props } from "./AuthProvider.types";
 
 const AuthProvider: React.FC<Props> = ({ initialUser, children }) => {

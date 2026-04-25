@@ -1,6 +1,5 @@
-import { routing } from "i18n/routing";
-
 import { getSiteUrl, localePath } from "lib/site";
+import { routing } from "i18n/routing";
 
 import type { MetadataRoute } from "next";
 

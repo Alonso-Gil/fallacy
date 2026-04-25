@@ -1,10 +1,10 @@
 import { type SetAllCookies } from "@supabase/ssr";
 import { createServerClient } from "@supabase/ssr";
-import { routing } from "i18n/routing";
 import { type NextRequest } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 
 import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
+import { routing } from "i18n/routing";
 
 const handleI18nRouting = createIntlMiddleware(routing);
 

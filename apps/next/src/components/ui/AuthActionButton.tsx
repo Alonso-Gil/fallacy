@@ -1,10 +1,10 @@
 "use client";
-import { useRouter } from "i18n/navigation";
 import { LogIn } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React from "react";
 
 import { Button } from "ui/shadcnComponents/button";
+import { useRouter } from "i18n/navigation";
 
 const AuthActionButton = () => {
   const router = useRouter();

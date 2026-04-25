@@ -1,17 +1,12 @@
 "use client";
 import { useTranslations } from "next-intl";
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useId } from "react";
 import { toast } from "sonner";
 
-import Button from "ui/Button/Button";
-import { createClient } from "utils/supabase/component";
-import type { Room } from "lib/room/room.types";
-import {
-  createTestRoom,
-  fetchLobbyRooms,
-  isApiConfigured
-} from "lib/room/roomApi";
 import { cn } from "lib/utils";
+import { isRoomApiConfigured } from "services/room/room.service";
+import { useFetchLobbyRooms } from "services/room/room.service.hooks";
+import CreateRoomDialog from "./CreateRoomDialog/CreateRoomDialog";
 import type { LobbyMainContentProps as Props } from "./LobbyMainContent.types";
 import LobbySearchBar from "./LobbySearchBar/LobbySearchBar";
 
@@ -19,64 +14,30 @@ const LobbyMainContent: React.FC<Props> = props => {
   const { className } = props;
   const t = useTranslations("Lobby");
   const searchInputId = `lobby-search-${useId()}`;
-  const [rooms, setRooms] = useState<Room[]>([]);
-  const [isLoadingRooms, setIsLoadingRooms] = useState(() => isApiConfigured());
-  const [isCreating, setIsCreating] = useState(false);
+  const isRoomApiReady = isRoomApiConfigured();
+  const {
+    data: rooms = [],
+    isLoading: isLoadingRooms,
+    isError: isRoomsError
+  } = useFetchLobbyRooms({ isEnabled: isRoomApiReady });
 
   useEffect(() => {
-    if (!isApiConfigured()) {
+    if (!isRoomsError) {
       return;
     }
-    let cancel = false;
-    fetchLobbyRooms()
-      .then(data => {
-        if (!cancel) {
-          setRooms(data);
-          setIsLoadingRooms(false);
-        }
-      })
-      .catch(() => {
-        if (!cancel) {
-          toast.error(t("roomsLoadError"));
-          setRooms([]);
-          setIsLoadingRooms(false);
-        }
-      });
-    return () => {
-      cancel = true;
-    };
-  }, [t]);
-
-  const handleCreateTest = async () => {
-    if (!isApiConfigured()) {
-      toast.error(t("apiNotConfigured"));
-      return;
-    }
-    const supabase = createClient();
-    if (!supabase) {
-      toast.error(t("apiNotConfigured"));
-      return;
-    }
-    setIsCreating(true);
-    try {
-      const { data, error: sessionError } = await supabase.auth.getSession();
-      if (sessionError || !data.session?.access_token) {
-        toast.error(t("loginToCreateRoom"));
-        return;
-      }
-      const created = await createTestRoom(data.session.access_token);
-      setRooms(prev => [created, ...prev]);
-      toast.success(t("testRoomCreated"));
-    } catch {
-      toast.error(t("createRoomError"));
-    } finally {
-      setIsCreating(false);
-    }
-  };
+    toast.error(t("room.errors.roomsLoad"));
+  }, [isRoomsError, t]);
 
   return (
-    <section className={className} aria-label={t("lobbyContentRegion")}>
-      <div className="border-border/20 shrink-0 border-b px-4 py-4 sm:px-6 sm:py-4">
+    <section
+      className={cn("relative isolate overflow-hidden", className)}
+      aria-label={t("lobbyContentRegion")}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_100%_85%_at_50%_-5%,oklch(0.75_0.14_45/0.11),transparent_58%),radial-gradient(ellipse_55%_45%_at_92%_45%,oklch(0.55_0.14_300/0.07),transparent_52%),radial-gradient(ellipse_40%_35%_at_12%_75%,oklch(0.5_0.12_300/0.05),transparent_50%)] dark:bg-[radial-gradient(ellipse_100%_85%_at_50%_-5%,oklch(0.6_0.14_45/0.14),transparent_58%),radial-gradient(ellipse_55%_45%_at_92%_45%,oklch(0.5_0.15_300/0.1),transparent_52%),radial-gradient(ellipse_40%_35%_at_12%_75%,oklch(0.45_0.12_300/0.08),transparent_50%)]"
+        aria-hidden
+      />
+      <div className="border-border/20 relative z-0 shrink-0 border-b px-4 py-4 sm:px-6 sm:py-4">
         <div className="mx-auto flex w-full max-w-2xl min-w-0 flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
           <LobbySearchBar
             className="min-w-0 grow"
@@ -84,41 +45,37 @@ const LobbyMainContent: React.FC<Props> = props => {
             label={t("searchBarLabel")}
             placeholder={t("searchPlaceholder")}
           />
-          <Button
-            type="button"
-            onClick={handleCreateTest}
-            isDisabled={!isApiConfigured() || isCreating}
-            isLoading={isCreating}
-            text={t("createTestRoom")}
-            className="hover:bg-primary/90 w-full max-w-2xl shrink-0 px-4 text-sm sm:h-10 sm:w-auto sm:min-w-[8.5rem]"
+          <CreateRoomDialog
+            isRoomApiReady={isRoomApiReady}
+            className="h-10 w-full max-w-2xl shrink-0 text-sm sm:w-auto sm:min-w-34"
           />
         </div>
       </div>
       <div
         className={cn(
-          "grid min-h-0 w-full min-w-0 flex-1 auto-rows-min grid-cols-[repeat(auto-fill,minmax(min(100%,28rem),1fr))] content-start gap-4 overflow-y-auto overscroll-y-contain p-4"
+          "relative z-0 grid min-h-0 w-full min-w-0 flex-1 auto-rows-min grid-cols-[repeat(auto-fill,minmax(min(100%,28rem),1fr))] content-start gap-4 overflow-y-auto overscroll-y-contain p-4"
         )}
         aria-live="polite"
       >
-        {isApiConfigured() ? null : (
+        {isRoomApiReady ? null : (
           <p className="text-muted-foreground col-span-full text-sm">
-            {t("apiNotConfiguredHint")}
+            {t("room.feedback.apiNotConfiguredHint")}
           </p>
         )}
-        {isApiConfigured() && isLoadingRooms ? (
+        {isRoomApiReady && isLoadingRooms ? (
           <p className="text-muted-foreground col-span-full text-sm">
-            {t("roomsLoading")}
+            {t("room.feedback.loading")}
           </p>
         ) : null}
-        {isApiConfigured() && !isLoadingRooms && rooms.length === 0 ? (
+        {isRoomApiReady && !isLoadingRooms && rooms.length === 0 ? (
           <p className="text-muted-foreground col-span-full text-sm">
-            {t("noRoomsInLobby")}
+            {t("room.feedback.empty")}
           </p>
         ) : null}
         {rooms.map(room => (
           <article
             key={room.id}
-            className="border-border/40 dark:bg-foreground/4 bg-foreground/5 min-h-32 w-full max-w-full min-w-0 overflow-hidden rounded-xl border p-4"
+            className="hover:border-primary/45 hover:shadow-primary/25 border-border/40 dark:bg-foreground/4 bg-foreground/5 min-h-32 w-full max-w-full min-w-0 cursor-pointer overflow-hidden rounded-xl border p-4 transition-[border-color,box-shadow] duration-200 ease-out hover:shadow-[0_0_22px_-6px]"
           >
             <h3 className="text-foreground mb-1 font-medium">{room.title}</h3>
             {room.description ? (
@@ -127,11 +84,11 @@ const LobbyMainContent: React.FC<Props> = props => {
               </p>
             ) : null}
             <p className="text-muted-foreground/80 mt-2 text-xs">
-              {t("roomMeta", {
+              {t("room.meta", {
                 status: room.status,
                 visibility: room.isPublic
-                  ? t("roomVisiblePublic")
-                  : t("roomVisiblePrivate"),
+                  ? t("room.visibility.public")
+                  : t("room.visibility.private"),
                 n: room.maxSeats
               })}
             </p>

@@ -176,17 +176,58 @@
     },
     "searchBarLabel": "Search rooms, topics, or motions (live search coming later)",
     "searchPlaceholder": "Search by title, motion, or room context",
-    "createTestRoom": "Test room",
-    "roomsLoadError": "Could not load the room list.",
-    "apiNotConfigured": "API is not available.",
-    "apiNotConfiguredHint": "Set NEXT_PUBLIC_API_URL in .env.local (e.g. http://localhost:3001) to use the room list.",
-    "loginToCreateRoom": "Sign in to create a test room.",
-    "testRoomCreated": "Test room created.",
-    "createRoomError": "Could not create the room.",
-    "roomsLoading": "Loading rooms…",
-    "noRoomsInLobby": "No public rooms yet. Create a test room if you are signed in.",
-    "roomMeta": "{status} · {visibility} · up to {n, plural, one {# seat} other {# seats}}",
-    "roomVisiblePublic": "public",
-    "roomVisiblePrivate": "private"
+    "room": {
+      "actions": {
+        "openCreate": "Create room",
+        "submitCreate": "Create room",
+        "cancelCreate": "Cancel"
+      },
+      "modal": {
+        "title": "Create room",
+        "description": "Set the basic details to open a new room."
+      },
+      "fields": {
+        "title": {
+          "label": "Title",
+          "placeholder": "e.g. Debate on nuclear energy"
+        },
+        "description": {
+          "label": "Description",
+          "placeholder": "Short room context (optional)"
+        },
+        "maxSeats": {
+          "label": "Max seats",
+          "option": "{n} seats"
+        },
+        "isPublic": {
+          "label": "Public room",
+          "hint": "If disabled, the room will only be visible to invited users."
+        },
+        "visibility": {
+          "label": "Visibility",
+          "publicText": "Anyone in the lobby can find and join this room.",
+          "privateText": "Only invited users can access this room."
+        }
+      },
+      "errors": {
+        "roomsLoad": "Could not load the room list.",
+        "apiNotConfigured": "API is not available.",
+        "loginRequired": "Sign in to create a room.",
+        "createFailed": "Could not create the room.",
+        "titleRequired": "Enter a room title.",
+        "maxSeatsInvalid": "Seats must be between 2 and 64."
+      },
+      "feedback": {
+        "created": "Room created successfully.",
+        "loading": "Loading rooms…",
+        "empty": "No public rooms yet. Create a room if you are signed in.",
+        "apiNotConfiguredHint": "Set NEXT_PUBLIC_API_URL in .env.local (e.g. http://localhost:3001) to use the room list."
+      },
+      "meta": "{status} · {visibility} · up to {n, plural, one {# seat} other {# seats}}",
+      "visibility": {
+        "public": "public",
+        "private": "private"
+      }
+    }
   }
 }

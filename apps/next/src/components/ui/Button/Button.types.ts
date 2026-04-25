@@ -8,4 +8,5 @@ export type ButtonProps = Omit<ComponentProps<typeof Button>, "className"> & {
   icon?: ReactNode;
   isDisabled?: boolean;
   isLoading?: boolean;
+  glow?: boolean;
 };

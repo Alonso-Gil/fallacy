@@ -1,0 +1,44 @@
+---
+description: Arquitectura de servicios Next con TanStack Query (API, hooks, types, mocks)
+globs: apps/next/src/services/**/*.ts
+alwaysApply: false
+---
+
+# Servicios Next + TanStack
+
+Para cada dominio en `apps/next/src/services/<modulo>/`, crear exactamente:
+
+- `<modulo>.service.ts`
+- `<modulo>.service.hooks.ts`
+- `<modulo>.service.types.ts`
+- `<modulo>.service.mock.ts`
+
+## `<modulo>.service.ts`
+
+- Solo funciones `async` puras de red y normalización de payload.
+- Sin hooks ni lógica de UI.
+- Debe soportar modo mock (`shouldMock` o flag equivalente) con latencia simulada.
+- Errores tipados y propagados; no silenciar excepciones.
+- Reusar utilidades transversales en `apps/next/src/utils/common.utils.ts` para headers auth, base URL, flags de mock y latencia.
+- Evitar helpers de un solo uso: si una función se invoca una sola vez y no mejora legibilidad, inlinéar la lógica en el punto de uso.
+- Si una constante se reutiliza en varias funciones del archivo (por ejemplo `baseUrl`), declararla una sola vez al nivel superior del módulo.
+
+## `<modulo>.service.hooks.ts`
+
+- Usar `useQuery`, `useMutation`, `useQueryClient` de `@tanstack/react-query`.
+- Definir factory de keys serializables (`all`, `list`, `detail`).
+- Queries con `enabled` por contexto/auth y `staleTime` explícito.
+- Mutaciones con `onSettled` + `invalidateQueries` de keys relacionadas.
+- En updates (`PUT/PATCH`): optimistic update completo con `cancelQueries`, snapshot, `setQueryData`, rollback y invalidación final.
+
+## `<modulo>.service.types.ts`
+
+- Tipos de requests/responses, variables de mutación y contextos de rollback.
+- Reusar tipos de dominio en `@fallacy/types` cuando el dominio pueda ser compartido entre apps (`next`/`nest`).
+- No usar `any`.
+
+## `<modulo>.service.mock.ts`
+
+- Estado mock inicial del dominio.
+- Helpers coherentes para flujos GET/POST/PUT-PATCH.
+- Mantener sincronía entre mocks y contratos tipados del dominio.

@@ -1,8 +1,7 @@
 "use client";
-import { useRouter } from "i18n/navigation";
-
 import { createClient } from "utils/supabase/component";
 import { useAuthStore } from "store/auth/auth.store";
+import { useRouter } from "i18n/navigation";
 
 export const useSignOut = () => {
   const router = useRouter();

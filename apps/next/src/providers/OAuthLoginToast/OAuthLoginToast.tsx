@@ -1,9 +1,10 @@
 "use client";
-import { usePathname, useRouter } from "i18n/navigation";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import React, { Suspense, useEffect, useRef } from "react";
 import { toast } from "sonner";
+
+import { usePathname, useRouter } from "i18n/navigation";
 
 const OAuthLoginToastInner: React.FC = () => {
   const searchParams = useSearchParams();

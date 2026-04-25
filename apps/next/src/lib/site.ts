@@ -1,5 +1,6 @@
-import { routing } from "i18n/routing";
 import { getTranslations } from "next-intl/server";
+
+import { routing } from "i18n/routing";
 
 import type { Metadata } from "next";
 

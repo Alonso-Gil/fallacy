@@ -1,6 +1,7 @@
 "use client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useTheme } from "next-themes";
-import React from "react";
+import React, { useState } from "react";
 import { Toaster } from "sonner";
 
 import { AppThemeProvider } from "providers/AppThemeProvider";
@@ -22,12 +23,15 @@ const SonnerToaster = () => {
 
 const Providers: React.FC<Props> = props => {
   const { initialUser, children } = props;
+  const [queryClient] = useState(() => new QueryClient());
 
   return (
     <AppThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <AuthProvider initialUser={initialUser}>{children}</AuthProvider>
-      <OAuthLoginToast />
-      <SonnerToaster />
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider initialUser={initialUser}>{children}</AuthProvider>
+        <OAuthLoginToast />
+        <SonnerToaster />
+      </QueryClientProvider>
     </AppThemeProvider>
   );
 };

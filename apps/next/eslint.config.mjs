@@ -1,10 +1,9 @@
-import { builtinModules } from "module";
-import { createRequire } from "module";
+import { builtinModules, createRequire } from "node:module";
 
+import { defineConfig } from "eslint/config";
 import eslint from "@eslint/js";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
-import tseslint from "typescript-eslint";
 
 const require = createRequire(import.meta.url);
 /** @type {import("eslint").Linter.Config[]} */
@@ -15,9 +14,9 @@ const nextCoreWebVitals = require("eslint-config-next/core-web-vitals");
  * Ajustar si añades nuevos alias en tsconfig paths.
  */
 const localPathPrefixes =
-  "^(?!ui/)(?!components/)(?!hooks/)(?!config/)(?!utils/)(?!providers/)(?!types/)(?!store/)(?!lib/)(?!images/)(?!globals\\.css$)";
+  "^(?!ui/)(?!components/)(?!hooks/)(?!config/)(?!utils/)(?!providers/)(?!types/)(?!store/)(?!lib/)(?!services/)(?!i18n/)(?!images/)(?!globals\\.css$)";
 
-export default tseslint.config(
+export default defineConfig(
   {
     ignores: [
       ".next/**",
@@ -54,9 +53,11 @@ export default tseslint.config(
               "^config/",
               "^utils/",
               "^lib/",
+              "^services/",
               "^providers/",
               "^types/",
               "^store/",
+              "^i18n/",
               "^\\.\\.(?!.*\\.(?:css|scss|sass|less)$)(?!/?$)",
               "^\\./(?!.*\\.(?:css|scss|sass|less)$)"
             ],

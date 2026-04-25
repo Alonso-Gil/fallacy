@@ -1,4 +1,3 @@
-import { Link } from "i18n/navigation";
 import { useTranslations } from "next-intl";
 import React from "react";
 
@@ -6,6 +5,7 @@ import AuthButton from "ui/AuthButton/AuthButton";
 import GoogleIcon from "ui/icons/GoogleIcon/GoogleIcon";
 import Logo from "ui/Logo/Logo";
 import { Separator } from "ui/shadcnComponents/separator";
+import { Link } from "i18n/navigation";
 import AuthPageLayout from "../AuthPageLayout/AuthPageLayout";
 import EmailAuthForm from "../EmailAuthForm/EmailAuthForm";
 import type { LoginProps } from "./Login.types";

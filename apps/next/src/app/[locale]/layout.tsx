@@ -1,4 +1,3 @@
-import { routing } from "i18n/routing";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
@@ -6,6 +5,7 @@ import React from "react";
 
 import { getCurrentUser } from "utils/supabase/getCurrentUser";
 import Providers from "providers/Providers";
+import { routing } from "i18n/routing";
 
 type Props = {
   children: React.ReactNode;

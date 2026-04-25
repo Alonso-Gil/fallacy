@@ -1,5 +1,4 @@
 "use client";
-
 import { Search } from "lucide-react";
 import React from "react";
 
@@ -15,7 +14,8 @@ const LobbySearchBar: React.FC<Props> = props => {
         "group/search relative w-full min-w-0",
         "border-border/55 bg-surface rounded-lg border shadow-sm",
         "dark:border-border/50",
-        "transition-[box-shadow,colors] duration-200",
+        "transition-[box-shadow,colors,border-color] duration-200",
+        "hover:border-primary/40 hover:shadow-primary/15 hover:shadow-[0_0_20px_-5px]",
         "focus-within:border-primary/45",
         "focus-within:shadow-primary/10 focus-within:shadow-md",
         className

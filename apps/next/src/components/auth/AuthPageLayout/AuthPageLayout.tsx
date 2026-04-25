@@ -1,5 +1,4 @@
 "use client";
-import { Link } from "i18n/navigation";
 import { ArrowLeft } from "lucide-react";
 import { useTranslations } from "next-intl";
 import React, { useState } from "react";
@@ -7,6 +6,7 @@ import React, { useState } from "react";
 import { Separator } from "ui/shadcnComponents/separator";
 import RandomFallacy from "components/RandomFallacy/RandomFallacy";
 import { cn } from "lib/utils";
+import { Link } from "i18n/navigation";
 import AuthBackgroundImage from "../AuthBackgroundImage/AuthBackgroundImage";
 import { pickRandomAuthBackground } from "../authBackgrounds";
 import AuthPhotoCredit from "../AuthPhotoCredit/AuthPhotoCredit";

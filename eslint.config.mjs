@@ -1,12 +1,13 @@
-import { builtinModules } from "module";
+import { builtinModules } from "node:module";
 
+import { defineConfig } from "eslint/config";
 import eslint from "@eslint/js";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config(
+export default defineConfig(
   {
     ignores: [
       "**/eslint.config.mjs",
@@ -27,7 +28,7 @@ export default tseslint.config(
         ...globals.node,
         ...globals.jest
       },
-      ecmaVersion: 5,
+      ecmaVersion: 2020,
       sourceType: "module",
       parserOptions: {
         ecmaVersion: 2020,
@@ -72,7 +73,7 @@ export default tseslint.config(
             ["^@fallacy/"],
 
             // Relativos
-            ["^\\.", "^ui/", "^types/", "^components/"],
+            ["^\\.", "^ui/", "^types/", "^components/", "^hooks/", "^config/", "^utils/", "^providers/", "^types/", "^store/", "^lib/", "^services/", "^i18n/", "^images/", "^globals\\.css$"],
 
             // Images
             ["^images/"],

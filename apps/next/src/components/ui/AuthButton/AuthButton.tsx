@@ -1,5 +1,4 @@
 "use client";
-import { routing } from "i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
 import React from "react";
 
@@ -7,6 +6,7 @@ import Button from "ui/Button/Button";
 import { isSupabaseConfigured } from "config/supabase";
 import { createClient } from "utils/supabase/component";
 import { cn } from "lib/utils";
+import { routing } from "i18n/routing";
 import { AuthButtonProps as Props } from "./AuthButton.types";
 
 const AuthButton: React.FC<Props> = props => {

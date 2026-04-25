@@ -1,6 +1,5 @@
 "use client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "i18n/navigation";
 import { useTranslations } from "next-intl";
 import React, { useMemo, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
@@ -10,6 +9,7 @@ import Button from "ui/Button/Button";
 import Input from "ui/Input/Input";
 import { isSupabaseConfigured } from "config/supabase";
 import { createClient } from "utils/supabase/component";
+import { useRouter } from "i18n/navigation";
 import type {
   EmailAuthFormProps,
   EmailLoginFormSchema,
@@ -158,7 +158,8 @@ const EmailAuthForm: React.FC<EmailAuthFormProps> = props => {
         />
       )}
       <Button
-        className="shadow-primary/25 hover:shadow-primary/35 mb-2 shadow-md transition-shadow"
+        className="mb-2"
+        glow
         text={isSignUp ? t("submitSignUp") : t("submitLogin")}
         type="submit"
         isLoading={isLoading}

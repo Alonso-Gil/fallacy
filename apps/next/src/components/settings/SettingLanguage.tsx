@@ -1,6 +1,4 @@
 "use client";
-import { usePathname, useRouter } from "i18n/navigation";
-import { routing } from "i18n/routing";
 import { useLocale, useTranslations } from "next-intl";
 
 import {
@@ -10,6 +8,8 @@ import {
   SelectTrigger,
   SelectValue
 } from "ui/shadcnComponents/select";
+import { usePathname, useRouter } from "i18n/navigation";
+import { routing } from "i18n/routing";
 
 const SettingLanguage = () => {
   const locale = useLocale();
