@@ -2807,7 +2807,7 @@
     iceberg-js "^0.8.1"
     tslib "2.8.1"
 
-"@supabase/supabase-js@^2.103.0":
+"@supabase/supabase-js@^2.104.1":
   version "2.104.1"
   resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.104.1.tgz#464ebe253766e05a005f6a3fd72a6bdf5feb856b"
   integrity sha512-E0H/CtVmaGjiAy+ieZ5ZB/1EqxXcGdaFaAc23AE5zaYfz6NtCNDcmaEdoGPYMPFH5pE6drGG6e3ljPmkFoGVxQ==

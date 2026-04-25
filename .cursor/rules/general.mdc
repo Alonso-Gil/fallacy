@@ -21,6 +21,7 @@ Aplican en todo el proyecto. Las reglas **largas o muy específicas** (p. ej. es
 - **Componentes React:** `const C: React.FC<Props> = props => { ... }` y export acorde.
 - **`forwardRef`:** callback flecha; `displayName` en la constante si hace falta.
 - **Excepciones:** métodos en objetos literales, código generado, APIs que exijan `function`.
+- **Nest (backend):** clases, `inject` y métodos de controlador / guard / servicio con la forma que impone el framework; no forzar clases a componentes de flecha. Helpers y utilidades de dominio: preferir `const` + flecha como en el resto del repo.
 
 ```tsx
 const Separator = ({ className }: Props) => <hr className={className} />;
@@ -40,6 +41,10 @@ const Separator = ({ className }: Props) => <hr className={className} />;
 {!loading && user && <Profile u={user} />}
 {!loading && !user && <Login />}
 ```
+
+## API / errores hacia el cliente (Nest, BFF, handlers)
+
+- Mensajes y `message` de excepciones **en inglés**, **genéricos** (p. ej. `Unauthorized`, `Service unavailable`); no revelar nombres de variables, stack, proveedores, ni pistas de configuración faltante que ayuden a atacar el sistema o entornos.
 
 ## UI (Next: `components/ui/`)
 

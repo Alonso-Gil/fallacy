@@ -175,6 +175,18 @@
       "authLoading": "Loading session"
     },
     "searchBarLabel": "Search rooms, topics, or motions (live search coming later)",
-    "searchPlaceholder": "Search by title, motion, or room context"
+    "searchPlaceholder": "Search by title, motion, or room context",
+    "createTestRoom": "Test room",
+    "roomsLoadError": "Could not load the room list.",
+    "apiNotConfigured": "API is not available.",
+    "apiNotConfiguredHint": "Set NEXT_PUBLIC_API_URL in .env.local (e.g. http://localhost:3001) to use the room list.",
+    "loginToCreateRoom": "Sign in to create a test room.",
+    "testRoomCreated": "Test room created.",
+    "createRoomError": "Could not create the room.",
+    "roomsLoading": "Loading rooms…",
+    "noRoomsInLobby": "No public rooms yet. Create a test room if you are signed in.",
+    "roomMeta": "{status} · {visibility} · up to {n, plural, one {# seat} other {# seats}}",
+    "roomVisiblePublic": "public",
+    "roomVisiblePrivate": "private"
   }
 }

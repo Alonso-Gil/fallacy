@@ -1,5 +1,4 @@
 import { builtinModules } from "module";
-import { fileURLToPath } from "node:url";
 
 import eslint from "@eslint/js";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
@@ -8,11 +7,9 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  ...tseslint.configs.recommendedTypeChecked,
-  eslint.configs.recommended,
-  eslintPluginPrettierRecommended,
   {
     ignores: [
+      "**/eslint.config.mjs",
       "environments/*",
       "**/node_modules/**",
       "**/dist/**",
@@ -20,7 +17,11 @@ export default tseslint.config(
       "**/coverage/**"
     ]
   },
+  ...tseslint.configs.recommended,
+  eslint.configs.recommended,
+  eslintPluginPrettierRecommended,
   {
+    files: ["**/*.{ts,tsx}"],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -29,18 +30,13 @@ export default tseslint.config(
       ecmaVersion: 5,
       sourceType: "module",
       parserOptions: {
-        projectService: true,
-        tsconfigRootDir: fileURLToPath(new URL(".", import.meta.url)),
         ecmaVersion: 2020,
         sourceType: "module",
         ecmaFeatures: {
           jsx: true
-        },
-        parser: "@typescript-eslint/parser"
+        }
       }
-    }
-  },
-  {
+    },
     plugins: {
       "simple-import-sort": simpleImportSort
     },

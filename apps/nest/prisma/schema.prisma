@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,12 +6,22 @@ datasource db {
   provider = "postgresql"
 }
 
-model Debate {
-  id         String   @id @default(uuid()) @db.Uuid
-  title      String
-  topic      String
-  createdBy  String   @map("created_by") @db.Uuid
-  createdAt  DateTime @default(now()) @map("created_at")
+model Room {
+  id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String
+  description String?
+  maxSeats    Int        @default(4) @map("max_seats")
+  isPublic    Boolean    @default(true) @map("is_public")
+  status      RoomStatus @default(WAITING) @map("status")
+  createdBy   String     @map("created_by") @db.Uuid
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
 
-  @@map("debates")
+  @@map("rooms")
+}
+
+enum RoomStatus {
+  WAITING
+  IN_PROGRESS
+  ENDED
 }

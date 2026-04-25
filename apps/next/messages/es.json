@@ -175,6 +175,18 @@
       "authLoading": "Cargando sesión"
     },
     "searchBarLabel": "Buscar salas, temas o mociones (próximamente con filtros y buscado en vivo)",
-    "searchPlaceholder": "Busca por título, moción o contexto de la sala"
+    "searchPlaceholder": "Busca por título, moción o contexto de la sala",
+    "createTestRoom": "Sala de prueba",
+    "roomsLoadError": "No se pudo cargar el listado de salas.",
+    "apiNotConfigured": "API no disponible.",
+    "apiNotConfiguredHint": "Define NEXT_PUBLIC_API_URL en .env.local (p. ej. http://localhost:3001) para ver el listado de salas.",
+    "loginToCreateRoom": "Inicia sesión para crear una sala de prueba.",
+    "testRoomCreated": "Sala de prueba creada.",
+    "createRoomError": "No se pudo crear la sala.",
+    "roomsLoading": "Cargando salas…",
+    "noRoomsInLobby": "Aún no hay salas públicas. Crea una de prueba si has iniciado sesión.",
+    "roomMeta": "{status} · {visibility} · hasta {n, plural, one {# plaza} other {# plazas}}",
+    "roomVisiblePublic": "pública",
+    "roomVisiblePrivate": "privada"
   }
 }

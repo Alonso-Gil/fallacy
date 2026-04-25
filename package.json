@@ -17,6 +17,10 @@
     "start:nest": "yarn compile && yarn workspace fallacy-nest start:dev",
     "prepare": "husky"
   },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.104.1",
+    "zod": "^3.24.2"
+  },
   "resolutions": {
     "es-iterator-helpers": "1.2.1",
     "internal-slot": "1.1.0"

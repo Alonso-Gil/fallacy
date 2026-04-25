@@ -1,0 +1,11 @@
+---
+description: Dependencias compartidas en Yarn workspaces (misma versión, hoisting en raíz)
+alwaysApply: true
+---
+
+# Monorepo: dependencias usadas en varios workspaces
+
+- Si un **mismo paquete npm** se importa (dependencia o devDependency) en **dos o más** workspaces bajo `apps/*` o `packages/*` (p. ej. en **Next y Nest a la vez**), decláralo en el **`package.json` de la raíz** del monorepo, con **una sola versión** acordada.
+- Elimínalo de los `package.json` de los paquetes hijo cuando pase a la raíz; los workspaces resuelven el módulo desde el árbol hoisteado.
+- Criterio: menos duplicación, upgrades en un solo sitio, menos conflictos de `yarn.lock`.
+- En el monorepo actual: p. ej. `zod`, `@supabase/supabase-js` en el `package.json` raíz.
