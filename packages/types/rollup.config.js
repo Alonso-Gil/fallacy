@@ -1,10 +1,13 @@
-import { declarationsConfig } from "../../rollup.config";
+import { createRequire } from "node:module";
+import { bundleConfig, declarationsConfig } from "../../rollup.config.js";
 
-const config = [
+const require = createRequire(import.meta.url);
+const packageJSON = require("./package.json");
+
+export default [
+  bundleConfig(packageJSON, []),
   {
     ...declarationsConfig,
     external: [...declarationsConfig.external]
   }
 ];
-
-export default config;

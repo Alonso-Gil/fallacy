@@ -89,7 +89,12 @@ const LobbyMainContent: React.FC<Props> = props => {
                 visibility: room.isPublic
                   ? t("room.visibility.public")
                   : t("room.visibility.private"),
-                n: room.maxSeats
+                m:
+                  room.format === "OXFORD" &&
+                  room.maxSeatsPerSide >= 1 &&
+                  room.maxSeatsPerSide <= 3
+                    ? `${room.maxSeatsPerSide}v${room.maxSeatsPerSide}`
+                    : "—"
               })}
             </p>
           </article>

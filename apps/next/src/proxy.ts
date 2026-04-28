@@ -8,7 +8,7 @@ import { routing } from "i18n/routing";
 
 const handleI18nRouting = createIntlMiddleware(routing);
 
-const proxy = async (request: NextRequest) => {
+export async function proxy(request: NextRequest) {
   const response = handleI18nRouting(request);
 
   if (!isSupabaseConfigured()) {
@@ -57,9 +57,7 @@ const proxy = async (request: NextRequest) => {
   await supabase.auth.getUser();
 
   return response;
-};
-
-export default proxy;
+}
 
 export const config = {
   matcher: ["/", "/((?!api|_next|_vercel|.*\\..*).*)"]

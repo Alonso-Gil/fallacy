@@ -6,7 +6,15 @@
   "main": "./dist/bundle.cjs.js",
   "module": "./dist/bundle.esm.js",
   "types": "./dist/bundle.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/bundle.d.ts",
+      "import": "./dist/bundle.esm.js",
+      "require": "./dist/bundle.cjs.js"
+    }
+  },
   "scripts": {
+    "prepare": "yarn compile",
     "start": "echo skipping",
     "compile": "rollup -c",
     "dev": "yarn compile -w",

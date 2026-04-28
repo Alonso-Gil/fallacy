@@ -1,6 +1,16 @@
-import type { Room } from "@fallacy/types";
+import type {
+  DebateFormat,
+  OxfordFormatConfig,
+  RoomBase,
+  RoomStatus
+} from "@fallacy/types";
 
-export type RoomEntity = Room;
+export type RoomEntity = RoomBase;
+
+export type CreateRoomPayload = Omit<
+  RoomBase,
+  "id" | "status" | "createdBy" | "createdAt" | "updatedAt" | "formatConfig"
+> & { formatConfig?: OxfordFormatConfig | null };
 
 export type RoomServiceErrorCode =
   | "API_NOT_CONFIGURED"
@@ -19,18 +29,16 @@ export class RoomServiceError extends Error {
   }
 }
 
-export interface CreateRoomPayload {
-  title: string;
-  description: string | null;
-  maxSeats: number;
-  isPublic: boolean;
-}
-
 export interface UpdateRoomPayload {
   title?: string;
   description?: string | null;
+  motion?: string | null;
   maxSeats?: number;
+  maxSeatsPerSide?: number;
   isPublic?: boolean;
+  format?: DebateFormat;
+  formatConfig?: OxfordFormatConfig | null;
+  status?: RoomStatus;
 }
 
 export interface PostRoomVariables {
@@ -57,3 +65,5 @@ export interface PutRoomOptimisticContext {
   previousLobbyRooms?: RoomEntity[];
   previousDetail?: RoomEntity;
 }
+
+export type { RoomBase };

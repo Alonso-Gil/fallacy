@@ -19,23 +19,25 @@ import { cn } from "lib/utils";
 import { usePostRoom } from "services/room/room.service.hooks";
 import type { CreateRoomDialogProps as Props } from "./CreateRoomDialog.types";
 
-const maxSeatsOptions = [2, 4, 8, 16, 32, 64];
+const debatersPerSideOptions = [1, 2, 3] as const;
 
 const CreateRoomDialog: React.FC<Props> = props => {
   const { isRoomApiReady, className } = props;
   const t = useTranslations("Lobby");
   const [isCreateRoomDialogOpen, setIsCreateRoomDialogOpen] = useState(false);
   const [roomTitle, setRoomTitle] = useState("");
+  const [roomMotion, setRoomMotion] = useState("");
   const [roomDescription, setRoomDescription] = useState("");
-  const [roomMaxSeats, setRoomMaxSeats] = useState("4");
+  const [roomDebatersPerSide, setRoomDebatersPerSide] = useState("2");
   const [isRoomPublic, setIsRoomPublic] = useState(true);
   const { getAccessToken } = useAccessToken();
   const { mutateAsync: createRoom, isPending: isCreating } = usePostRoom();
 
   const resetCreateRoomForm = () => {
     setRoomTitle("");
+    setRoomMotion("");
     setRoomDescription("");
-    setRoomMaxSeats("4");
+    setRoomDebatersPerSide("2");
     setIsRoomPublic(true);
   };
 
@@ -49,13 +51,14 @@ const CreateRoomDialog: React.FC<Props> = props => {
       toast.error(t("room.errors.titleRequired"));
       return;
     }
-    const parsedMaxSeats = Number(roomMaxSeats);
-    if (
-      !Number.isInteger(parsedMaxSeats) ||
-      parsedMaxSeats < 2 ||
-      parsedMaxSeats > 64
-    ) {
-      toast.error(t("room.errors.maxSeatsInvalid"));
+    const motion = roomMotion.trim();
+    if (!motion) {
+      toast.error(t("room.errors.motionRequiredOxford"));
+      return;
+    }
+    const parsed = Number(roomDebatersPerSide);
+    if (!Number.isInteger(parsed) || parsed < 1 || parsed > 3) {
+      toast.error(t("room.errors.debatersPerSideInvalid"));
       return;
     }
     try {
@@ -72,9 +75,11 @@ const CreateRoomDialog: React.FC<Props> = props => {
         accessToken: accessTokenResult.accessToken,
         payload: {
           title,
+          motion,
           description: roomDescription.trim() ? roomDescription.trim() : null,
-          maxSeats: parsedMaxSeats,
-          isPublic: isRoomPublic
+          maxSeatsPerSide: parsed,
+          isPublic: isRoomPublic,
+          format: "OXFORD" as const
         }
       });
       setIsCreateRoomDialogOpen(false);
@@ -126,6 +131,22 @@ const CreateRoomDialog: React.FC<Props> = props => {
               <div className="grid gap-2">
                 <label
                   className="text-sm font-medium"
+                  htmlFor="create-room-motion"
+                >
+                  {t("room.fields.motion.label")}
+                </label>
+                <textarea
+                  id="create-room-motion"
+                  value={roomMotion}
+                  onChange={event => setRoomMotion(event.target.value)}
+                  maxLength={5000}
+                  placeholder={t("room.fields.motion.placeholder")}
+                  className="border-border bg-surface text-foreground placeholder:text-text-secondary/70 focus-visible:border-primary focus-visible:ring-primary/35 min-h-20 rounded-lg border px-3 py-2 text-sm outline-none focus-visible:ring-3"
+                />
+              </div>
+              <div className="grid gap-2">
+                <label
+                  className="text-sm font-medium"
                   htmlFor="create-room-description"
                 >
                   {t("room.fields.description.label")}
@@ -139,42 +160,33 @@ const CreateRoomDialog: React.FC<Props> = props => {
                   className="border-border bg-surface text-foreground placeholder:text-text-secondary/70 focus-visible:border-primary focus-visible:ring-primary/35 min-h-28 rounded-lg border px-3 py-2 text-sm outline-none focus-visible:ring-3"
                 />
               </div>
-            </div>
-            <div className="grid gap-3">
               <div className="grid gap-2">
-                <label
-                  className="text-sm font-medium"
-                  htmlFor="create-room-max-seats"
-                >
-                  {t("room.fields.maxSeats.label")}
-                </label>
-                <input
-                  id="create-room-max-seats"
-                  type="number"
-                  min={2}
-                  max={64}
-                  value={roomMaxSeats}
-                  onChange={event => setRoomMaxSeats(event.target.value)}
-                  className="border-border bg-surface text-foreground focus-visible:border-primary focus-visible:ring-primary/35 h-10 rounded-lg border px-3 text-sm outline-none focus-visible:ring-3"
-                />
+                <p className="text-sm font-medium">
+                  {t("room.fields.debateSize.label")}
+                </p>
                 <div className="grid grid-cols-3 gap-2">
-                  {maxSeatsOptions.map(option => (
+                  {debatersPerSideOptions.map(n => (
                     <button
-                      key={option}
+                      key={n}
                       type="button"
-                      onClick={() => setRoomMaxSeats(String(option))}
+                      onClick={() => setRoomDebatersPerSide(String(n))}
                       className={cn(
                         "rounded-lg border px-2 py-1.5 text-xs font-medium transition-colors",
-                        roomMaxSeats === String(option)
+                        roomDebatersPerSide === String(n)
                           ? "bg-primary text-primary-foreground border-primary"
                           : "bg-surface border-border text-foreground hover:border-primary/45"
                       )}
                     >
-                      {t("room.fields.maxSeats.option", { n: option })}
+                      {`${n}v${n}`}
                     </button>
                   ))}
                 </div>
+                <p className="text-muted-foreground text-xs">
+                  {t("room.fields.debateSize.hint")}
+                </p>
               </div>
+            </div>
+            <div className="grid gap-3">
               <div className="flex items-center justify-between gap-3 rounded-lg border px-3 py-2">
                 <div className="grid gap-0.5">
                   <p className="text-sm font-medium">

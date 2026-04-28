@@ -191,13 +191,17 @@
           "label": "Título",
           "placeholder": "Ej. Debate sobre energía nuclear"
         },
+        "motion": {
+          "label": "Moción (Oxford)",
+          "placeholder": "Obligatoria en Oxford: la proposición exacta que sostiene la casa"
+        },
         "description": {
           "label": "Descripción",
           "placeholder": "Contexto breve de la sala (opcional)"
         },
-        "maxSeats": {
-          "label": "Plazas máximas",
-          "option": "{n} plazas"
+        "debateSize": {
+          "label": "Tamaño del debate",
+          "hint": "Oradores por bando; en la sala se puede poner aunque haya huecos."
         },
         "isPublic": {
           "label": "Sala pública",
@@ -215,7 +219,8 @@
         "loginRequired": "Inicia sesión para crear una sala.",
         "createFailed": "No se pudo crear la sala.",
         "titleRequired": "Ingresa un título para la sala.",
-        "maxSeatsInvalid": "Las plazas deben estar entre 2 y 64."
+        "debatersPerSideInvalid": "Elige 1, 2 o 3 oradores por bando (1v1, 2v2 o 3v3).",
+        "motionRequiredOxford": "Escribe la moción en formato Oxford (qué sostiene la casa)."
       },
       "feedback": {
         "created": "Sala creada correctamente.",
@@ -223,7 +228,7 @@
         "empty": "Aún no hay salas públicas. Crea una sala si has iniciado sesión.",
         "apiNotConfiguredHint": "Define NEXT_PUBLIC_API_URL en .env.local (p. ej. http://localhost:3001) para ver el listado de salas."
       },
-      "meta": "{status} · {visibility} · hasta {n, plural, one {# plaza} other {# plazas}}",
+      "meta": "{status} · {visibility} · {m}",
       "visibility": {
         "public": "pública",
         "private": "privada"

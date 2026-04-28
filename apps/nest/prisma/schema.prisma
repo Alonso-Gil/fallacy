@@ -7,15 +7,18 @@ datasource db {
 }
 
 model Room {
-  id          String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  title       String
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title      String
+  motion     String?   @map("motion")
   description String?
-  maxSeats    Int        @default(4) @map("max_seats")
-  isPublic    Boolean    @default(true) @map("is_public")
-  status      RoomStatus @default(WAITING) @map("status")
-  createdBy   String     @map("created_by") @db.Uuid
-  createdAt   DateTime   @default(now()) @map("created_at")
-  updatedAt   DateTime   @updatedAt @map("updated_at")
+  maxSeats  Int     @default(2) @map("max_seats")
+  isPublic  Boolean    @default(true) @map("is_public")
+  status    RoomStatus @default(WAITING) @map("status")
+  format       DebateFormat @default(OXFORD) @map("debate_format")
+  formatConfig Json?         @map("format_config")
+  createdBy   String  @map("created_by") @db.Uuid
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
 
   @@map("rooms")
 }
@@ -24,4 +27,12 @@ enum RoomStatus {
   WAITING
   IN_PROGRESS
   ENDED
+}
+
+enum DebateFormat {
+  OXFORD
+  BRITISH_PARLIAMENTARY
+  WORLD_SCHOOLS
+  FREE
+  CUSTOM
 }

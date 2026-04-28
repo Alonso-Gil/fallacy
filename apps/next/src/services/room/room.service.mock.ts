@@ -1,5 +1,12 @@
+import {
+  type DebateFormat,
+  getDefaultOxfordFormatConfig
+} from "@fallacy/types";
+
+import { applyRoomUpdate } from "services/room/room.service.utils";
 import type {
   CreateRoomPayload,
+  RoomBase,
   RoomEntity,
   UpdateRoomPayload
 } from "./room.service.types";
@@ -13,18 +20,43 @@ const buildMockRoom = (
   payload?: CreateRoomPayload
 ): RoomEntity => {
   const current = nowIso();
-  return {
+  const format: DebateFormat = payload?.format ?? overrides.format ?? "OXFORD";
+  const base: Pick<
+    RoomEntity,
+    | "id"
+    | "title"
+    | "motion"
+    | "description"
+    | "maxSeatsPerSide"
+    | "isPublic"
+    | "status"
+    | "createdBy"
+    | "createdAt"
+    | "updatedAt"
+  > = {
     id:
       overrides.id ??
       `mock-room-${Math.random().toString(36).slice(2, 10)}-${Date.now()}`,
     title: payload?.title ?? overrides.title ?? "Sala mock",
+    motion: payload?.motion ?? overrides.motion ?? null,
     description: payload?.description ?? overrides.description ?? null,
-    maxSeats: payload?.maxSeats ?? overrides.maxSeats ?? 4,
+    maxSeatsPerSide: payload?.maxSeatsPerSide ?? overrides.maxSeatsPerSide ?? 2,
     isPublic: payload?.isPublic ?? overrides.isPublic ?? true,
-    status: overrides.status ?? "WAITING",
+    status: (overrides.status ?? "WAITING") as RoomBase["status"],
     createdBy: overrides.createdBy ?? "mock-user",
     createdAt: overrides.createdAt ?? current,
     updatedAt: overrides.updatedAt ?? current
+  };
+  const formatConfig =
+    format === "OXFORD"
+      ? (overrides.formatConfig ??
+        payload?.formatConfig ??
+        getDefaultOxfordFormatConfig())
+      : (overrides.formatConfig ?? null);
+  return {
+    ...base,
+    format,
+    formatConfig
   };
 };
 
@@ -32,10 +64,13 @@ const createInitialRoomMockState = (): RoomEntity[] => [
   buildMockRoom({
     id: "mock-room-1",
     title: "Debate abierto: IA en educación",
+    motion:
+      "Esta casa cree que la inteligencia artificial debería integrarse formalmente en escuelas y universidades.",
     description: "Impacto real en escuelas y universidades",
-    maxSeats: 12,
+    maxSeatsPerSide: 2,
     isPublic: true,
     status: "WAITING",
+    format: "OXFORD",
     createdBy: "mock-host-ana",
     createdAt: isoMinutesAgo(180),
     updatedAt: isoMinutesAgo(95)
@@ -44,7 +79,9 @@ const createInitialRoomMockState = (): RoomEntity[] => [
     id: "mock-room-2",
     title: "Sala privada de moderadores",
     description: "Ajustes de reglas para torneo interno",
-    maxSeats: 8,
+    format: "FREE",
+    motion: null,
+    maxSeatsPerSide: 2,
     isPublic: false,
     status: "WAITING",
     createdBy: "mock-host-carlos",
@@ -55,7 +92,7 @@ const createInitialRoomMockState = (): RoomEntity[] => [
     id: "mock-room-3",
     title: "Ensayo de apertura",
     description: "Práctica de argumentos iniciales",
-    maxSeats: 4,
+    maxSeatsPerSide: 2,
     isPublic: true,
     status: "IN_PROGRESS",
     createdBy: "mock-host-lucy",
@@ -66,9 +103,10 @@ const createInitialRoomMockState = (): RoomEntity[] => [
     id: "mock-room-4",
     title: "Final regional",
     description: "Ronda cerrada de semifinalistas",
-    maxSeats: 16,
+    maxSeatsPerSide: 3,
     isPublic: false,
     status: "IN_PROGRESS",
+    format: "OXFORD",
     createdBy: "mock-host-diego",
     createdAt: isoMinutesAgo(75),
     updatedAt: isoMinutesAgo(5)
@@ -77,7 +115,7 @@ const createInitialRoomMockState = (): RoomEntity[] => [
     id: "mock-room-5",
     title: "Debate sobre renta básica",
     description: "Conclusiones y votación final",
-    maxSeats: 20,
+    maxSeatsPerSide: 2,
     isPublic: true,
     status: "ENDED",
     createdBy: "mock-host-irene",
@@ -88,7 +126,7 @@ const createInitialRoomMockState = (): RoomEntity[] => [
     id: "mock-room-6",
     title: "Club de novatos",
     description: "Introducción a falacias comunes",
-    maxSeats: 32,
+    maxSeatsPerSide: 2,
     isPublic: true,
     status: "WAITING",
     createdBy: "mock-host-marco",
@@ -99,19 +137,19 @@ const createInitialRoomMockState = (): RoomEntity[] => [
     id: "mock-room-7",
     title: "Debate relámpago",
     description: null,
-    maxSeats: 2,
+    maxSeatsPerSide: 1,
     isPublic: true,
     status: "WAITING",
+    format: "OXFORD",
     createdBy: "mock-host-sara",
     createdAt: isoMinutesAgo(12),
     updatedAt: isoMinutesAgo(12)
   }),
   buildMockRoom({
     id: "mock-room-8",
-    title: "Delfino es puto",
-    description:
-      "Delfino es putisimo, es un top y como todos los tops, es puto.",
-    maxSeats: 64,
+    title: "Sala de prueba 8",
+    description: "Datos de ejemplo",
+    maxSeatsPerSide: 2,
     isPublic: true,
     status: "ENDED",
     createdBy: "mock-host-admin",
@@ -140,11 +178,11 @@ export const updateRoomMock = (
   payload: UpdateRoomPayload
 ): RoomEntity => {
   const target = roomMockState.find(room => room.id === roomId);
-  const updated: RoomEntity = {
-    ...(target ?? buildMockRoom({ id: roomId })),
-    ...payload,
-    updatedAt: nowIso()
-  };
+  if (!target) {
+    const fallback = buildMockRoom({ id: roomId });
+    return applyRoomUpdate(fallback, payload);
+  }
+  const updated = applyRoomUpdate(target, payload);
   roomMockState = roomMockState.map(room =>
     room.id === roomId ? updated : room
   );

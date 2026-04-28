@@ -15,6 +15,7 @@ import type {
   UseFetchLobbyRoomsParams,
   UseFetchRoomDetailParams
 } from "./room.service.types";
+import { applyRoomUpdate } from "./room.service.utils";
 
 export const roomKeys = {
   all: ["room"] as const,
@@ -87,9 +88,7 @@ export const usePutRoom = () => {
             return currentRooms;
           }
           return currentRooms.map(room =>
-            room.id === roomId
-              ? { ...room, ...payload, updatedAt: new Date().toISOString() }
-              : room
+            room.id === roomId ? applyRoomUpdate(room, payload) : room
           );
         }
       );
@@ -100,11 +99,7 @@ export const usePutRoom = () => {
           if (!currentRoom) {
             return currentRoom;
           }
-          return {
-            ...currentRoom,
-            ...payload,
-            updatedAt: new Date().toISOString()
-          };
+          return applyRoomUpdate(currentRoom, payload);
         }
       );
 

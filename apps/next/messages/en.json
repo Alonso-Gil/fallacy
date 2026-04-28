@@ -191,13 +191,17 @@
           "label": "Title",
           "placeholder": "e.g. Debate on nuclear energy"
         },
+        "motion": {
+          "label": "Motion (Oxford)",
+          "placeholder": "Required for Oxford: the exact resolution this house affirms"
+        },
         "description": {
           "label": "Description",
           "placeholder": "Short room context (optional)"
         },
-        "maxSeats": {
-          "label": "Max seats",
-          "option": "{n} seats"
+        "debateSize": {
+          "label": "Debate size",
+          "hint": "Debaters per side; the live room can still run with empty seats if people agree."
         },
         "isPublic": {
           "label": "Public room",
@@ -215,7 +219,8 @@
         "loginRequired": "Sign in to create a room.",
         "createFailed": "Could not create the room.",
         "titleRequired": "Enter a room title.",
-        "maxSeatsInvalid": "Seats must be between 2 and 64."
+        "debatersPerSideInvalid": "Pick 1, 2, or 3 debaters per side (1v1, 2v2, or 3v3).",
+        "motionRequiredOxford": "Enter the motion in Oxford format (it defines what this house affirms)."
       },
       "feedback": {
         "created": "Room created successfully.",
@@ -223,7 +228,7 @@
         "empty": "No public rooms yet. Create a room if you are signed in.",
         "apiNotConfiguredHint": "Set NEXT_PUBLIC_API_URL in .env.local (e.g. http://localhost:3001) to use the room list."
       },
-      "meta": "{status} · {visibility} · up to {n, plural, one {# seat} other {# seats}}",
+      "meta": "{status} · {visibility} · {m}",
       "visibility": {
         "public": "public",
         "private": "private"
