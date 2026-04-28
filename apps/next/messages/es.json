@@ -180,7 +180,8 @@
       "actions": {
         "openCreate": "Crear sala",
         "submitCreate": "Crear sala",
-        "cancelCreate": "Cancelar"
+        "cancelCreate": "Cancelar",
+        "enter": "Entrar"
       },
       "modal": {
         "title": "Crear sala",
@@ -189,28 +190,38 @@
       "fields": {
         "title": {
           "label": "Título",
-          "placeholder": "Ej. Debate sobre energía nuclear"
+          "placeholder": "Ej. Debate sobre energía nuclear",
+          "error": "El título es obligatorio."
         },
         "motion": {
-          "label": "Moción (Oxford)",
-          "placeholder": "Obligatoria en Oxford: la proposición exacta que sostiene la casa"
+          "labelByFormat": {
+            "OXFORD": "Moción (Oxford)",
+            "FREE": "Tema principal"
+          },
+          "placeholder": "Ej. Esta casa prohibiría el uso de celulares en escuelas",
+          "error": "La moción es obligatoria para debates Oxford."
         },
         "description": {
           "label": "Descripción",
           "placeholder": "Contexto breve de la sala (opcional)"
         },
+        "format": {
+          "label": "Formato del debate"
+        },
         "debateSize": {
           "label": "Tamaño del debate",
-          "hint": "Oradores por bando; en la sala se puede poner aunque haya huecos."
+          "hint": "Número de oradores por cada lado del debate."
         },
-        "isPublic": {
-          "label": "Sala pública",
-          "hint": "Si está desactivado, solo será visible para invitados."
+        "privacy": {
+          "label": "Privacidad",
+          "publicToggle": "Sala pública",
+          "publicHint": "Visible en el lobby para cualquier usuario.",
+          "privateHint": "Solo podrán entrar usuarios con invitación."
         },
-        "visibility": {
-          "label": "Visibilidad",
-          "publicText": "Cualquiera en el lobby podrá encontrar y unirse a la sala.",
-          "privateText": "Solo usuarios invitados podrán acceder a la sala."
+        "preview": {
+          "label": "Vista previa",
+          "titlePlaceholder": "Título de la sala",
+          "motionPlaceholder": "Aún no escribes la moción"
         }
       },
       "errors": {
@@ -228,11 +239,37 @@
         "empty": "Aún no hay salas públicas. Crea una sala si has iniciado sesión.",
         "apiNotConfiguredHint": "Define NEXT_PUBLIC_API_URL en .env.local (p. ej. http://localhost:3001) para ver el listado de salas."
       },
-      "meta": "{status} · {visibility} · {m}",
-      "visibility": {
-        "public": "pública",
-        "private": "privada"
-      }
+      "status": {
+        "WAITING": "Esperando",
+        "IN_PROGRESS": "En debate",
+        "ENDED": "Finalizado"
+      },
+      "badges": {
+        "public": "Pública",
+        "private": "Privada"
+      },
+      "format": {
+        "OXFORD": "Oxford",
+        "BRITISH_PARLIAMENTARY": "Parlamentario británico",
+        "WORLD_SCHOOLS": "World Schools",
+        "FREE": "Libre",
+        "CUSTOM": "Personalizado"
+      },
+      "phases": {
+        "MOTION_PRESENTATION": "Presentación de la moción",
+        "INITIAL_AUDIENCE_VOTE": "Votación inicial del público",
+        "OPENING_PROPOSITION": "Apertura de la proposición",
+        "OPENING_OPPOSITION": "Apertura de la oposición",
+        "ARGUMENT_REBUTTAL_ROUNDS": "Rondas de argumentos y réplicas",
+        "AUDIENCE_OR_MODERATOR_QUESTIONS": "Preguntas del público o moderador",
+        "CLOSING_OPPOSITION": "Cierre de la oposición",
+        "CLOSING_PROPOSITION": "Cierre de la proposición",
+        "FINAL_AUDIENCE_VOTE": "Votación final del público",
+        "RESULT": "Resultado"
+      },
+      "seatsLabel": "{n} vs {n}",
+      "currentPhaseLabel": "Fase actual",
+      "progressCount": "{current} de {total}"
     }
   }
 }

@@ -180,7 +180,8 @@
       "actions": {
         "openCreate": "Create room",
         "submitCreate": "Create room",
-        "cancelCreate": "Cancel"
+        "cancelCreate": "Cancel",
+        "enter": "Enter"
       },
       "modal": {
         "title": "Create room",
@@ -189,28 +190,38 @@
       "fields": {
         "title": {
           "label": "Title",
-          "placeholder": "e.g. Debate on nuclear energy"
+          "placeholder": "e.g. Debate on nuclear energy",
+          "error": "Title is required."
         },
         "motion": {
-          "label": "Motion (Oxford)",
-          "placeholder": "Required for Oxford: the exact resolution this house affirms"
+          "labelByFormat": {
+            "OXFORD": "Motion (Oxford)",
+            "FREE": "Main topic"
+          },
+          "placeholder": "e.g. This house would ban smartphones in schools",
+          "error": "Motion is required for Oxford debates."
         },
         "description": {
           "label": "Description",
           "placeholder": "Short room context (optional)"
         },
+        "format": {
+          "label": "Debate format"
+        },
         "debateSize": {
           "label": "Debate size",
-          "hint": "Debaters per side; the live room can still run with empty seats if people agree."
+          "hint": "Number of speakers per side of the debate."
         },
-        "isPublic": {
-          "label": "Public room",
-          "hint": "If disabled, the room will only be visible to invited users."
+        "privacy": {
+          "label": "Privacy",
+          "publicToggle": "Public room",
+          "publicHint": "Visible in the lobby to any user.",
+          "privateHint": "Only invited users will be able to join."
         },
-        "visibility": {
-          "label": "Visibility",
-          "publicText": "Anyone in the lobby can find and join this room.",
-          "privateText": "Only invited users can access this room."
+        "preview": {
+          "label": "Preview",
+          "titlePlaceholder": "Room title",
+          "motionPlaceholder": "Motion not written yet"
         }
       },
       "errors": {
@@ -228,11 +239,37 @@
         "empty": "No public rooms yet. Create a room if you are signed in.",
         "apiNotConfiguredHint": "Set NEXT_PUBLIC_API_URL in .env.local (e.g. http://localhost:3001) to use the room list."
       },
-      "meta": "{status} · {visibility} · {m}",
-      "visibility": {
-        "public": "public",
-        "private": "private"
-      }
+      "status": {
+        "WAITING": "Waiting",
+        "IN_PROGRESS": "In progress",
+        "ENDED": "Finished"
+      },
+      "badges": {
+        "public": "Public",
+        "private": "Private"
+      },
+      "format": {
+        "OXFORD": "Oxford",
+        "BRITISH_PARLIAMENTARY": "British Parliamentary",
+        "WORLD_SCHOOLS": "World Schools",
+        "FREE": "Free",
+        "CUSTOM": "Custom"
+      },
+      "phases": {
+        "MOTION_PRESENTATION": "Motion presentation",
+        "INITIAL_AUDIENCE_VOTE": "Initial audience vote",
+        "OPENING_PROPOSITION": "Opening proposition",
+        "OPENING_OPPOSITION": "Opening opposition",
+        "ARGUMENT_REBUTTAL_ROUNDS": "Argument and rebuttal rounds",
+        "AUDIENCE_OR_MODERATOR_QUESTIONS": "Audience or moderator questions",
+        "CLOSING_OPPOSITION": "Closing opposition",
+        "CLOSING_PROPOSITION": "Closing proposition",
+        "FINAL_AUDIENCE_VOTE": "Final audience vote",
+        "RESULT": "Result"
+      },
+      "seatsLabel": "{n} vs {n}",
+      "currentPhaseLabel": "Current phase",
+      "progressCount": "{current} of {total}"
     }
   }
 }
