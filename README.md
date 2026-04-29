@@ -1,77 +1,112 @@
 # Fallacy
 
-Plataforma de debates: salas con reglas, participantes y espectadores. Este repositorio es un **monorepo** gestionado con **Yarn workspaces** y **Turborepo**.
+Debate platform with rooms, rules, participants, and spectators. This repository is a monorepo managed with Yarn Workspaces and Turborepo.
 
-## Contenido del repositorio
+## Repository Structure
 
-| Ruta             | Descripción                                       |
-| ---------------- | ------------------------------------------------- |
-| `apps/next`      | Frontend **Next.js** (`fallacy-web`)              |
-| `apps/nest`      | API **NestJS** (`fallacy-nest`)                   |
-| `packages/types` | Tipos e interfaces compartidos (`@fallacy/types`) |
+- `apps/next`: Next.js web app (`fallacy-web`).
+- `apps/nest`: NestJS API (`fallacy-nest`).
+- `apps/expo`: Expo mobile app (`fallacy-mobile`).
+- `packages/types`: Shared types and interfaces (`@fallacy/types`).
 
-## Requisitos previos
+## Requirements
 
-- **Node.js** 22 (recomendado usar [nvm](https://github.com/nvm-sh/nvm) o similar; en la raíz hay un archivo `.nvmrc`).
-- **Yarn** 1.x (el proyecto declara `packageManager: yarn@1.22.19`).
+- Node.js 22. Use the root `.nvmrc` when possible.
+- Yarn 1.x. The root `package.json` declares `packageManager: yarn@1.22.19`.
+- Expo Go or native simulators if you work on `apps/expo`.
 
-## Cómo levantar el proyecto
+## Setup
 
-1. **Clonar** el repositorio e ir a la carpeta raíz.
+Install dependencies from the monorepo root:
 
-2. **Instalar dependencias** (desde la raíz del monorepo):
+```bash
+yarn install
+```
 
-   ```bash
-   yarn install
-   ```
+Set up the web app environment:
 
-3. **Variables de entorno (app web)**  
-   En `apps/next`, copia la plantilla y rellena los valores (por ejemplo credenciales de Supabase):
+```bash
+cp apps/next/.env.template apps/next/.env.local
+```
 
-   ```bash
-   cp apps/next/.env.template apps/next/.env.local
-   ```
+Set up the API environment:
 
-   Edita `apps/next/.env.local` y asigna `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` según tu proyecto.
+```bash
+cp apps/nest/.env.example apps/nest/.env
+```
 
-4. **Arrancar en desarrollo**  
-   Desde la **raíz**:
+Fill the generated files with the values required by your local services:
 
-   ```bash
-   yarn dev
-   ```
+- `apps/next/.env.local`: `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_ROOM_SHOULD_MOCK`.
+- `apps/nest/.env`: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `DATABASE_URL`, `DIRECT_URL`, `PORT`, `CORS_ORIGIN`.
 
-   Eso levanta la aplicación Next en modo desarrollo (por defecto en [http://localhost:3000](http://localhost:3000), salvo que el puerto esté ocupado).
+## Development
 
-   Alternativa si necesitas compilar paquetes compartidos antes:
+Run each app from the monorepo root:
 
-   ```bash
-   yarn start:next
-   ```
+```bash
+yarn dev:next
+yarn dev:nest
+yarn dev:expo
+```
 
-5. **API Nest (opcional)**  
-   Si trabajas en el backend:
+Useful workspace-specific commands:
 
-   ```bash
-   yarn workspace fallacy-nest start:dev
-   ```
+```bash
+yarn workspace fallacy-mobile android
+yarn workspace fallacy-mobile ios
+yarn workspace fallacy-mobile web
+yarn workspace fallacy-nest prisma:generate
+yarn workspace fallacy-nest prisma:migrate
+yarn workspace fallacy-nest test
+```
 
-## Scripts útiles (raíz)
+Use these commands when you need shared packages compiled before starting an app:
 
-| Comando                             | Uso                                     |
-| ----------------------------------- | --------------------------------------- |
-| `yarn dev`                          | Desarrollo del frontend Next            |
-| `yarn compile`                      | Compilación vía Turborepo               |
-| `yarn check-types`                  | Comprobación de tipos en los workspaces |
-| `yarn lint` / `yarn lint:ci`        | ESLint                                  |
-| `yarn format` / `yarn check-format` | Prettier                                |
+```bash
+yarn start:next
+yarn start:nest
+```
 
-Tras `yarn install`, el hook **Husky** (`prepare`) configura el **pre-commit** con **lint-staged** (formato y lint sobre archivos staged).
+## Root Scripts
 
-## Integración continua
+- `yarn dev:next`: starts the Next.js app in development mode.
+- `yarn dev:nest`: starts the NestJS API in watch mode.
+- `yarn dev:expo`: starts the Expo development server.
+- `yarn compile`: runs the Turborepo `compile` pipeline.
+- `yarn check-types`: runs TypeScript checks across workspaces.
+- `yarn lint`: runs ESLint with auto-fix across workspaces.
+- `yarn lint:ci`: runs ESLint in CI mode across workspaces.
+- `yarn format`: formats files across workspaces.
+- `yarn check-format`: checks formatting across workspaces.
+- `yarn clean`: removes root and workspace `node_modules`, then clears caches.
 
-En GitHub, el workflow `.github/workflows/ci.yml` ejecuta comprobaciones de formato, compilación, tipos y lint en pushes y pull requests hacia `main`.
+After `yarn install`, the `prepare` script installs Husky hooks. Pre-commit checks are handled by `lint-staged`.
 
-## Contribuir
+## Monorepo Conventions
 
-Flujo de ramas, PR y buenas prácticas: **[CONTRIBUTING.md](./CONTRIBUTING.md)**.
+- Keep comments, documentation, user-facing copy, variables, functions, and error messages in English.
+- Prefer `const` plus arrow functions for helpers, utilities, and React components. Framework-required class methods are allowed in NestJS.
+- Boolean variables, props, parameters, and state slices should use the `is` prefix, such as `isOpen`, `isLoading`, or `isValid`.
+- Do not use nested ternaries. Prefer explicit helpers, `if` statements, or separate JSX conditions.
+- If the same npm package is imported by two or more workspaces under `apps/*` or `packages/*`, declare it once in the root `package.json` and remove it from child `package.json` files.
+- Keep shared contracts in `packages/types` and import them through `@fallacy/types`.
+- UI primitives from shadcn live under `apps/next/src/components/ui/shadcnComponents`; product-level wrappers live above that layer in `apps/next/src/components/ui`.
+- Client-facing API errors must be generic and must not expose environment names, stack traces, provider details, or configuration hints.
+
+## Quality Checks
+
+Before opening a pull request, run:
+
+```bash
+yarn check-format
+yarn compile
+yarn check-types
+yarn lint:ci
+```
+
+The GitHub workflow at `.github/workflows/ci.yml` runs the same quality gates on pull requests and pushes to `main`.
+
+## Contributing
+
+Branch workflow, pull request guidance, and review practices live in [CONTRIBUTING.md](./CONTRIBUTING.md).

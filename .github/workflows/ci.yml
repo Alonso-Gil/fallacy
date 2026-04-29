@@ -1,5 +1,5 @@
-# Comprueba formato, compilación, tipos y lint en cada PR y en pushes a main.
-# En GitHub: Settings → Branches → protege main y marca este workflow como check obligatorio.
+# Checks formatting, compilation, types, and lint on each PR and on pushes to main.
+# In GitHub: Settings -> Branches -> protect main and mark this workflow as a required check.
 
 name: CI
 

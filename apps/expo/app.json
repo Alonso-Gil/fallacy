@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "Fallacy",
+    "slug": "fallacy-mobile",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fallacy.mobile"
+    },
+    "android": {
+      "package": "com.fallacy.mobile",
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}

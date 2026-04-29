@@ -5,6 +5,7 @@
   "scripts": {
     "dev:next": "yarn workspace fallacy-web dev",
     "dev:nest": "yarn workspace fallacy-nest start:dev",
+    "dev:expo": "yarn workspace fallacy-mobile start",
     "clean": "rm -rf node_modules && rm -rf packages/**/node_modules && rm -rf apps/**/node_modules && yarn clean:cache",
     "clean:cache": "rm -rf packages/**/.turbo && rm -rf apps/**/.turbo && rm -rf apps/**/.next",
     "compile": "turbo run compile",
@@ -19,6 +20,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.104.1",
+    "react": "^19.2.0",
     "zod": "^3.24.2"
   },
   "resolutions": {
@@ -31,6 +33,7 @@
     "@rollup/plugin-commonjs": "^24.1.0",
     "@rollup/plugin-inject": "^5.0.3",
     "@rollup/plugin-json": "^6.0.0",
+    "@types/react": "^19.2.0",
     "esbuild": "^0.25.2",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",

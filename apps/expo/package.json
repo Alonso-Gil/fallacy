@@ -1,0 +1,30 @@
+{
+  "name": "fallacy-mobile",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "compile": "echo skipping compile",
+    "build": "echo skipping build",
+    "clean": "rm -rf .expo && rm -rf node_modules",
+    "lint": "eslint . --ext .ts,.tsx --fix",
+    "lint:ci": "eslint . --ext .ts,.tsx --max-warnings 0",
+    "check-types": "tsc --noEmit",
+    "prettier": "prettier --ignore-path ../../.prettierignore \"src/**/*.{js,jsx,ts,tsx,json}\" \"*.{ts,tsx,js,mjs,cjs,json}\" \"App.tsx\" \"index.ts\"",
+    "format": "yarn prettier --write",
+    "check-format": "yarn prettier --list-different"
+  },
+  "dependencies": {
+    "@fallacy/types": "*",
+    "expo": "~55.0.18",
+    "expo-status-bar": "~55.0.5",
+    "react-native": "0.83.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.0"
+  }
+}
