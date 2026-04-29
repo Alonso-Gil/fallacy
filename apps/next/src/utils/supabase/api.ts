@@ -5,9 +5,7 @@ import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
 const createClient = (req: NextApiRequest, res: NextApiResponse) => {
   if (!isSupabaseConfigured()) {
-    throw new Error(
-      "[TODO Supabase] Configura NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (o ANON_KEY legacy)"
-    );
+    throw new Error("Service unavailable");
   }
 
   const supabase = createServerClient(

@@ -5,9 +5,7 @@ import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
 
 export const createClient = async () => {
   if (!isSupabaseConfigured()) {
-    throw new Error(
-      "Supabase no está configurado (NEXT_PUBLIC_SUPABASE_URL y clave pública)"
-    );
+    throw new Error("Service unavailable");
   }
 
   const cookieStore = await cookies();
@@ -25,7 +23,7 @@ export const createClient = async () => {
             cookieStore.set(name, value, options);
           });
         } catch {
-          // set puede fallar en Server Components; el middleware renueva la sesión
+          // set may fail in Server Components; the middleware refreshes the session
         }
       }
     }

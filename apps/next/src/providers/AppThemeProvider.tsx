@@ -1,8 +1,8 @@
 "use client";
 import { ThemeProvider, type ThemeProviderProps } from "next-themes";
 
-// TODO: eliminar cuando next-themes deje de inyectar <script> en runtime y
-// React 19 ya no lance este warning. Ver: https://github.com/pacocoursey/next-themes
+// TODO: remove when next-themes stops injecting <script> at runtime and
+// React 19 no longer emits this warning. See: https://github.com/pacocoursey/next-themes
 const NEXT_THEMES_SCRIPT_WARNING =
   "Encountered a script tag while rendering React component";
 

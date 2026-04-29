@@ -7,9 +7,10 @@
     "dev:nest": "yarn workspace fallacy-nest start:dev",
     "dev:expo": "yarn workspace fallacy-mobile start",
     "clean": "rm -rf node_modules && rm -rf packages/**/node_modules && rm -rf apps/**/node_modules && yarn clean:cache",
-    "clean:cache": "rm -rf packages/**/.turbo && rm -rf apps/**/.turbo && rm -rf apps/**/.next",
+    "clean:cache": "rm -rf packages/**/.turbo && rm -rf apps/**/.turbo && rm -rf apps/**/.next && rm -rf apps/**/.expo",
     "compile": "turbo run compile",
     "check-types": "turbo run check-types",
+    "test": "turbo run test",
     "lint": "turbo run lint",
     "lint:ci": "turbo run lint:ci",
     "format": "turbo run format",
@@ -35,7 +36,7 @@
     "@rollup/plugin-json": "^6.0.0",
     "@types/react": "^19.2.0",
     "esbuild": "^0.25.2",
-    "eslint": "^9.22.0",
+    "eslint": "^9.39.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-import-resolver-typescript": "^4.3.2",
     "eslint-plugin-prettier": "^5.2.5",
@@ -50,7 +51,8 @@
     "tsconfig-paths": "^4.2.0",
     "turbo": "^1.10.12",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.20.0"
+    "typescript-eslint": "^8.20.0",
+    "vitest": "^3.2.4"
   },
   "workspaces": {
     "packages": [

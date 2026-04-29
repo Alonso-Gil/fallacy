@@ -35,10 +35,17 @@ Set up the API environment:
 cp apps/nest/.env.example apps/nest/.env
 ```
 
+Set up the mobile app environment:
+
+```bash
+cp apps/expo/.env.example apps/expo/.env.local
+```
+
 Fill the generated files with the values required by your local services:
 
 - `apps/next/.env.local`: `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_ROOM_SHOULD_MOCK`.
 - `apps/nest/.env`: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `DATABASE_URL`, `DIRECT_URL`, `PORT`, `CORS_ORIGIN`.
+- `apps/expo/.env.local`: `EXPO_PUBLIC_API_URL`, `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
 
 ## Development
 
@@ -75,6 +82,7 @@ yarn start:nest
 - `yarn dev:expo`: starts the Expo development server.
 - `yarn compile`: runs the Turborepo `compile` pipeline.
 - `yarn check-types`: runs TypeScript checks across workspaces.
+- `yarn test`: runs the test suites across workspaces.
 - `yarn lint`: runs ESLint with auto-fix across workspaces.
 - `yarn lint:ci`: runs ESLint in CI mode across workspaces.
 - `yarn format`: formats files across workspaces.
@@ -103,6 +111,7 @@ yarn check-format
 yarn compile
 yarn check-types
 yarn lint:ci
+yarn test
 ```
 
 The GitHub workflow at `.github/workflows/ci.yml` runs the same quality gates on pull requests and pushes to `main`.

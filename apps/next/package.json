@@ -11,6 +11,7 @@
     "lint": "eslint . --ext .ts,.tsx --fix",
     "lint:ci": "eslint . --ext .ts,.tsx --max-warnings 0",
     "check-types": "tsc",
+    "test": "vitest run",
     "prettier": "prettier --ignore-path .prettierignore \"src/**/*.{js,jsx,ts,tsx,json,css,scss,html}\" \"messages/**/*.json\" \"src/proxy.ts\" \"*.{ts,tsx,js,mjs,cjs,json}\"",
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different"
@@ -40,7 +41,6 @@
     "@tailwindcss/postcss": "^4.2.2",
     "@types/node": "^22.19.0",
     "@types/react-dom": "^19.2.0",
-    "eslint": "^9.39.0",
     "eslint-config-next": "16.2.3",
     "postcss": "^8.5.9",
     "prettier-plugin-tailwindcss": "^0.6.14",

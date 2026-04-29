@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   quality:
-    name: Format, compile, types, lint
+    name: Format, compile, types, lint, tests
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -43,3 +43,6 @@ jobs:
 
       - name: ESLint (check)
         run: yarn lint:ci
+
+      - name: Tests
+        run: yarn test

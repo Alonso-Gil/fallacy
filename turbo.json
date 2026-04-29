@@ -3,17 +3,43 @@
   "pipeline": {
     "compile": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*"],
+      "inputs": [
+        "src/**/*",
+        "App.tsx",
+        "index.ts",
+        "app.json",
+        "babel.config.js",
+        "metro.config.js"
+      ],
       "outputs": ["dist/**", ".next/**"]
     },
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["src/**/*"],
+      "inputs": [
+        "src/**/*",
+        "App.tsx",
+        "index.ts",
+        "app.json",
+        "babel.config.js",
+        "metro.config.js"
+      ],
       "outputs": ["dist/**", ".next/**"]
     },
     "check-types": {
       "dependsOn": ["^build", "compile"],
-      "inputs": ["src/**/*"]
+      "inputs": ["src/**/*", "App.tsx", "index.ts"]
+    },
+    "test": {
+      "dependsOn": ["^build", "compile"],
+      "inputs": [
+        "src/**/*",
+        "test/**/*",
+        "App.tsx",
+        "index.ts",
+        "vitest.config.ts",
+        "jest.config.*"
+      ],
+      "outputs": ["coverage/**"]
     },
     "lint": {},
     "lint:ci": {

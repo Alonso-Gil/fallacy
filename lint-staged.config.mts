@@ -20,6 +20,13 @@ const config: Configuration = {
     const rel = relInside(files, "apps/nest");
     return `yarn --cwd apps/nest eslint --fix --max-warnings 0 ${rel.map(quoteArg).join(" ")}`;
   },
+  "apps/expo/**/*.{ts,tsx}": (files): string | string[] => {
+    if (files.length === 0) {
+      return [];
+    }
+    const rel = relInside(files, "apps/expo");
+    return `yarn --cwd apps/expo eslint --fix --max-warnings 0 ${rel.map(quoteArg).join(" ")}`;
+  },
   "packages/types/**/*.{ts,tsx}": (files): string | string[] => {
     if (files.length === 0) {
       return [];

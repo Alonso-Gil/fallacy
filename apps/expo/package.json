@@ -14,7 +14,8 @@
     "lint": "eslint . --ext .ts,.tsx --fix",
     "lint:ci": "eslint . --ext .ts,.tsx --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "prettier": "prettier --ignore-path ../../.prettierignore \"src/**/*.{js,jsx,ts,tsx,json}\" \"*.{ts,tsx,js,mjs,cjs,json}\" \"App.tsx\" \"index.ts\"",
+    "test": "vitest run",
+    "prettier": "prettier --ignore-path ../../.prettierignore --no-error-on-unmatched-pattern \"src/**/*.{js,jsx,ts,tsx,json}\" \"__tests__/**/*.{ts,tsx}\" \"*.{ts,tsx,js,mjs,cjs,json}\" \"App.tsx\" \"index.ts\"",
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different"
   },
