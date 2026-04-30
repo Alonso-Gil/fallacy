@@ -3,6 +3,7 @@ import {
   ForbiddenException,
   Injectable,
   NotFoundException,
+  Logger, // 1. Importamos el Logger
 } from '@nestjs/common';
 import { DebateFormat, Prisma, type Room as PrismaRoom } from '@prisma/client';
 import { getDefaultOxfordFormatConfig } from '@fallacy/types';
@@ -16,6 +17,7 @@ import {
   type UpdateRoomBody,
 } from './room.schemas';
 
+// Helpers (se mantienen igual, pero ahora el servicio los envuelve en logs)
 const resolveUpdateFormatConfig = (
   body: UpdateRoomBody,
   existing: PrismaRoom,
@@ -67,9 +69,16 @@ const mapRoom = (r: PrismaRoom): RoomBase => {
 
 @Injectable()
 export class RoomService {
+  // 2. Instanciamos el logger con el nombre de la clase
+  private readonly logger = new Logger(RoomService.name);
+
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(userId: string, body: CreateRoomBody) {
+    this.logger.log(
+      `Intentando crear sala: "${body.title}" por el usuario: ${userId}`,
+    );
+
     const room = await this.prismaService.room.create({
       data: {
         title: body.title,
@@ -85,10 +94,13 @@ export class RoomService {
         createdBy: userId,
       },
     });
+
+    this.logger.log(`Sala creada exitosamente con ID: ${room.id}`);
     return mapRoom(room);
   }
 
   async listLobbyPublic() {
+    this.logger.log('Listando salas públicas del lobby');
     const rooms = await this.prismaService.room.findMany({
       where: { isPublic: true },
       orderBy: { createdAt: 'desc' },
@@ -97,16 +109,19 @@ export class RoomService {
   }
 
   async findOneLobbyPublic(id: string) {
+    this.logger.log(`Buscando sala pública con ID: ${id}`);
     const room = await this.prismaService.room.findFirst({
       where: { id, isPublic: true },
     });
     if (!room) {
+      this.logger.warn(`Sala pública con ID: ${id} no encontrada`);
       throw new NotFoundException('Not found');
     }
     return mapRoom(room);
   }
 
   async listVisibleForUser(userId: string) {
+    this.logger.log(`Listando salas visibles para el usuario: ${userId}`);
     const rooms = await this.prismaService.room.findMany({
       where: {
         OR: [{ isPublic: true }, { createdBy: userId }],
@@ -117,6 +132,7 @@ export class RoomService {
   }
 
   async findOneForUser(id: string, userId: string) {
+    this.logger.log(`Buscando sala ${id} para el usuario ${userId}`);
     const room = await this.prismaService.room.findFirst({
       where: {
         id,
@@ -124,27 +140,45 @@ export class RoomService {
       },
     });
     if (!room) {
+      this.logger.warn(
+        `Sala ${id} no encontrada o sin acceso para usuario ${userId}`,
+      );
       throw new NotFoundException('Not found');
     }
     return mapRoom(room);
   }
 
   async update(id: string, userId: string, body: UpdateRoomBody) {
+    this.logger.log(
+      `Iniciando actualización de sala ${id} por usuario ${userId}`,
+    );
+
     const existing = await this.prismaService.room.findFirst({
       where: { id, createdBy: userId },
     });
+
     if (!existing) {
       const row = await this.prismaService.room.findUnique({ where: { id } });
       if (!row) {
+        this.logger.warn(`Intento de actualizar sala inexistente: ${id}`);
         throw new NotFoundException('Not found');
       }
+      this.logger.warn(
+        `Usuario ${userId} intentó actualizar sala ${id} sin ser el creador`,
+      );
       throw new ForbiddenException('Forbidden');
     }
+
     const nextFormat = body.format ?? existing.format;
     const nextMotion =
       body.motion !== undefined ? body.motion : existing.motion;
+
+    // Logs de validación de lógica de negocio
     if (nextFormat === DebateFormat.OXFORD) {
       if (!nextMotion?.trim()) {
+        this.logger.error(
+          'Fallo de validación: Formato OXFORD requiere una moción',
+        );
         throw new BadRequestException('Invalid request');
       }
     } else {
@@ -183,24 +217,37 @@ export class RoomService {
     if (nextFormatConfig !== undefined) {
       data.formatConfig = nextFormatConfig;
     }
+
     const room = await this.prismaService.room.update({
       where: { id },
       data,
     });
+
+    this.logger.log(`Sala ${id} actualizada con éxito`);
     return mapRoom(room);
   }
 
   async remove(id: string, userId: string) {
+    this.logger.log(`Intentando eliminar sala ${id} por usuario ${userId}`);
+
     const result = await this.prismaService.room.deleteMany({
       where: { id, createdBy: userId },
     });
+
     if (result.count > 0) {
+      this.logger.log(`Sala ${id} eliminada correctamente`);
       return { id };
     }
+
     const row = await this.prismaService.room.findUnique({ where: { id } });
     if (!row) {
+      this.logger.warn(`Intento de borrar sala inexistente: ${id}`);
       throw new NotFoundException('Not found');
     }
+
+    this.logger.warn(
+      `Usuario ${userId} no tiene permiso para borrar la sala ${id}`,
+    );
     throw new ForbiddenException('Forbidden');
   }
 }
