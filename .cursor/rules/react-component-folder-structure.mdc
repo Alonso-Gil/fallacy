@@ -25,6 +25,24 @@ Si un bloque merece **otro nombre**, crear **`OtroComponente/`** con el mismo cr
 
 Imports típicos desde el padre: `./OtroComponente/OtroComponente`.
 
+## Estados privados de una pantalla o componente
+
+Para vistas internas que rara vez cambian y pertenecen solo al componente padre (loading placeholders, empty states, error states), preferir **archivos sibling privados** antes que carpetas propias:
+
+```txt
+NombreComponente/
+  NombreComponente.tsx
+  NombreComponente.types.ts
+  NombreComponente.placeholder.tsx
+  NombreComponente.error.tsx
+  NombreComponente.empty.tsx
+```
+
+- Usar este patrón cuando el estado es específico de esa pantalla y no se reutiliza fuera.
+- Mantener el componente padre como orquestador: decide `loading` / `error` / `empty` / contenido real.
+- Crear carpeta propia solo si ese estado crece con props complejas, tipos propios, utils, tests o subpiezas internas.
+- Nombrar los archivos como `NombreComponente.<estado>.tsx` para dejar claro que son privados del componente padre.
+
 ## Firma del componente (`.tsx`)
 
 Definir el componente como **const** con **`React.FC<…Props>`** y parámetro único **`props`**, importando el tipo de props desde el `.types.ts`:
@@ -46,7 +64,7 @@ export default EmailAuthForm;
 
 ## Qué no hacer en esa carpeta
 
-- No añadir `helpers.ts`, `constants.ts`, `types.ts` genéricos ni más nombres salvo decisión explícita del equipo.
+- No añadir `helpers.ts`, `constants.ts`, `types.ts` genéricos ni más nombres salvo los estados privados documentados arriba o decisión explícita del equipo.
 - No mezclar en `.types.ts` lógica que deba vivir en `.utils.ts` cuando exista ese archivo.
 
 ## Excepciones razonables

@@ -181,7 +181,9 @@
         "openCreate": "Crear sala",
         "submitCreate": "Crear sala",
         "cancelCreate": "Cancelar",
-        "enter": "Entrar"
+        "enter": "Entrar",
+        "retryLoad": "Reintentar",
+        "retryLoading": "Reintentando..."
       },
       "modal": {
         "title": "Crear sala",
@@ -236,8 +238,11 @@
       "feedback": {
         "created": "Sala creada correctamente.",
         "loading": "Cargando salas…",
+        "emptyTitle": "Todavía no hay salas",
         "empty": "Aún no hay salas públicas. Crea una sala si has iniciado sesión.",
-        "apiNotConfiguredHint": "Define NEXT_PUBLIC_API_URL en .env.local (p. ej. http://localhost:3001) para ver el listado de salas."
+        "errorEyebrow": "Error al conectar con el lobby",
+        "errorTitle": "No pudimos cargar las salas",
+        "errorDescription": "Revisa tu conexión o intenta nuevamente en unos segundos."
       },
       "status": {
         "WAITING": "Esperando",

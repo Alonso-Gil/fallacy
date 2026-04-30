@@ -3,7 +3,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   fetchLobbyRoomDetail,
   fetchLobbyRooms,
-  isRoomApiConfigured,
   postRoom,
   putRoom
 } from "./room.service";
@@ -30,7 +29,7 @@ export const useFetchLobbyRooms = (params?: UseFetchLobbyRoomsParams) => {
   return useQuery({
     queryKey: roomKeys.list("lobby"),
     queryFn: fetchLobbyRooms,
-    enabled: isEnabled && isRoomApiConfigured(),
+    enabled: isEnabled,
     staleTime: 30_000
   });
 };
@@ -41,7 +40,7 @@ export const useFetchRoomDetail = (params: UseFetchRoomDetailParams) => {
   return useQuery({
     queryKey: roomKeys.detail(roomId),
     queryFn: () => fetchLobbyRoomDetail(roomId),
-    enabled: isEnabled && !!roomId && isRoomApiConfigured(),
+    enabled: isEnabled && !!roomId,
     staleTime: 30_000
   });
 };

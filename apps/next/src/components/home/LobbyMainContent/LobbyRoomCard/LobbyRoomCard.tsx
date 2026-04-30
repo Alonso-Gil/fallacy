@@ -33,7 +33,7 @@ const LobbyRoomCard: React.FC<Props> = props => {
   const seatsLabel = getSeatsLabel(room.format, room.maxSeatsPerSide, t);
   const createdLabel = getCreatedAtLabel(room.createdAt, locale);
 
-  const summaryText = room.motion ?? room.description;
+  const summaryText = room.motion ?? room.description ?? "";
 
   const oxfordConfig = room.format === "OXFORD" ? room.formatConfig : null;
   const phaseLabel = oxfordConfig
@@ -83,11 +83,12 @@ const LobbyRoomCard: React.FC<Props> = props => {
           <h3 className="text-foreground line-clamp-2 text-[15px] leading-snug font-semibold tracking-tight dark:text-white">
             {room.title}
           </h3>
-          {summaryText ? (
-            <p className="text-muted-foreground line-clamp-2 text-sm leading-snug dark:text-white/60">
-              {summaryText}
-            </p>
-          ) : null}
+          <p
+            className="text-muted-foreground line-clamp-2 h-[2.75em] text-sm leading-snug dark:text-white/60"
+            aria-hidden={summaryText ? undefined : true}
+          >
+            {summaryText}
+          </p>
         </div>
 
         {oxfordConfig ? (

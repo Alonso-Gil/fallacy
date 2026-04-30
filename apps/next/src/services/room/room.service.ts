@@ -15,11 +15,7 @@ import type {
   RoomEntity,
   UpdateRoomPayload
 } from "./room.service.types";
-import {
-  isRoomApiConfigured as getIsRoomApiConfigured,
-  parseRoom,
-  toRoomServiceError
-} from "./room.service.utils";
+import { parseRoom, toRoomServiceError } from "./room.service.utils";
 
 const ROOM_MOCK_LATENCY_MS = 220;
 const isMockEnabled = shouldMockByFlag(
@@ -27,17 +23,10 @@ const isMockEnabled = shouldMockByFlag(
 );
 const baseUrl = getBaseUrlFromEnv(process.env.NEXT_PUBLIC_API_URL);
 
-export const isRoomApiConfigured = (): boolean =>
-  getIsRoomApiConfigured(isMockEnabled, baseUrl);
-
 export const fetchLobbyRooms = async (): Promise<RoomEntity[]> => {
   if (isMockEnabled) {
     await waitForMockLatency(ROOM_MOCK_LATENCY_MS);
     return getRoomMockState();
-  }
-
-  if (!baseUrl) {
-    throw toRoomServiceError("API_NOT_CONFIGURED");
   }
 
   const response = await fetch(`${baseUrl}/room/lobby`, { cache: "no-store" });
@@ -64,10 +53,6 @@ export const fetchLobbyRoomDetail = async (
     return room;
   }
 
-  if (!baseUrl) {
-    throw toRoomServiceError("API_NOT_CONFIGURED");
-  }
-
   const response = await fetch(`${baseUrl}/room/lobby/${roomId}`, {
     cache: "no-store"
   });
@@ -85,10 +70,6 @@ export const postRoom = async (
   if (isMockEnabled) {
     await waitForMockLatency(ROOM_MOCK_LATENCY_MS);
     return createRoomMock(payload);
-  }
-
-  if (!baseUrl) {
-    throw toRoomServiceError("API_NOT_CONFIGURED");
   }
 
   const response = await fetch(`${baseUrl}/room`, {
@@ -112,10 +93,6 @@ export const putRoom = async (
   if (isMockEnabled) {
     await waitForMockLatency(ROOM_MOCK_LATENCY_MS);
     return updateRoomMock(roomId, payload);
-  }
-
-  if (!baseUrl) {
-    throw toRoomServiceError("API_NOT_CONFIGURED");
   }
 
   const response = await fetch(`${baseUrl}/room/${roomId}`, {

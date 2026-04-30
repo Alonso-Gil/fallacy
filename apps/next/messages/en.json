@@ -181,7 +181,9 @@
         "openCreate": "Create room",
         "submitCreate": "Create room",
         "cancelCreate": "Cancel",
-        "enter": "Enter"
+        "enter": "Enter",
+        "retryLoad": "Retry",
+        "retryLoading": "Retrying..."
       },
       "modal": {
         "title": "Create room",
@@ -236,8 +238,11 @@
       "feedback": {
         "created": "Room created successfully.",
         "loading": "Loading rooms…",
+        "emptyTitle": "No rooms yet",
         "empty": "No public rooms yet. Create a room if you are signed in.",
-        "apiNotConfiguredHint": "Set NEXT_PUBLIC_API_URL in .env.local (e.g. http://localhost:3001) to use the room list."
+        "errorEyebrow": "Error connecting to the lobby",
+        "errorTitle": "We could not load the rooms",
+        "errorDescription": "Check your connection or try again in a few seconds."
       },
       "status": {
         "WAITING": "Waiting",

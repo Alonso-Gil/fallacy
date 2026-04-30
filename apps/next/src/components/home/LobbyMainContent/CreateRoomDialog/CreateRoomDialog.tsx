@@ -43,7 +43,7 @@ const isMotionRequiredFor = (format: DebateFormat): boolean =>
   format === "OXFORD";
 
 const CreateRoomDialog: React.FC<Props> = props => {
-  const { isRoomApiReady, className } = props;
+  const { className } = props;
   const t = useTranslations("Lobby");
   const [isCreateRoomDialogOpen, setIsCreateRoomDialogOpen] = useState(false);
   const [roomTitle, setRoomTitle] = useState("");
@@ -105,10 +105,6 @@ const CreateRoomDialog: React.FC<Props> = props => {
 
   const handleCreateRoom = async () => {
     setIsSubmitAttempted(true);
-    if (!isRoomApiReady) {
-      toast.error(t("room.errors.apiNotConfigured"));
-      return;
-    }
     if (!isFormValid) {
       return;
     }
@@ -152,7 +148,7 @@ const CreateRoomDialog: React.FC<Props> = props => {
       <Button
         type="button"
         onClick={() => setIsCreateRoomDialogOpen(true)}
-        isDisabled={!isRoomApiReady || isCreating}
+        isDisabled={isCreating}
         icon={<Plus aria-hidden className="size-4" />}
         text={t("room.actions.openCreate")}
         glow
@@ -365,7 +361,7 @@ const CreateRoomDialog: React.FC<Props> = props => {
               type="button"
               onClick={handleCreateRoom}
               isLoading={isCreating}
-              isDisabled={!isRoomApiReady || !isFormValid}
+              isDisabled={!isFormValid}
               text={t("room.actions.submitCreate")}
               glow
               className={cn(

@@ -12,10 +12,7 @@ export type CreateRoomPayload = Omit<
   "id" | "status" | "createdBy" | "createdAt" | "updatedAt" | "formatConfig"
 > & { formatConfig?: OxfordFormatConfig | null };
 
-export type RoomServiceErrorCode =
-  | "API_NOT_CONFIGURED"
-  | "HTTP_ERROR"
-  | "INVALID_RESPONSE";
+export type RoomServiceErrorCode = "HTTP_ERROR" | "INVALID_RESPONSE";
 
 export class RoomServiceError extends Error {
   code: RoomServiceErrorCode;
@@ -66,4 +63,4 @@ export interface PutRoomOptimisticContext {
   previousDetail?: RoomEntity;
 }
 
-export type { RoomBase };
+export type { RoomBase } from "@fallacy/types";

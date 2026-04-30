@@ -1,12 +1,13 @@
 "use client";
 import { useTranslations } from "next-intl";
-import React, { useEffect, useId } from "react";
-import { toast } from "sonner";
+import React, { useId } from "react";
 
 import { cn } from "lib/utils";
-import { isRoomApiConfigured } from "services/room/room.service";
 import { useFetchLobbyRooms } from "services/room/room.service.hooks";
 import CreateRoomDialog from "./CreateRoomDialog/CreateRoomDialog";
+import LobbyMainContentEmpty from "./LobbyMainContent.empty";
+import LobbyMainContentError from "./LobbyMainContent.error";
+import LobbyMainContentPlaceholder from "./LobbyMainContent.placeholder";
 import type { LobbyMainContentProps as Props } from "./LobbyMainContent.types";
 import LobbyRoomCard from "./LobbyRoomCard/LobbyRoomCard";
 import LobbySearchBar from "./LobbySearchBar/LobbySearchBar";
@@ -15,19 +16,41 @@ const LobbyMainContent: React.FC<Props> = props => {
   const { className } = props;
   const t = useTranslations("Lobby");
   const searchInputId = `lobby-search-${useId()}`;
-  const isRoomApiReady = isRoomApiConfigured();
   const {
     data: rooms = [],
     isLoading: isLoadingRooms,
-    isError: isRoomsError
-  } = useFetchLobbyRooms({ isEnabled: isRoomApiReady });
+    isError: isRoomsError,
+    isRefetching: isRetryingRooms,
+    refetch: refetchRooms
+  } = useFetchLobbyRooms();
+  const isRoomsEmpty = !isLoadingRooms && !isRoomsError && rooms.length === 0;
 
-  useEffect(() => {
-    if (!isRoomsError) {
-      return;
+  const renderRooms = () => {
+    if (isLoadingRooms) {
+      return <LobbyMainContentPlaceholder />;
     }
-    toast.error(t("room.errors.roomsLoad"));
-  }, [isRoomsError, t]);
+
+    if (isRoomsError) {
+      return (
+        <LobbyMainContentError
+          isRetryingRooms={isRetryingRooms}
+          onRetry={() => void refetchRooms()}
+        />
+      );
+    }
+
+    if (isRoomsEmpty) {
+      return <LobbyMainContentEmpty />;
+    }
+
+    return (
+      <div className="mx-auto grid w-full max-w-384 auto-rows-min grid-cols-[repeat(auto-fill,minmax(min(100%,28rem),1fr))] content-start gap-4">
+        {rooms.map(room => (
+          <LobbyRoomCard key={room.id} room={room} />
+        ))}
+      </div>
+    );
+  };
 
   return (
     <section
@@ -47,10 +70,7 @@ const LobbyMainContent: React.FC<Props> = props => {
               label={t("searchBarLabel")}
               placeholder={t("searchPlaceholder")}
             />
-            <CreateRoomDialog
-              isRoomApiReady={isRoomApiReady}
-              className="shadow-primary/15 hover:shadow-primary/25 h-11 w-full rounded-xl px-5 text-sm font-semibold shadow-lg transition-all sm:w-auto sm:min-w-32"
-            />
+            <CreateRoomDialog className="shadow-primary/15 hover:shadow-primary/25 h-11 w-full rounded-xl px-5 text-sm font-semibold shadow-lg transition-all sm:w-auto sm:min-w-32" />
           </div>
         </div>
       </div>
@@ -58,28 +78,10 @@ const LobbyMainContent: React.FC<Props> = props => {
         className={cn(
           "relative z-0 min-h-0 w-full min-w-0 flex-1 overflow-y-auto overscroll-y-contain px-4 pt-4 pb-4 sm:px-6 sm:pb-6"
         )}
+        aria-busy={isLoadingRooms}
         aria-live="polite"
       >
-        <div className="mx-auto grid w-full max-w-384 auto-rows-min grid-cols-[repeat(auto-fill,minmax(min(100%,28rem),1fr))] content-start gap-4">
-          {isRoomApiReady ? null : (
-            <p className="text-muted-foreground col-span-full text-sm">
-              {t("room.feedback.apiNotConfiguredHint")}
-            </p>
-          )}
-          {isRoomApiReady && isLoadingRooms ? (
-            <p className="text-muted-foreground col-span-full text-sm">
-              {t("room.feedback.loading")}
-            </p>
-          ) : null}
-          {isRoomApiReady && !isLoadingRooms && rooms.length === 0 ? (
-            <p className="text-muted-foreground col-span-full text-sm">
-              {t("room.feedback.empty")}
-            </p>
-          ) : null}
-          {rooms.map(room => (
-            <LobbyRoomCard key={room.id} room={room} />
-          ))}
-        </div>
+        {renderRooms()}
       </div>
     </section>
   );

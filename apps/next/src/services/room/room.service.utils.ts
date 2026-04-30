@@ -14,9 +14,9 @@ export const applyRoomUpdate = (
   return {
     ...room,
     ...rest,
-    ...(nextMaxSeatsPerSide !== undefined
-      ? { maxSeatsPerSide: nextMaxSeatsPerSide }
-      : {}),
+    ...(nextMaxSeatsPerSide === undefined
+      ? {}
+      : { maxSeatsPerSide: nextMaxSeatsPerSide }),
     updatedAt: new Date().toISOString()
   } as RoomEntity;
 };
@@ -33,8 +33,3 @@ export const toRoomServiceError = (
   status?: number
 ): RoomServiceError =>
   new RoomServiceError("Room request failed", code, status);
-
-export const isRoomApiConfigured = (
-  isMockEnabled: boolean,
-  baseUrl: string | null
-): boolean => isMockEnabled || baseUrl !== null;
