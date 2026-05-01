@@ -183,7 +183,8 @@
         "cancelCreate": "Cancel",
         "enter": "Enter",
         "retryLoad": "Retry",
-        "retryLoading": "Retrying..."
+        "retryLoading": "Retrying...",
+        "clearFilters": "Clear filters"
       },
       "modal": {
         "title": "Create room",
@@ -242,7 +243,53 @@
         "empty": "No public rooms yet. Create a room if you are signed in.",
         "errorEyebrow": "Error connecting to the lobby",
         "errorTitle": "We could not load the rooms",
-        "errorDescription": "Check your connection or try again in a few seconds."
+        "errorDescription": "Check your connection or try again in a few seconds.",
+        "noFilterResultsTitle": "No rooms found",
+        "noFilterResultsDescription": "Try a different search or adjust the filters to see more rooms."
+      },
+      "filters": {
+        "status": {
+          "label": "Status",
+          "shortLabel": "Status",
+          "ariaLabel": "Filter by status",
+          "options": {
+            "ALL": "All",
+            "WAITING": "Waiting",
+            "IN_PROGRESS": "In progress",
+            "ENDED": "Finished"
+          }
+        },
+        "visibility": {
+          "label": "Access",
+          "shortLabel": "Access",
+          "ariaLabel": "Filter by access",
+          "options": {
+            "ALL": "All",
+            "PUBLIC": "Public",
+            "PRIVATE": "Private"
+          }
+        },
+        "format": {
+          "label": "Format",
+          "shortLabel": "Format",
+          "ariaLabel": "Filter by format",
+          "options": {
+            "ALL": "All",
+            "OXFORD": "Oxford",
+            "FREE": "Free"
+          }
+        },
+        "seats": {
+          "label": "Size",
+          "shortLabel": "Size",
+          "ariaLabel": "Filter by size",
+          "options": {
+            "ALL": "All",
+            "1": "1 vs 1",
+            "2": "2 vs 2",
+            "3": "3 vs 3"
+          }
+        }
       },
       "status": {
         "WAITING": "Waiting",

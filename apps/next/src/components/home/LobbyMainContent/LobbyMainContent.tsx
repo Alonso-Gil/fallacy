@@ -1,10 +1,11 @@
 "use client";
+import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
-import React, { useId } from "react";
+import React, { useCallback, useId, useState } from "react";
 
 import { cn } from "lib/utils";
 import { useFetchLobbyRooms } from "services/room/room.service.hooks";
-import CreateRoomDialog from "./CreateRoomDialog/CreateRoomDialog";
+import type { RoomEntity } from "services/room/room.service.types";
 import LobbyMainContentEmpty from "./LobbyMainContent.empty";
 import LobbyMainContentError from "./LobbyMainContent.error";
 import LobbyMainContentPlaceholder from "./LobbyMainContent.placeholder";
@@ -16,6 +17,8 @@ const LobbyMainContent: React.FC<Props> = props => {
   const { className } = props;
   const t = useTranslations("Lobby");
   const searchInputId = `lobby-search-${useId()}`;
+  const [filteredRooms, setFilteredRooms] = useState<RoomEntity[] | null>(null);
+  const [isFilterActive, setIsFilterActive] = useState(false);
   const {
     data: rooms = [],
     isLoading: isLoadingRooms,
@@ -23,7 +26,21 @@ const LobbyMainContent: React.FC<Props> = props => {
     isRefetching: isRetryingRooms,
     refetch: refetchRooms
   } = useFetchLobbyRooms();
+  const visibleRooms = filteredRooms ?? rooms;
   const isRoomsEmpty = !isLoadingRooms && !isRoomsError && rooms.length === 0;
+  const isFilteredRoomsEmpty =
+    !isLoadingRooms &&
+    !isRoomsError &&
+    rooms.length > 0 &&
+    visibleRooms.length === 0;
+
+  const handleFilteredRoomsChange = useCallback(
+    (nextFilteredRooms: RoomEntity[], nextIsFilterActive: boolean) => {
+      setFilteredRooms(nextFilteredRooms);
+      setIsFilterActive(nextIsFilterActive);
+    },
+    []
+  );
 
   const renderRooms = () => {
     if (isLoadingRooms) {
@@ -43,9 +60,29 @@ const LobbyMainContent: React.FC<Props> = props => {
       return <LobbyMainContentEmpty />;
     }
 
+    if (isFilteredRoomsEmpty && isFilterActive) {
+      return (
+        <div className="mx-auto flex min-h-full w-full max-w-384 items-center justify-center">
+          <div className="border-border/60 bg-card/90 flex w-full max-w-xl flex-col items-center gap-4 rounded-2xl border px-6 py-10 text-center shadow-sm backdrop-blur-sm">
+            <span className="bg-primary/10 text-primary flex size-12 items-center justify-center rounded-full">
+              <Search className="size-6" aria-hidden />
+            </span>
+            <div className="flex flex-col gap-1.5">
+              <h2 className="text-foreground text-lg font-semibold">
+                {t("room.feedback.noFilterResultsTitle")}
+              </h2>
+              <p className="text-muted-foreground text-sm">
+                {t("room.feedback.noFilterResultsDescription")}
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="mx-auto grid w-full max-w-384 auto-rows-min grid-cols-[repeat(auto-fill,minmax(min(100%,28rem),1fr))] content-start gap-4">
-        {rooms.map(room => (
+        {visibleRooms.map(room => (
           <LobbyRoomCard key={room.id} room={room} />
         ))}
       </div>
@@ -62,15 +99,16 @@ const LobbyMainContent: React.FC<Props> = props => {
         aria-hidden
       />
       <div className="border-border/20 relative z-0 shrink-0 border-b px-4 pt-4 pb-3 sm:px-6">
-        <div className="mx-auto flex w-full max-w-384 min-w-0 flex-col items-stretch gap-3 sm:flex-row sm:items-center">
-          <div className="flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="mx-auto flex w-full flex-col items-stretch gap-3">
+          <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-start">
             <LobbySearchBar
-              className="w-full sm:max-w-[640px] sm:flex-1"
+              className="LobbySearchBar w-full sm:flex-1"
               inputId={searchInputId}
               label={t("searchBarLabel")}
+              rooms={rooms}
+              onFilteredRoomsChange={handleFilteredRoomsChange}
               placeholder={t("searchPlaceholder")}
             />
-            <CreateRoomDialog className="shadow-primary/15 hover:shadow-primary/25 h-11 w-full rounded-xl px-5 text-sm font-semibold shadow-lg transition-all sm:w-auto sm:min-w-32" />
           </div>
         </div>
       </div>

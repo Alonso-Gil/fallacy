@@ -183,7 +183,8 @@
         "cancelCreate": "Cancelar",
         "enter": "Entrar",
         "retryLoad": "Reintentar",
-        "retryLoading": "Reintentando..."
+        "retryLoading": "Reintentando...",
+        "clearFilters": "Limpiar filtros"
       },
       "modal": {
         "title": "Crear sala",
@@ -242,7 +243,53 @@
         "empty": "Aún no hay salas públicas. Crea una sala si has iniciado sesión.",
         "errorEyebrow": "Error al conectar con el lobby",
         "errorTitle": "No pudimos cargar las salas",
-        "errorDescription": "Revisa tu conexión o intenta nuevamente en unos segundos."
+        "errorDescription": "Revisa tu conexión o intenta nuevamente en unos segundos.",
+        "noFilterResultsTitle": "No encontramos salas",
+        "noFilterResultsDescription": "Prueba con otra búsqueda o ajusta los filtros para ver más salas."
+      },
+      "filters": {
+        "status": {
+          "label": "Estado",
+          "shortLabel": "Estado",
+          "ariaLabel": "Filtrar por estado",
+          "options": {
+            "ALL": "Todos",
+            "WAITING": "Esperando",
+            "IN_PROGRESS": "En debate",
+            "ENDED": "Finalizadas"
+          }
+        },
+        "visibility": {
+          "label": "Acceso",
+          "shortLabel": "Acceso",
+          "ariaLabel": "Filtrar por acceso",
+          "options": {
+            "ALL": "Todos",
+            "PUBLIC": "Públicas",
+            "PRIVATE": "Privadas"
+          }
+        },
+        "format": {
+          "label": "Formato",
+          "shortLabel": "Formato",
+          "ariaLabel": "Filtrar por formato",
+          "options": {
+            "ALL": "Todos",
+            "OXFORD": "Oxford",
+            "FREE": "Libre"
+          }
+        },
+        "seats": {
+          "label": "Tamaño",
+          "shortLabel": "Tamaño",
+          "ariaLabel": "Filtrar por tamaño",
+          "options": {
+            "ALL": "Todos",
+            "1": "1 vs 1",
+            "2": "2 vs 2",
+            "3": "3 vs 3"
+          }
+        }
       },
       "status": {
         "WAITING": "Esperando",
