@@ -4,7 +4,10 @@ const roomPlaceholderItems = Array.from({ length: 5 }, (_, index) => index);
 
 const LobbyMainContentPlaceholder: React.FC = () => {
   return (
-    <output className="mx-auto grid w-full max-w-384 auto-rows-min grid-cols-[repeat(auto-fill,minmax(min(100%,28rem),1fr))] content-start gap-4">
+    <div
+      className="mx-auto grid w-full max-w-384 auto-rows-min grid-cols-[repeat(auto-fill,minmax(min(100%,28rem),1fr))] content-start gap-4"
+      aria-hidden
+    >
       {roomPlaceholderItems.map(item => (
         <article
           key={item}
@@ -41,7 +44,7 @@ const LobbyMainContentPlaceholder: React.FC = () => {
           </div>
         </article>
       ))}
-    </output>
+    </div>
   );
 };
 

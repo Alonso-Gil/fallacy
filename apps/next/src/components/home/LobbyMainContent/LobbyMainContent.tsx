@@ -113,9 +113,7 @@ const LobbyMainContent: React.FC<Props> = props => {
         </div>
       </div>
       <div
-        className={cn(
-          "relative z-0 min-h-0 w-full min-w-0 flex-1 overflow-y-auto overscroll-y-contain px-4 pt-4 pb-4 sm:px-6 sm:pb-6"
-        )}
+        className="relative z-0 min-h-0 w-full min-w-0 flex-1 overflow-y-auto overscroll-y-contain px-4 pt-4 pb-4 sm:px-6 sm:pb-6"
         aria-busy={isLoadingRooms}
         aria-live="polite"
       >
