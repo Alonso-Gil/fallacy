@@ -58,6 +58,22 @@ export class RoomController {
     return this.roomService.create(user.id, body);
   }
 
+  @Post(':id/join')
+  join(
+    @CurrentUser() user: User,
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ) {
+    return this.roomService.join(id, user.id);
+  }
+
+  @Get(':id/participants')
+  getParticipants(
+    @CurrentUser() user: User,
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ) {
+    return this.roomService.getParticipants(id);
+  }
+
   @Patch(':id')
   update(
     @CurrentUser() user: User,

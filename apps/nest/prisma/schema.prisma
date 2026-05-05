@@ -7,20 +7,40 @@ datasource db {
 }
 
 model Room {
-  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  title      String
-  motion     String?   @map("motion")
-  description String?
-  maxSeats  Int     @default(2) @map("max_seats")
-  isPublic  Boolean    @default(true) @map("is_public")
-  status    RoomStatus @default(WAITING) @map("status")
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title        String
+  motion       String?   @map("motion")
+  description  String?
+  maxSeats     Int       @default(2) @map("max_seats")
+  isPublic     Boolean   @default(true) @map("is_public")
+  status       RoomStatus @default(WAITING) @map("status")
   format       DebateFormat @default(OXFORD) @map("debate_format")
   formatConfig Json?         @map("format_config")
-  createdBy   String  @map("created_by") @db.Uuid
+  createdBy    String    @map("created_by") @db.Uuid
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
+  participants Participant[]
+
   @@map("rooms")
+}
+
+model Participant {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  roomId    String   @map("room_id") @db.Uuid
+  role      ParticipantRole @default(GUEST) @map("role")
+  joinedAt  DateTime @default(now()) @map("joined_at")
+
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roomId])
+  @@map("participants")
+}
+
+enum ParticipantRole {
+  HOST
+  GUEST
 }
 
 enum RoomStatus {

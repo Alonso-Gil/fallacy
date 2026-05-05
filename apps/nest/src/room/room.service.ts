@@ -3,14 +3,16 @@ import {
   ForbiddenException,
   Injectable,
   NotFoundException,
-  Logger, // 1. Importamos el Logger
+  Logger,
 } from '@nestjs/common';
 import { DebateFormat, Prisma, type Room as PrismaRoom } from '@prisma/client';
+import { ParticipantRole } from './participant-role';
 import { getDefaultOxfordFormatConfig } from '@fallacy/types';
 
 import type { RoomBase } from '@fallacy/types';
 
 import { PrismaService } from '../prisma.service';
+import { RealtimeService } from '../realtime/realtime.service';
 import {
   parseOxfordFormatConfig,
   type CreateRoomBody,
@@ -69,10 +71,12 @@ const mapRoom = (r: PrismaRoom): RoomBase => {
 
 @Injectable()
 export class RoomService {
-  // 2. Instanciamos el logger con el nombre de la clase
   private readonly logger = new Logger(RoomService.name);
 
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly realtimeService: RealtimeService,
+  ) {}
 
   async create(userId: string, body: CreateRoomBody) {
     this.logger.log(
@@ -249,5 +253,99 @@ export class RoomService {
       `Usuario ${userId} no tiene permiso para borrar la sala ${id}`,
     );
     throw new ForbiddenException('Forbidden');
+  }
+
+  async join(roomId: string, userId: string) {
+    this.logger.log(`Usuario ${userId} intentando unirse a la sala ${roomId}`);
+
+    const room = await this.prismaService.room.findUnique({
+      where: { id: roomId },
+    });
+
+    if (!room) {
+      this.logger.warn(`Sala ${roomId} no encontrada`);
+      throw new NotFoundException('Room not found');
+    }
+
+    if (!room.isPublic && room.createdBy !== userId) {
+      this.logger.warn(
+        `Usuario ${userId} intentó unirse a sala privada ${roomId}`,
+      );
+      throw new ForbiddenException('Cannot join private room');
+    }
+
+    const existing = await this.prismaService.participant.findUnique({
+      where: {
+        userId_roomId: { userId, roomId },
+      },
+    });
+
+    if (existing) {
+      this.logger.log(
+        `Usuario ${userId} ya es participante de la sala ${roomId}`,
+      );
+      const role: 'host' | 'guest' =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+        existing.role === ParticipantRole.HOST ? 'host' : 'guest';
+      const cloudflareToken = this.realtimeService.generateToken(
+        roomId,
+        userId,
+        role,
+      );
+      return {
+        roomId: room.id,
+        userId: existing.userId,
+        role,
+        cloudflareToken,
+      };
+    }
+
+    const isHost = room.createdBy === userId;
+    const role = isHost ? ParticipantRole.HOST : ParticipantRole.GUEST;
+
+    await this.prismaService.participant.create({
+      data: {
+        userId,
+        roomId,
+        role,
+      },
+    });
+
+    this.logger.log(
+      `Usuario ${userId} se unió como ${role} a la sala ${roomId}`,
+    );
+
+    await this.realtimeService.broadcastUserJoined(
+      roomId,
+      userId,
+      isHost ? 'host' : 'guest',
+    );
+
+    const cloudflareToken = this.realtimeService.generateToken(
+      roomId,
+      userId,
+      isHost ? 'host' : 'guest',
+    );
+
+    return {
+      roomId: room.id,
+      userId,
+      role: isHost ? 'host' : ('guest' as const),
+      cloudflareToken,
+    };
+  }
+
+  async getParticipants(roomId: string) {
+    const participants = await this.prismaService.participant.findMany({
+      where: { roomId },
+      orderBy: { joinedAt: 'asc' },
+    });
+
+    return participants.map((p) => ({
+      userId: p.userId,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
+      role: p.role === ParticipantRole.HOST ? 'host' : 'guest',
+      joinedAt: p.joinedAt.toISOString(),
+    }));
   }
 }
