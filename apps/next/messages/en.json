@@ -321,7 +321,35 @@
       },
       "seatsLabel": "{n} vs {n}",
       "currentPhaseLabel": "Current phase",
-      "progressCount": "{current} of {total}"
+      "progressCount": "{current} of {total}",
+      "details": {
+        "previewDescription": "Room preview before entering.",
+        "close": "Close",
+        "motion": "Motion",
+        "description": "Description",
+        "noDescription": "This room does not have a description yet.",
+        "noPhase": "No active phase",
+        "participants": "Participants",
+        "proposition": "Proposition",
+        "opposition": "Opposition",
+        "participantCapacity": "{current} / {max}",
+        "formatAndRules": "Format and rules",
+        "noRules": "This format does not have configured phases.",
+        "details": "Details",
+        "createdAt": "Created",
+        "access": "Access",
+        "status": "Status",
+        "creator": "Creator",
+        "cancel": "Cancel",
+        "enterRoom": "Enter room",
+        "formatNames": {
+          "OXFORD": "Oxford Debate",
+          "BRITISH_PARLIAMENTARY": "British Parliamentary",
+          "WORLD_SCHOOLS": "World Schools",
+          "FREE": "Free",
+          "CUSTOM": "Custom"
+        }
+      }
     }
   }
 }

@@ -23,7 +23,7 @@ const neutralBadgeClasses =
   "border-border/60 bg-foreground/5 text-foreground/80 dark:bg-foreground/10";
 
 const LobbyRoomCard: React.FC<Props> = props => {
-  const { room } = props;
+  const { room, onSelect } = props;
   const t = useTranslations("Lobby");
   const locale = useLocale();
   const statusLabel = getStatusLabel(room.status, t);
@@ -32,9 +32,7 @@ const LobbyRoomCard: React.FC<Props> = props => {
   const formatLabel = getFormatLabel(room.format, t);
   const seatsLabel = getSeatsLabel(room.format, room.maxSeatsPerSide, t);
   const createdLabel = getCreatedAtLabel(room.createdAt, locale);
-
   const summaryText = room.motion ?? room.description ?? "";
-
   const oxfordConfig = room.format === "OXFORD" ? room.formatConfig : null;
   const phaseLabel = oxfordConfig
     ? getPhaseLabel(oxfordConfig.currentPhase, t)
@@ -49,14 +47,16 @@ const LobbyRoomCard: React.FC<Props> = props => {
     : 0;
 
   return (
-    <article
+    <button
+      type="button"
       className={cn(
-        "group/card relative flex min-h-[190px] w-full max-w-full min-w-0 cursor-pointer flex-col overflow-hidden",
+        "group/card relative flex min-h-[190px] w-full max-w-full min-w-0 cursor-pointer flex-col overflow-hidden text-left",
         "border-border/50 bg-card/90 rounded-2xl border shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/4",
         "transition-all duration-200 ease-out",
         "hover:border-primary/50 hover:bg-card hover:shadow-primary/5 hover:-translate-y-0.5 hover:shadow-lg dark:hover:border-orange-500/40 dark:hover:bg-white/5",
         "focus-within:border-primary/50 focus-within:shadow-lg dark:focus-within:border-orange-500/40"
       )}
+      onClick={onSelect}
     >
       <div className="flex flex-1 flex-col gap-2.5 p-3.5">
         <div className="flex flex-wrap items-center gap-1.5">
@@ -119,12 +119,12 @@ const LobbyRoomCard: React.FC<Props> = props => {
 
       <div className="border-border/40 flex items-center justify-between border-t px-3.5 py-2.5">
         <p className="text-muted-foreground text-xs">{createdLabel}</p>
-        <span className="bg-primary/10 text-primary hover:bg-primary/20 inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ease-out dark:bg-orange-500/10 dark:text-orange-400 dark:hover:bg-orange-500/20 dark:hover:text-orange-300">
+        <span className="bg-primary/10 text-primary group-hover/card:bg-primary/20 inline-flex items-center gap-1 rounded-full px-3 py-1 text-sm font-medium transition-colors duration-200 ease-out dark:bg-orange-500/10 dark:text-orange-400 dark:group-hover/card:bg-orange-500/20 dark:group-hover/card:text-orange-300">
           {t("room.actions.enter")}
           <ArrowRight className="size-3.5" aria-hidden />
         </span>
       </div>
-    </article>
+    </button>
   );
 };
 

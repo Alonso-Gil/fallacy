@@ -1,6 +1,6 @@
 import { type ReactNode } from "react";
 
-const HomeLayout = ({
+const RoomLayout = ({
   children
 }: Readonly<{
   children: ReactNode;
@@ -14,4 +14,4 @@ const HomeLayout = ({
   );
 };
 
-export default HomeLayout;
+export default RoomLayout;
