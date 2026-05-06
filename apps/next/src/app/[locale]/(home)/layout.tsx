@@ -1,17 +1,13 @@
-import { type ReactNode } from "react";
+import RouteViewportLayout from "components/layout/RouteViewportLayout";
+
+import type { ReactNode } from "react";
 
 const HomeLayout = ({
   children
 }: Readonly<{
   children: ReactNode;
 }>) => {
-  return (
-    <div className="flex h-dvh min-h-0 flex-col overflow-hidden">
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
-        {children}
-      </div>
-    </div>
-  );
+  return <RouteViewportLayout>{children}</RouteViewportLayout>;
 };
 
 export default HomeLayout;
