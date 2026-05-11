@@ -5,69 +5,15 @@ import {
   NotFoundException,
   Logger,
 } from '@nestjs/common';
-import { DebateFormat, Prisma, type Room as PrismaRoom } from '@prisma/client';
-import { ParticipantRole } from './participant-role';
-import { getDefaultOxfordFormatConfig } from '@fallacy/types';
-
-import type { RoomBase } from '@fallacy/types';
+import { DebateFormat, Prisma } from '@prisma/client';
 
 import { PrismaService } from '../prisma.service';
 import { RealtimeService } from '../realtime/realtime.service';
-import {
-  parseOxfordFormatConfig,
-  type CreateRoomBody,
-  type UpdateRoomBody,
-} from './room.schemas';
-
-// Helpers (se mantienen igual, pero ahora el servicio los envuelve en logs)
-const resolveUpdateFormatConfig = (
-  body: UpdateRoomBody,
-  existing: PrismaRoom,
-  nextFormat: DebateFormat,
-): Prisma.RoomUpdateInput['formatConfig'] | undefined => {
-  if (body.formatConfig !== undefined) {
-    if (body.formatConfig === null) {
-      if (nextFormat === DebateFormat.OXFORD) {
-        return getDefaultOxfordFormatConfig();
-      }
-      return Prisma.DbNull;
-    }
-    if (nextFormat === DebateFormat.OXFORD) {
-      return body.formatConfig;
-    }
-    return undefined;
-  }
-  if (body.format === undefined) {
-    return undefined;
-  }
-  if (nextFormat === DebateFormat.OXFORD) {
-    if (existing.format === DebateFormat.OXFORD) {
-      return undefined;
-    }
-    return getDefaultOxfordFormatConfig();
-  }
-  return Prisma.DbNull;
-};
-
-const mapRoom = (r: PrismaRoom): RoomBase => {
-  return {
-    id: r.id,
-    title: r.title,
-    motion: r.motion,
-    description: r.description,
-    maxSeatsPerSide: r.maxSeats,
-    isPublic: r.isPublic,
-    status: r.status,
-    createdBy: r.createdBy,
-    createdAt: r.createdAt.toISOString(),
-    updatedAt: r.updatedAt.toISOString(),
-    format: r.format,
-    formatConfig:
-      r.format === DebateFormat.OXFORD
-        ? parseOxfordFormatConfig(r.formatConfig)
-        : null,
-  };
-};
+import { mapRoom } from './map-room';
+import { ParticipantRole } from './participant-role';
+import { resolveUpdateFormatConfig } from './resolve-update-format-config';
+import { toApiRole } from './to-api-role';
+import { type CreateRoomBody, type UpdateRoomBody } from './room.schemas';
 
 @Injectable()
 export class RoomService {
@@ -177,7 +123,6 @@ export class RoomService {
     const nextMotion =
       body.motion !== undefined ? body.motion : existing.motion;
 
-    // Logs de validación de lógica de negocio
     if (nextFormat === DebateFormat.OXFORD) {
       if (!nextMotion?.trim()) {
         this.logger.error(
@@ -274,6 +219,13 @@ export class RoomService {
       throw new ForbiddenException('Cannot join private room');
     }
 
+    if (room.status === 'ENDED') {
+      this.logger.warn(
+        `Usuario ${userId} intentó unirse a sala finalizada ${roomId}`,
+      );
+      throw new BadRequestException('Room has ended');
+    }
+
     const existing = await this.prismaService.participant.findUnique({
       where: {
         userId_roomId: { userId, roomId },
@@ -284,54 +236,71 @@ export class RoomService {
       this.logger.log(
         `Usuario ${userId} ya es participante de la sala ${roomId}`,
       );
-      const role: 'host' | 'guest' =
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-        existing.role === ParticipantRole.HOST ? 'host' : 'guest';
-      const cloudflareToken = this.realtimeService.generateToken(
-        roomId,
-        userId,
-        role,
-      );
+      const role = toApiRole(existing.role);
       return {
         roomId: room.id,
         userId: existing.userId,
         role,
-        cloudflareToken,
+        cloudflareToken: null,
+        sfuEnabled: this.realtimeService.isCloudflareConfigured,
       };
+    }
+
+    const participantCount = await this.prismaService.participant.count({
+      where: { roomId },
+    });
+    if (participantCount >= room.maxSeats * 2) {
+      this.logger.warn(
+        `Sala ${roomId} está llena (maxSeats per side: ${room.maxSeats}, total allowed: ${room.maxSeats * 2})`,
+      );
+      throw new BadRequestException('Room is full');
     }
 
     const isHost = room.createdBy === userId;
     const role = isHost ? ParticipantRole.HOST : ParticipantRole.GUEST;
+    const apiRole = toApiRole(role);
 
-    await this.prismaService.participant.create({
-      data: {
-        userId,
-        roomId,
-        role,
-      },
-    });
+    try {
+      await this.prismaService.participant.create({
+        data: {
+          userId,
+          roomId,
+          role,
+        },
+      });
+    } catch (err) {
+      if (
+        typeof err === 'object' &&
+        err !== null &&
+        'code' in err &&
+        (err as { code: string }).code === 'P2002'
+      ) {
+        this.logger.log(
+          `Concurrent join detected for user ${userId} in room ${roomId}, returning existing record`,
+        );
+        return {
+          roomId: room.id,
+          userId,
+          role: apiRole,
+          cloudflareToken: null,
+          sfuEnabled: this.realtimeService.isCloudflareConfigured,
+        };
+      }
+      throw err;
+    }
 
     this.logger.log(
-      `Usuario ${userId} se unió como ${role} a la sala ${roomId}`,
+      `Usuario ${userId} se unió como ${apiRole} a la sala ${roomId}`,
     );
 
-    await this.realtimeService.broadcastUserJoined(
-      roomId,
-      userId,
-      isHost ? 'host' : 'guest',
-    );
-
-    const cloudflareToken = this.realtimeService.generateToken(
-      roomId,
-      userId,
-      isHost ? 'host' : 'guest',
-    );
+    await this.realtimeService.broadcastUserJoined(roomId, userId, apiRole);
 
     return {
       roomId: room.id,
       userId,
-      role: isHost ? 'host' : ('guest' as const),
-      cloudflareToken,
+      role: apiRole,
+      cloudflareToken: null,
+      sfuEnabled: this.realtimeService.isCloudflareConfigured,
     };
   }
 
@@ -343,9 +312,81 @@ export class RoomService {
 
     return participants.map((p) => ({
       userId: p.userId,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
-      role: p.role === ParticipantRole.HOST ? 'host' : 'guest',
+      role: toApiRole(p.role),
       joinedAt: p.joinedAt.toISOString(),
     }));
+  }
+
+  async leave(roomId: string, userId: string) {
+    const participant = await this.prismaService.participant.findFirst({
+      where: { roomId, userId },
+    });
+
+    if (!participant) {
+      this.logger.warn(`Usuario ${userId} no encontrado en sala ${roomId}`);
+      return { success: false, message: 'Not a participant' };
+    }
+
+    await this.prismaService.participant.delete({
+      where: { id: participant.id },
+    });
+
+    this.logger.log(`Usuario ${userId} salió de la sala ${roomId}`);
+
+    await this.realtimeService.broadcastUserLeft(roomId, userId);
+
+    const remaining = await this.prismaService.participant.count({
+      where: { roomId },
+    });
+    if (remaining === 0) {
+      await this.realtimeService.removeChannel(roomId);
+    }
+
+    return { success: true, message: 'Left successfully' };
+  }
+
+  async refreshToken(roomId: string, userId: string) {
+    const participant = await this.prismaService.participant.findFirst({
+      where: { roomId, userId },
+    });
+
+    if (!participant) {
+      this.logger.warn(
+        `Intento de refrescar token de usuario ${userId} que no pertenece a la sala ${roomId}`,
+      );
+      throw new ForbiddenException('Not a participant of this room');
+    }
+
+    const apiRole = toApiRole(participant.role);
+    this.logger.log(
+      `Token refrescado para usuario ${userId} en la sala ${roomId}`,
+    );
+
+    return {
+      roomId,
+      userId,
+      role: apiRole,
+      cloudflareToken: null,
+      sfuEnabled: this.realtimeService.isCloudflareConfigured,
+    };
+  }
+
+  async createSfuSession(
+    roomId: string,
+    userId: string,
+    sessionDescription: { type: 'offer' | 'answer'; sdp: string },
+  ) {
+    const participant = await this.prismaService.participant.findFirst({
+      where: { roomId, userId },
+    });
+
+    if (!participant) {
+      this.logger.warn(
+        `Usuario ${userId} intentó crear sesión SFU sin pertenecer a la sala ${roomId}`,
+      );
+      throw new ForbiddenException('Not a participant of this room');
+    }
+
+    return this.realtimeService.createCloudflareSession(sessionDescription);
   }
 }

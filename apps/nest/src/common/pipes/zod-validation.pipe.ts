@@ -7,10 +7,7 @@ export class ZodValidationPipe<T extends ZodType> implements PipeTransform {
   transform(value: unknown): z.infer<T> {
     const r = this.schema.safeParse(value);
     if (!r.success) {
-      throw new BadRequestException({
-        message: 'Bad request',
-        issues: r.error.flatten(),
-      });
+      throw new BadRequestException('Bad request');
     }
     return r.data as z.infer<T>;
   }

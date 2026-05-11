@@ -12,6 +12,7 @@ import {
 } from "./room.service.mock";
 import type {
   CreateRoomPayload,
+  JoinRoomResponse,
   RoomEntity,
   UpdateRoomPayload
 } from "./room.service.types";
@@ -129,4 +130,24 @@ export const putRoom = async (
   }
 
   return parseRoom(await response.json());
+};
+
+export const joinRoom = async (
+  accessToken: string,
+  roomId: string
+): Promise<JoinRoomResponse> => {
+  if (!baseUrl) {
+    throw toRoomServiceError("API_NOT_CONFIGURED");
+  }
+
+  const response = await fetch(`${baseUrl}/room/${roomId}/join`, {
+    method: "POST",
+    cache: "no-store",
+    headers: buildAuthHeaders(accessToken)
+  });
+  if (!response.ok) {
+    throw toRoomServiceError("HTTP_ERROR", response.status);
+  }
+
+  return response.json() as Promise<JoinRoomResponse>;
 };

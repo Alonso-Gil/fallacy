@@ -35,3 +35,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+/.ollamassist/conversations/de002686-f8f9-4745-ac58-f5cb87d0ba70.json
+/.opencode/plans/realtime-videocall-fixes.md

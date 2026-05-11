@@ -21,7 +21,8 @@
         "en": "Inglés",
         "es": "Español"
       }
-    }
+    },
+    "loading": "Cargando..."
   },
   "Auth": {
     "login": {
@@ -161,6 +162,9 @@
     ]
   },
   "Lobby": {
+    "common": {
+      "loading": "Cargando"
+    },
     "lobbyContentRegion": "Zona principal del lobby",
     "brand": {
       "subtitle": "Donde las ideas se enfrentan"
@@ -269,7 +273,25 @@
       },
       "seatsLabel": "{n} vs {n}",
       "currentPhaseLabel": "Fase actual",
-      "progressCount": "{current} de {total}"
+      "progressCount": "{current} de {total}",
+      "joinRoom": "Unirse a la Sala",
+      "joinTitle": "Unirse a la Sala",
+      "joinDescription": "Permite el acceso al micrófono para unirte al debate",
+      "micRequired": "Se requiere acceso al micrófono para unirse a la sala",
+      "loginRequired": "Inicia sesión para unirte a la sala",
+      "joinError": "Error al unirse a la sala",
+      "enterRoom": "Entrar a la Sala",
+      "roomTitle": "Sala",
+      "leaveRoom": "Salir de la Sala",
+      "mute": "Silenciar",
+      "unmute": "Activar sonido",
+      "videoOn": "Activar cámara",
+      "videoOff": "Desactivar cámara",
+      "shareScreen": "Compartir pantalla",
+      "you": "Tú",
+      "mediaError": "Error al acceder a cámara/micrófono",
+      "waitingForPeer": "Esperando otros participantes...",
+      "connected": "Conectado"
     }
   }
 }

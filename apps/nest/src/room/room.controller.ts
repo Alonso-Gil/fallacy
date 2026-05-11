@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -66,6 +67,39 @@ export class RoomController {
     return this.roomService.join(id, user.id);
   }
 
+  @Post(':id/refresh-token')
+  refreshToken(
+    @CurrentUser() user: User,
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ) {
+    return this.roomService.refreshToken(id, user.id);
+  }
+
+  @Post(':id/sfu/session')
+  createSfuSession(
+    @CurrentUser() user: User,
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body()
+    body: {
+      sessionDescription?: { type?: 'offer' | 'answer'; sdp?: string };
+    },
+  ) {
+    const sessionDescription = body.sessionDescription;
+    if (
+      !sessionDescription ||
+      (sessionDescription.type !== 'offer' &&
+        sessionDescription.type !== 'answer') ||
+      typeof sessionDescription.sdp !== 'string'
+    ) {
+      throw new BadRequestException('Invalid SFU session request');
+    }
+
+    return this.roomService.createSfuSession(id, user.id, {
+      type: sessionDescription.type,
+      sdp: sessionDescription.sdp,
+    });
+  }
+
   @Get(':id/participants')
   getParticipants(
     @CurrentUser() user: User,
@@ -89,5 +123,13 @@ export class RoomController {
     @Param('id', new ParseUUIDPipe()) id: string,
   ) {
     return this.roomService.remove(id, user.id);
+  }
+
+  @Post(':id/leave')
+  leave(
+    @CurrentUser() user: User,
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ) {
+    return this.roomService.leave(id, user.id);
   }
 }

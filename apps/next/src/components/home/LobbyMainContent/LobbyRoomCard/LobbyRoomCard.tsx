@@ -1,10 +1,11 @@
 "use client";
 import { ArrowRight, Lock } from "lucide-react";
+import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import React from "react";
 
 import { cn } from "lib/utils";
-import type { LobbyRoomCardProps as Props } from "./LobbyRoomCard.types";
+import type { LobbyRoomCardProps } from "./LobbyRoomCard.types";
 import {
   getCreatedAtLabel,
   getFormatLabel,
@@ -22,7 +23,7 @@ const baseBadgeClasses =
 const neutralBadgeClasses =
   "border-border/60 bg-foreground/5 text-foreground/80 dark:bg-foreground/10";
 
-const LobbyRoomCard: React.FC<Props> = props => {
+const LobbyRoomCard: React.FC<LobbyRoomCardProps> = props => {
   const { room } = props;
   const t = useTranslations("Lobby");
   const locale = useLocale();
@@ -49,7 +50,8 @@ const LobbyRoomCard: React.FC<Props> = props => {
     : 0;
 
   return (
-    <article
+    <Link
+      href={`/join/${room.id}`}
       className={cn(
         "group/card relative flex min-h-[190px] w-full max-w-full min-w-0 cursor-pointer flex-col overflow-hidden",
         "border-border/50 bg-card/90 rounded-2xl border shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-white/4",
@@ -123,7 +125,7 @@ const LobbyRoomCard: React.FC<Props> = props => {
           <ArrowRight className="size-3.5" aria-hidden />
         </span>
       </div>
-    </article>
+    </Link>
   );
 };
 

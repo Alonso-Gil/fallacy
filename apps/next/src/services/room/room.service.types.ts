@@ -61,6 +61,19 @@ export interface UseFetchRoomDetailParams {
   isEnabled?: boolean;
 }
 
+export type JoinRoomResponse = {
+  roomId: string;
+  userId: string;
+  role: "host" | "guest";
+  cloudflareToken: string | null;
+  sfuEnabled: boolean;
+};
+
+export interface JoinRoomVariables {
+  accessToken: string;
+  roomId: string;
+}
+
 export interface PutRoomOptimisticContext {
   previousLobbyRooms?: RoomEntity[];
   previousDetail?: RoomEntity;

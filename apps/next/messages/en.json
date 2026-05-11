@@ -21,7 +21,8 @@
         "en": "English",
         "es": "Spanish"
       }
-    }
+    },
+    "loading": "Loading..."
   },
   "Auth": {
     "login": {
@@ -269,7 +270,25 @@
       },
       "seatsLabel": "{n} vs {n}",
       "currentPhaseLabel": "Current phase",
-      "progressCount": "{current} of {total}"
+      "progressCount": "{current} of {total}",
+      "joinRoom": "Join Room",
+      "joinTitle": "Join Room",
+      "joinDescription": "Allow microphone access to join the debate",
+      "micRequired": "Microphone access is required to join the room",
+      "loginRequired": "Please log in to join the room",
+      "joinError": "Failed to join room",
+      "enterRoom": "Enter Room",
+      "roomTitle": "Room",
+      "leaveRoom": "Leave Room",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "videoOn": "Turn on camera",
+      "videoOff": "Turn off camera",
+      "shareScreen": "Share screen",
+      "you": "You",
+      "mediaError": "Failed to access camera/microphone",
+      "waitingForPeer": "Waiting for other participants...",
+      "connected": "Connected"
     }
   }
 }

@@ -4,10 +4,12 @@ import {
   fetchLobbyRoomDetail,
   fetchLobbyRooms,
   isRoomApiConfigured,
+  joinRoom,
   postRoom,
   putRoom
 } from "./room.service";
 import type {
+  JoinRoomVariables,
   PostRoomVariables,
   PutRoomOptimisticContext,
   PutRoomVariables,
@@ -125,5 +127,12 @@ export const usePutRoom = () => {
         queryKey: roomKeys.detail(variables.roomId)
       });
     }
+  });
+};
+
+export const useJoinRoom = () => {
+  return useMutation({
+    mutationFn: ({ accessToken, roomId }: JoinRoomVariables) =>
+      joinRoom(accessToken, roomId)
   });
 };
