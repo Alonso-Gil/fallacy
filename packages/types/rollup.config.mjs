@@ -1,5 +1,5 @@
 import { createRequire } from "node:module";
-import { bundleConfig, declarationsConfig } from "../../rollup.config.js";
+import { bundleConfig, declarationsConfig } from "../../rollup.config.mjs";
 
 const require = createRequire(import.meta.url);
 const packageJSON = require("./package.json");

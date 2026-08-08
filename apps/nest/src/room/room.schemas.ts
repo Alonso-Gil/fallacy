@@ -162,7 +162,7 @@ const createRoomInputSchema = z
       .max(3, { message: 'maxSeatsPerSide must be at most 3' })
       .optional(),
     isPublic: z.boolean().optional(),
-    format: z.nativeEnum(DebateFormat).optional(),
+    format: z.enum(DebateFormat).optional(),
     formatConfig: formatConfigField,
   })
   .strict()
@@ -176,14 +176,14 @@ const createRoomInputSchema = z
         (typeof m === 'string' && m.trim() === '')
       ) {
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: 'custom',
           message: 'Motion is required',
           path: ['motion'],
         });
       }
     } else if (val.formatConfig != null) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: 'Invalid request',
         path: ['formatConfig'],
       });
@@ -226,15 +226,15 @@ const updateRoomInputSchema = z
     maxSeats: z.number().int().min(1).max(3).optional(),
     maxSeatsPerSide: z.number().int().min(1).max(3).optional(),
     isPublic: z.boolean().optional(),
-    status: z.nativeEnum(RoomStatus).optional(),
-    format: z.nativeEnum(DebateFormat).optional(),
+    status: z.enum(RoomStatus).optional(),
+    format: z.enum(DebateFormat).optional(),
     formatConfig: formatConfigField,
   })
   .strict()
   .superRefine((o, ctx) => {
     if (Object.keys(o).length === 0) {
       ctx.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: 'custom',
         message: 'At least one field is required',
       });
       return;
@@ -242,7 +242,7 @@ const updateRoomInputSchema = z
     if (o.format !== undefined && o.format !== DebateFormat.OXFORD) {
       if (o.formatConfig !== undefined && o.formatConfig !== null) {
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: 'custom',
           message: 'Invalid request',
           path: ['formatConfig'],
         });
@@ -253,7 +253,7 @@ const updateRoomInputSchema = z
         o.motion === null || o.motion === '' || o.motion.trim() === '';
       if (isEmpty) {
         ctx.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: 'custom',
           message: 'Motion is required',
           path: ['motion'],
         });

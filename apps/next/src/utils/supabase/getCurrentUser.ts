@@ -5,8 +5,7 @@ import { isSupabaseConfigured } from "config/supabase";
 import { createClient } from "./server-props";
 
 export type CurrentUser =
-  | { status: "authenticated"; user: User }
-  | { status: "anonymous"; user: null };
+  { status: "authenticated"; user: User } | { status: "anonymous"; user: null };
 
 const loadCurrentUser = async (): Promise<CurrentUser> => {
   if (!isSupabaseConfigured()) {

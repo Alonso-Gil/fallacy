@@ -1,5 +1,6 @@
 import { BadRequestException, PipeTransform } from '@nestjs/common';
-import type { z, ZodType } from 'zod';
+import type { ZodType, z } from 'zod';
+import { treeifyError } from 'zod';
 
 export class ZodValidationPipe<T extends ZodType> implements PipeTransform {
   constructor(private readonly schema: T) {}
@@ -9,9 +10,9 @@ export class ZodValidationPipe<T extends ZodType> implements PipeTransform {
     if (!r.success) {
       throw new BadRequestException({
         message: 'Bad request',
-        issues: r.error.flatten(),
+        issues: treeifyError(r.error),
       });
     }
-    return r.data as z.infer<T>;
+    return r.data;
   }
 }

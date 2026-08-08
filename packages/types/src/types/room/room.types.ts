@@ -48,11 +48,7 @@ export const getDefaultOxfordFormatConfig = (): OxfordFormatConfig => ({
 });
 
 export type DebateFormat =
-  | "OXFORD"
-  | "BRITISH_PARLIAMENTARY"
-  | "WORLD_SCHOOLS"
-  | "FREE"
-  | "CUSTOM";
+  "OXFORD" | "BRITISH_PARLIAMENTARY" | "WORLD_SCHOOLS" | "FREE" | "CUSTOM";
 
 export type RoomStatus = "WAITING" | "IN_PROGRESS" | "ENDED";
 

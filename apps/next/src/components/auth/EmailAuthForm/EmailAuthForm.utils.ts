@@ -112,8 +112,7 @@ export const mapSupabaseAuthMessageToKey = (
 };
 
 export type EmailLoginResult =
-  | { status: "redirect" }
-  | { status: "error"; errorKey: AuthFormErrorKey };
+  { status: "redirect" } | { status: "error"; errorKey: AuthFormErrorKey };
 
 export const signInWithEmailPassword = async (
   supabase: SupabaseClient,

@@ -2,6 +2,7 @@ import { createServerClient, type SetAllCookies } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
 import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
+import { applySupabaseCookies } from "utils/supabase/applySupabaseCookies";
 
 const authCallback = async (request: NextRequest) => {
   if (!isSupabaseConfigured()) {
@@ -38,14 +39,11 @@ const authCallback = async (request: NextRequest) => {
           getAll() {
             return request.cookies.getAll();
           },
-          setAll(cookiesToSet: Parameters<SetAllCookies>[0]) {
-            for (const { name, value, options } of cookiesToSet) {
-              if (options) {
-                response.cookies.set(name, value, options);
-              } else {
-                response.cookies.set(name, value);
-              }
-            }
+          setAll(
+            cookiesToSet: Parameters<SetAllCookies>[0],
+            headers?: Parameters<SetAllCookies>[1]
+          ) {
+            applySupabaseCookies(response, cookiesToSet, headers);
           }
         }
       }

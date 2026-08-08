@@ -141,7 +141,7 @@ const RoomDetailsDrawer: React.FC<Props> = props => {
           </div>
         </div>
 
-        <div className="min-h-0 overflow-y-auto px-4 py-3.5 [scrollbar-color:rgba(255,255,255,0.16)_transparent] [scrollbar-width:thin] sm:px-5 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/15 [&::-webkit-scrollbar-thumb:hover]:bg-white/25 [&::-webkit-scrollbar-track]:bg-transparent">
+        <div className="min-h-0 [scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,0.16)_transparent] overflow-y-auto px-4 py-3.5 sm:px-5 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/15 [&::-webkit-scrollbar-thumb:hover]:bg-white/25 [&::-webkit-scrollbar-track]:bg-transparent">
           <div className="flex flex-col gap-3">
             <section className={sectionClasses}>
               {motion ? (

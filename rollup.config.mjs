@@ -3,7 +3,7 @@ import json from "@rollup/plugin-json";
 import dts from "rollup-plugin-dts";
 import esbuild from "rollup-plugin-esbuild";
 
-import globalPackageJSON from "./package.json";
+import globalPackageJSON from "./package.json" with { type: "json" };
 
 export const dist = "dist/bundle";
 
@@ -32,14 +32,13 @@ export const bundleConfig = (packageJSON, externalsWhitelist = []) => {
       }
     ],
     plugins: [
-      // nodeResolve(),
       commonjs(),
       json(),
       esbuild({
         sourceMap: true,
         target: "es2020",
         minify: process.env.NODE_ENV === "production",
-        tsconfig: "./tsconfig.json" // default
+        tsconfig: "./tsconfig.json"
       })
     ],
     external

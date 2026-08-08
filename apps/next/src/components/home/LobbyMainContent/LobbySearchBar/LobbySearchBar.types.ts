@@ -5,8 +5,7 @@ import type { RoomEntity } from "services/room/room.service.types";
 export type LobbyRoomStatusFilter = "ALL" | RoomStatus;
 export type LobbyRoomVisibilityFilter = "ALL" | "PUBLIC" | "PRIVATE";
 export type LobbyRoomFormatFilter =
-  | "ALL"
-  | Extract<DebateFormat, "OXFORD" | "FREE">;
+  "ALL" | Extract<DebateFormat, "OXFORD" | "FREE">;
 export type LobbyRoomSeatFilter = "ALL" | 1 | 2 | 3;
 
 export interface LobbyRoomFilters {

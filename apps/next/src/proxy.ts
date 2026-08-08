@@ -4,6 +4,7 @@ import { type NextRequest } from "next/server";
 import createIntlMiddleware from "next-intl/middleware";
 
 import { getSupabasePublicKey, isSupabaseConfigured } from "config/supabase";
+import { applySupabaseCookies } from "utils/supabase/applySupabaseCookies";
 import { routing } from "i18n/routing";
 
 const handleI18nRouting = createIntlMiddleware(routing);
@@ -35,20 +36,7 @@ export async function proxy(request: NextRequest) {
           cookiesToSet: Parameters<SetAllCookies>[0],
           headers?: Parameters<SetAllCookies>[1]
         ) {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            if (options) {
-              response.cookies.set(name, value, options);
-            } else {
-              response.cookies.set(name, value);
-            }
-          });
-          if (headers && typeof headers === "object") {
-            Object.entries(headers).forEach(([key, value]) => {
-              if (typeof value === "string") {
-                response.headers.set(key, value);
-              }
-            });
-          }
+          applySupabaseCookies(response, cookiesToSet, headers);
         }
       }
     }
